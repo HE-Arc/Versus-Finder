@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 #from django.contrib.auth.models import User
 #from .serializers import UserSerializer, SoldierSerializer
-from rest_framework import viewsets
+#from rest_framework import viewsets
 
 def index(request):
     context = {}
