@@ -4,7 +4,8 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
+    path('home', views.home, name='home'),
     #path('login', views.LoginView.as_view(), name='login'),
     #path('profile', views.ProfileView.as_view(), name='profile'),
     #path('dashboard', views.DashboardView.as_view(), name='dashboard'),

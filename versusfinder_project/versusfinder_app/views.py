@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 #from .serializers import UserSerializer, SoldierSerializer
 #from rest_framework import viewsets
 
-def index(request):
+def home(request):
     context = {}
-    return render(request, 'versusfinder_app/index.html', context)
+    context['user_id'] = request.user.id
+    return render(request, 'versusfinder_app/home.html', context)
