@@ -7,9 +7,9 @@ with urllib.request.urlopen("https://www.smashbros.com/assets_v2/data/fighter.js
     model = "versusfinder_app.character"
     for d in data["fighters"]:
         id = d["id"][-2:]
-        print(id)
-        name = d["displayName"]["en_US"]
-        print(name)
+        #print(id)
+        name = str(d["displayName"]["en_US"])
+        #print(name)
         json_data.append({
                         'model': model,
                         'pk': id,

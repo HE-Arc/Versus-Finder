@@ -68,7 +68,7 @@
   "model": "versusfinder_app.character",
   "pk": "11",
   "fields": {
-    "name": "CAPTAIN <br>FALCON"
+    "name": "CAPTAIN FALCON"
   }
 }, {
   "model": "versusfinder_app.character",
@@ -176,7 +176,7 @@
   "model": "versusfinder_app.character",
   "pk": "28",
   "fields": {
-    "name": "MR. GAME <br>& WATCH"
+    "name": "MR. GAME & WATCH"
   }
 }, {
   "model": "versusfinder_app.character",
@@ -224,7 +224,7 @@
   "model": "versusfinder_app.character",
   "pk": "36",
   "fields": {
-    "name": "POK\u00c9MON <br>TRAINER"
+    "name": "POKEMON TRAINER"
   }
 }, {
   "model": "versusfinder_app.character",
