@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'versusfinder_app',
+    'accounts.apps.AccountsConfig',
     'bootstrap4',
 ]
 
