@@ -1,0 +1,22 @@
+<!-- templates/registration/login.html -->
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}New profil{% endblock %}
+
+{% block content %}
+<h2>New profil for {% game %}</h2>
+<form method="post">
+  {% csrf_token %}
+  <label for="input_character">
+    <select id="input_character">
+        {% for character in characters %}
+          <option value="{{character.id}}">
+            {{ character.name }}
+          </option>
+        {% endfor %}
+    </select> 
+    Character choice
+  </label>
+  <button type="submit">Login</button>
+</form>
+{% endblock %}

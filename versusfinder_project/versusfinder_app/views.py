@@ -11,3 +11,12 @@ def home(request):
     context = {}
     context['user_id'] = request.user.id
     return render(request, 'versusfinder_app/home.html', context)
+
+def newprofil(request):
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['characters'] = {}
+        return render(request, 'versusfinder_app/newprofil.html', context)
+    else:
+        pass #render error
