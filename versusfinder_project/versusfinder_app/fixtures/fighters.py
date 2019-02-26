@@ -1,7 +1,7 @@
 import urllib.request, json
 
 with urllib.request.urlopen("https://www.smashbros.com/assets_v2/data/fighter.json") as url:
-    data = json.loads(url.read().decode())
+    data = json.load(url)
      #print(data)
     json_data = []
     model = "versusfinder_app.character"
