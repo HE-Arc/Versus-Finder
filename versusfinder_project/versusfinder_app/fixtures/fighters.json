@@ -1,439 +1,586 @@
-[{
-  "model": "versusfinder_app.character",
-  "pk": "01",
-  "fields": {
-    "name": "MARIO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "02",
-  "fields": {
-    "name": "DONKEY KONG"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "03",
-  "fields": {
-    "name": "LINK"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "04",
-  "fields": {
-    "name": "SAMUS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "65",
-  "fields": {
-    "name": "DARK SAMUS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "05",
-  "fields": {
-    "name": "YOSHI"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "06",
-  "fields": {
-    "name": "KIRBY"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "07",
-  "fields": {
-    "name": "FOX"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "08",
-  "fields": {
-    "name": "PIKACHU"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "09",
-  "fields": {
-    "name": "LUIGI"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "10",
-  "fields": {
-    "name": "NESS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "11",
-  "fields": {
-    "name": "CAPTAIN FALCON"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "12",
-  "fields": {
-    "name": "JIGGLYPUFF"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "13",
-  "fields": {
-    "name": "PEACH"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "14",
-  "fields": {
-    "name": "DAISY"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "15",
-  "fields": {
-    "name": "BOWSER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "16",
-  "fields": {
-    "name": "ICE CLIMBERS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "17",
-  "fields": {
-    "name": "SHEIK"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "18",
-  "fields": {
-    "name": "ZELDA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "19",
-  "fields": {
-    "name": "DR. MARIO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "20",
-  "fields": {
-    "name": "PICHU"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "21",
-  "fields": {
-    "name": "FALCO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "22",
-  "fields": {
-    "name": "MARTH"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "23",
-  "fields": {
-    "name": "LUCINA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "24",
-  "fields": {
-    "name": "YOUNG LINK"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "25",
-  "fields": {
-    "name": "GANONDORF"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "26",
-  "fields": {
-    "name": "MEWTWO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "27",
-  "fields": {
-    "name": "ROY"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "66",
-  "fields": {
-    "name": "CHROM"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "28",
-  "fields": {
-    "name": "MR. GAME & WATCH"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "29",
-  "fields": {
-    "name": "META KNIGHT"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "30",
-  "fields": {
-    "name": "PIT"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "31",
-  "fields": {
-    "name": "DARK PIT"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "32",
-  "fields": {
-    "name": "ZERO SUIT SAMUS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "33",
-  "fields": {
-    "name": "WARIO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "34",
-  "fields": {
-    "name": "SNAKE"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "35",
-  "fields": {
-    "name": "IKE"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "36",
-  "fields": {
-    "name": "POKEMON TRAINER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "37",
-  "fields": {
-    "name": "DIDDY KONG"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "38",
-  "fields": {
-    "name": "LUCAS"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "39",
-  "fields": {
-    "name": "SONIC"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "40",
-  "fields": {
-    "name": "KING DEDEDE"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "41",
-  "fields": {
-    "name": "OLIMAR"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "42",
-  "fields": {
-    "name": "LUCARIO"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "43",
-  "fields": {
-    "name": "R.O.B."
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "44",
-  "fields": {
-    "name": "TOON LINK"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "45",
-  "fields": {
-    "name": "WOLF"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "46",
-  "fields": {
-    "name": "VILLAGER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "47",
-  "fields": {
-    "name": "MEGA MAN"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "48",
-  "fields": {
-    "name": "Wii Fit TRAINER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "49",
-  "fields": {
-    "name": "ROSALINA & LUMA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "50",
-  "fields": {
-    "name": "LITTLE MAC"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "51",
-  "fields": {
-    "name": "GRENINJA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "52",
-  "fields": {
-    "name": "Mii FIGHTER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "53",
-  "fields": {
-    "name": "PALUTENA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "54",
-  "fields": {
-    "name": "PAC-MAN"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "55",
-  "fields": {
-    "name": "ROBIN"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "56",
-  "fields": {
-    "name": "SHULK"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "57",
-  "fields": {
-    "name": "BOWSER JR."
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "58",
-  "fields": {
-    "name": "DUCK HUNT"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "59",
-  "fields": {
-    "name": "RYU"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "71",
-  "fields": {
-    "name": "KEN"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "60",
-  "fields": {
-    "name": "CLOUD"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "61",
-  "fields": {
-    "name": "CORRIN"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "62",
-  "fields": {
-    "name": "BAYONETTA"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "63",
-  "fields": {
-    "name": "INKLING"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "64",
-  "fields": {
-    "name": "RIDLEY"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "67",
-  "fields": {
-    "name": "SIMON"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "68",
-  "fields": {
-    "name": "RICHTER"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "69",
-  "fields": {
-    "name": "KING K. ROOL"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "70",
-  "fields": {
-    "name": "ISABELLE"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "72",
-  "fields": {
-    "name": "INCINEROAR"
-  }
-}, {
-  "model": "versusfinder_app.character",
-  "pk": "73",
-  "fields": {
-    "name": "PIRANHA PLANT"
-  }
-}]
+[
+  {
+    "model": "versusfinder_app.character",
+    "pk": "01",
+    "fields": {
+      "game_id": 1,
+      "name": "MARIO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "02",
+    "fields": {
+      "game_id": 1,
+      "name": "DONKEY KONG"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "03",
+    "fields": {
+      "game_id": 1,
+      "name": "LINK"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "04",
+    "fields": {
+      "game_id": 1,
+      "name": "SAMUS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "65",
+    "fields": {
+      "game_id": 1,
+      "name": "DARK SAMUS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "05",
+    "fields": {
+      "game_id": 1,
+      "name": "YOSHI"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "06",
+    "fields": {
+      "game_id": 1,
+      "name": "KIRBY"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "07",
+    "fields": {
+      "game_id": 1,
+      "name": "FOX"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "08",
+    "fields": {
+      "game_id": 1,
+      "name": "PIKACHU"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "09",
+    "fields": {
+      "game_id": 1,
+      "name": "LUIGI"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "10",
+    "fields": {
+      "game_id": 1,
+      "name": "NESS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "11",
+    "fields": {
+      "game_id": 1,
+      "name": "CAPTAIN FALCON"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "12",
+    "fields": {
+      "game_id": 1,
+      "name": "JIGGLYPUFF"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "13",
+    "fields": {
+      "game_id": 1,
+      "name": "PEACH"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "14",
+    "fields": {
+      "game_id": 1,
+      "name": "DAISY"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "15",
+    "fields": {
+      "game_id": 1,
+      "name": "BOWSER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "16",
+    "fields": {
+      "game_id": 1,
+      "name": "ICE CLIMBERS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "17",
+    "fields": {
+      "game_id": 1,
+      "name": "SHEIK"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "18",
+    "fields": {
+      "game_id": 1,
+      "name": "ZELDA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "19",
+    "fields": {
+      "game_id": 1,
+      "name": "DR. MARIO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "20",
+    "fields": {
+      "game_id": 1,
+      "name": "PICHU"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "21",
+    "fields": {
+      "game_id": 1,
+      "name": "FALCO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "22",
+    "fields": {
+      "game_id": 1,
+      "name": "MARTH"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "23",
+    "fields": {
+      "game_id": 1,
+      "name": "LUCINA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "24",
+    "fields": {
+      "game_id": 1,
+      "name": "YOUNG LINK"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "25",
+    "fields": {
+      "game_id": 1,
+      "name": "GANONDORF"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "26",
+    "fields": {
+      "game_id": 1,
+      "name": "MEWTWO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "27",
+    "fields": {
+      "game_id": 1,
+      "name": "ROY"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "66",
+    "fields": {
+      "game_id": 1,
+      "name": "CHROM"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "28",
+    "fields": {
+      "game_id": 1,
+      "name": "MR. GAME & WATCH"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "29",
+    "fields": {
+      "game_id": 1,
+      "name": "META KNIGHT"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "30",
+    "fields": {
+      "game_id": 1,
+      "name": "PIT"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "31",
+    "fields": {
+      "game_id": 1,
+      "name": "DARK PIT"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "32",
+    "fields": {
+      "game_id": 1,
+      "name": "ZERO SUIT SAMUS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "33",
+    "fields": {
+      "game_id": 1,
+      "name": "WARIO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "34",
+    "fields": {
+      "game_id": 1,
+      "name": "SNAKE"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "35",
+    "fields": {
+      "game_id": 1,
+      "name": "IKE"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "36",
+    "fields": {
+      "game_id": 1,
+      "name": "POKEMON TRAINER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "37",
+    "fields": {
+      "game_id": 1,
+      "name": "DIDDY KONG"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "38",
+    "fields": {
+      "game_id": 1,
+      "name": "LUCAS"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "39",
+    "fields": {
+      "game_id": 1,
+      "name": "SONIC"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "40",
+    "fields": {
+      "game_id": 1,
+      "name": "KING DEDEDE"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "41",
+    "fields": {
+      "game_id": 1,
+      "name": "OLIMAR"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "42",
+    "fields": {
+      "game_id": 1,
+      "name": "LUCARIO"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "43",
+    "fields": {
+      "game_id": 1,
+      "name": "R.O.B."
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "44",
+    "fields": {
+      "game_id": 1,
+      "name": "TOON LINK"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "45",
+    "fields": {
+      "game_id": 1,
+      "name": "WOLF"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "46",
+    "fields": {
+      "game_id": 1,
+      "name": "VILLAGER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "47",
+    "fields": {
+      "game_id": 1,
+      "name": "MEGA MAN"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "48",
+    "fields": {
+      "game_id": 1,
+      "name": "Wii Fit TRAINER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "49",
+    "fields": {
+      "game_id": 1,
+      "name": "ROSALINA & LUMA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "50",
+    "fields": {
+      "game_id": 1,
+      "name": "LITTLE MAC"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "51",
+    "fields": {
+      "game_id": 1,
+      "name": "GRENINJA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "52",
+    "fields": {
+      "game_id": 1,
+      "name": "Mii FIGHTER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "53",
+    "fields": {
+      "game_id": 1,
+      "name": "PALUTENA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "54",
+    "fields": {
+      "game_id": 1,
+      "name": "PAC-MAN"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "55",
+    "fields": {
+      "game_id": 1,
+      "name": "ROBIN"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "56",
+    "fields": {
+      "game_id": 1,
+      "name": "SHULK"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "57",
+    "fields": {
+      "game_id": 1,
+      "name": "BOWSER JR."
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "58",
+    "fields": {
+      "game_id": 1,
+      "name": "DUCK HUNT"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "59",
+    "fields": {
+      "game_id": 1,
+      "name": "RYU"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "71",
+    "fields": {
+      "game_id": 1,
+      "name": "KEN"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "60",
+    "fields": {
+      "game_id": 1,
+      "name": "CLOUD"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "61",
+    "fields": {
+      "game_id": 1,
+      "name": "CORRIN"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "62",
+    "fields": {
+      "game_id": 1,
+      "name": "BAYONETTA"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "63",
+    "fields": {
+      "game_id": 1,
+      "name": "INKLING"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "64",
+    "fields": {
+      "game_id": 1,
+      "name": "RIDLEY"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "67",
+    "fields": {
+      "game_id": 1,
+      "name": "SIMON"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "68",
+    "fields": {
+      "game_id": 1,
+      "name": "RICHTER"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "69",
+    "fields": {
+      "game_id": 1,
+      "name": "KING K. ROOL"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "70",
+    "fields": {
+      "game_id": 1,
+      "name": "ISABELLE"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "72",
+    "fields": {
+      "game_id": 1,
+      "name": "INCINEROAR"
+    }
+  },
+  {
+    "model": "versusfinder_app.character",
+    "pk": "73",
+    "fields": {
+      "game_id": 1,
+      "name": "PIRANHA PLANT"
+    }
+  }
+]

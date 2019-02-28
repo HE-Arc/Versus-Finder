@@ -33,3 +33,10 @@ def search(request):
         return render(request, 'versusfinder_app/search.html', context)
     else:
         pass #render error
+
+class GamePageView(generic.TemplateView):
+    template_name = "versusfinder_app/gamepage.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
