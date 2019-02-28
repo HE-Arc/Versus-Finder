@@ -4,11 +4,26 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+
+<script>
+    $( function() {
+        $( "#slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: 10,
+        values: [ 3, 7 ],
+        slide: function( event, ui ) {
+            $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
+        });
+        $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
+    } );
+</script>
+
+
 {% if user.is_authenticated %}
 
-
-  Hi {{ user.username }}, son ID est {{user_id}} !
-  <p><a href="{% url 'logout' %}">logout</a></p>
+    <h1>Recherche d'un adversaire</h1>
 
     <div>
         <label for="input_character">
@@ -18,7 +33,7 @@
                     {{ character.name }}
                 </option>
                 {% endfor %}
-            </select> 
+            </select>
             Character choice
         </label>
     </div>
@@ -28,24 +43,35 @@
             <label for="amount">Skill range:</label>
             <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
         </p>
-        <div id="slider-range"></div>
+        <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
     </div>
-   
+
     <div>
         <label>
-            <input type="number"/>
-            <input type="number"/>
-            Date
+            <input type="time" id="input_hour" name="input_hour" min="0:00" max="24:00" required>
+            Heure
         </label>
     </div>
 
     <div>
         <label>
-            <input type="number"/>
-            <input type="number"/>
-            <input type="number"/>
-            Heure
+            <input type="date" id="input_date" name="input_date" min="2019-01-01">
+            Date
         </label>
+    </div>
+
+    <button type="submit">Search</button>
+
+    <div>
+        <!-- CALENDAR -->
+    </div>
+
+    <div style="float:right">
+        <!-- FLOAT RIGHT -->
+        <p>{{ info.playeronline|default:"0" }} players online</p>
+        <p>{{ info.playersearching|default:"0" }} players searching</p>
+        <p>{{ info.matchsplanned|default:"0" }} matchs planned</p>
+        <p>{{ info.opponentfound|default:"0" }} opponents found</p>
     </div>
 
 {% else %}
@@ -58,18 +84,3 @@
 {% endif %}
 {% endblock %}
 
-<script>
-    $( function() {
-        $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 75, 300 ],
-        slide: function( event, ui ) {
-            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-        }
-        });
-        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-    } );
-</script>
