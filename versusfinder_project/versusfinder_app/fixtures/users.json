@@ -1,0 +1,56 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$120000$q2DV3nDcmoCw$TMMeTenwh/xwjSOCDjaoWulD+hwQsEcbL+zo8EGyL1Y=",
+        "last_login": "2019-02-26T16:32:07.056Z",
+        "is_superuser": true,
+        "username": "toto",
+        "first_name": "",
+        "last_name": "",
+        "email": "toto@toto.ch",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2019-02-22T07:30:14.804Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$120000$iWGPQozxtKEb$9g0I8jjr1/AzAIGjbIFfzI7MwSozO9sCYmRlRCObJ+4=",
+        "last_login": "2019-02-25T13:11:23.216Z",
+        "is_superuser": false,
+        "username": "test",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-25T13:11:16.287Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$120000$TZJEE0Qzkgff$sNnhjCrLwglB6V5MXS1kUM+bvNqyitYAUG53ISsEVcA=",
+        "last_login": "2019-02-26T16:47:46.004Z",
+        "is_superuser": false,
+        "username": "fromage",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2019-02-26T16:47:20.802Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
