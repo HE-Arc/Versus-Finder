@@ -19,7 +19,7 @@ def newprofil(request):
         context = {}
         context['game'] = None
         context['user_id'] = request.user.id
-        context['characters'] = Character.objects.all()
+        context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'registration/newprofil.html', context)
     else:
         pass #render error
@@ -29,7 +29,7 @@ def searchmatch(request):
         context = {}
         context['game'] = None
         context['user_id'] = request.user.id
-        context['characters'] = Character.objects.all()
+        context['characters'] = Character.objects.all().order_by('name')
         context['banlist'] = {}
         return render(request, 'versusfinder_app/search.html', context)
     else:
