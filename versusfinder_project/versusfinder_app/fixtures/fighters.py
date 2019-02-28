@@ -14,6 +14,7 @@ with urllib.request.urlopen("https://www.smashbros.com/assets_v2/data/fighter.js
                         'model': model,
                         'pk': id,
                         'fields': {
+                            'game_id' : 1,
                             'name' : name
                             }
                      })

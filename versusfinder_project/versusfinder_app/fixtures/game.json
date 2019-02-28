@@ -1,0 +1,9 @@
+[
+  {
+    "model": "versusfinder_app.game",
+    "pk": "1",
+    "fields": {
+      "name": "Super Smash Bros Ultimate"
+    }
+  }
+]

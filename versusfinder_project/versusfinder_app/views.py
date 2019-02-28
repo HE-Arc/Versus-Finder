@@ -12,3 +12,10 @@ def home(request):
     context = {}
     context['user_id'] = request.user.id
     return render(request, 'versusfinder_app/home.html', context)
+
+class GamePageView(generic.TemplateView):
+    template_name = "versusfinder_app/gamepage.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

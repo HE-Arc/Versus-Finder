@@ -11,8 +11,8 @@ class Game(models.Model):
 
 
 class Character(models.Model):
-    id = models.AutoField(primary_key=True)
-    game_id = game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
+    #id = models.AutoField(primary_key=True)
+    game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
 
 
