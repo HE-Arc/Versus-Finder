@@ -16,8 +16,20 @@ def home(request):
 def newprofil(request):
     if request.user.is_authenticated:
         context = {}
+        context['game'] = None
         context['user_id'] = request.user.id
         context['characters'] = {}
-        return render(request, 'versusfinder_app/newprofil.html', context)
+        return render(request, 'registration/newprofil.html', context)
+    else:
+        pass #render error
+
+def search(request):
+    if request.user.is_authenticated:
+        context = {}
+        context['game'] = None
+        context['user_id'] = request.user.id
+        context['characters'] = {}
+        context['banlist'] = {}
+        return render(request, 'versusfinder_app/search.html', context)
     else:
         pass #render error

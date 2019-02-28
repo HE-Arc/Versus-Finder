@@ -1,0 +1,75 @@
+<!-- templates/home.html -->
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+
+  Hi {{ user.username }}, son ID est {{user_id}} !
+  <p><a href="{% url 'logout' %}">logout</a></p>
+
+    <div>
+        <label for="input_character">
+            <select id="input_character">
+                {% for character in characters %}
+                <option value="{{character.id}}">
+                    {{ character.name }}
+                </option>
+                {% endfor %}
+            </select> 
+            Character choice
+        </label>
+    </div>
+
+    <div>
+        <p>
+            <label for="amount">Skill range:</label>
+            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+        </p>
+        <div id="slider-range"></div>
+    </div>
+   
+    <div>
+        <label>
+            <input type="number"/>
+            <input type="number"/>
+            Date
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input type="number"/>
+            <input type="number"/>
+            <input type="number"/>
+            Heure
+        </label>
+    </div>
+
+{% else %}
+
+
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+
+
+{% endif %}
+{% endblock %}
+
+<script>
+    $( function() {
+        $( "#slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [ 75, 300 ],
+        slide: function( event, ui ) {
+            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+        });
+        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    } );
+</script>

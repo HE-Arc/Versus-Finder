@@ -4,19 +4,54 @@
 {% block title %}New profil{% endblock %}
 
 {% block content %}
-<h2>New profil for {% game %}</h2>
+<h2>New profil for {{ game.name }}</h2>
+
+<label for="input_pseudo">
+  <input type="text" name="input_pseudo" id="input_pseudo"/>
+  Pseudo
+</label>
+
 <form method="post">
   {% csrf_token %}
-  <label for="input_character">
-    <select id="input_character">
-        {% for character in characters %}
-          <option value="{{character.id}}">
-            {{ character.name }}
-          </option>
-        {% endfor %}
-    </select> 
-    Character choice
-  </label>
-  <button type="submit">Login</button>
+
+  <div>
+    <label for="input_character">
+      <select id="input_character">
+          {% for character in characters %}
+            <option value="{{character.id}}">
+              {{ character.name }}
+            </option>
+          {% endfor %}
+      </select> 
+      Character choice
+    </label>
+  </div>
+
+  <div>
+      <div>
+          <label for="input_banlist">
+          <select id="input_banlist">
+              {% for character in characters %}
+                  <option value="{{character.id}}">
+                  {{ character.name }}
+                  </option>
+              {% endfor %}
+          </select> 
+          Character banned
+          </label>
+      </div>
+      <input type="button" value="Ban" name="input_newban" id="input_newban"/>
+  </div>
+
+  <!-- Initialiser la ban list à null -->
+
+  <div>
+    <label for="input_skill">
+      <input id="input_skill" name="input_skill" type="range" min="1" max="10" value="5" class="slider" id="myRange">
+      Competence level
+    </label>
+  </div>
+  
+  <button type="submit">New profil</button>
 </form>
 {% endblock %}
