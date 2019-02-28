@@ -1,4 +1,7 @@
 @ECHO OFF
+
+# Use this inside your venv
+
 cd versusfinder_project
 python.exe .\manage.py makemigrations versusfinder_app
 python.exe .\manage.py migrate
