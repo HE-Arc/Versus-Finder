@@ -1,0 +1,14 @@
+[
+  {
+    "model": "versusfinder_app.match",
+    "fields": {
+      "user_one_id" : 1,
+      "user_two_id" : 2,
+      "timetable_id" : 1,
+      "game_id" : 1,
+      "state" : 0,
+      "user_one_score" : 0,
+      "user_two_score" : 0
+    }
+  }
+]
