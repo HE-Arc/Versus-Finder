@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
-from .models import Character
+from .models import Character, Match, User
 
 
 # from django.contrib.auth.models import User
@@ -40,4 +40,5 @@ class GamePageView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['matchs'] = Match.objects.all()
         return context

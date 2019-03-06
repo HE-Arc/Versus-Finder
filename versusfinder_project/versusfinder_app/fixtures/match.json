@@ -1,9 +1,23 @@
 [
   {
     "model": "versusfinder_app.match",
+    "pk": 1,
     "fields": {
       "user_one_id" : 1,
       "user_two_id" : 2,
+      "timetable_id" : 1,
+      "game_id" : 1,
+      "state" : 0,
+      "user_one_score" : 0,
+      "user_two_score" : 0
+    }
+  },
+  {
+    "model": "versusfinder_app.match",
+    "pk": 2,
+    "fields": {
+      "user_one_id" : 2,
+      "user_two_id" : 3,
       "timetable_id" : 1,
       "game_id" : 1,
       "state" : 0,

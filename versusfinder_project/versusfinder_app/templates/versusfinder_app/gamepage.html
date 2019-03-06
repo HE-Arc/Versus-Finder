@@ -5,13 +5,17 @@
 {% block content %}
     Hi ???, vous trouverez ??? !
     <div>
-        <!-- <a href="">Rechercher un adversaire !</a> -->
+        <a href="{% url 'searchmatch' %}">Rechercher un adversaire !</a>
     </div>
     <div>
         <p>Les matchs à venir</p>
     </div>
+
     <div>
-        <!-- CALENDAR -->
+        {% for match in matchs %}
+            <p>Joueur 1 : {{ match.get_user_one_profile.username }}</p>
+            <p>Joueur 2 : {{ match.get_user_two_profile.username }}</p>
+        {% endfor %}
     </div>
 
 {% endblock %}

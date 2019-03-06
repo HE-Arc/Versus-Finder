@@ -3,6 +3,7 @@ from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from datetime import datetime
 
+
 # Create your models here.
 # Core class
 class Game(models.Model):
@@ -54,6 +55,12 @@ class Match(models.Model):
     user_two_score = models.IntegerField()
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     updated_at = models.DateTimeField(default=datetime.now, blank=True)
+
+    def get_user_one_profile(self):
+        return UserGameProfile.objects.get(user=self.user_one_id)
+
+    def get_user_two_profile(self):
+        return UserGameProfile.objects.get(user=self.user_two_id)
 
 
 # Pivots
