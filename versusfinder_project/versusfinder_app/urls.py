@@ -9,8 +9,8 @@ urlpatterns = [
     path('accounts/newprofil', views.newprofil, name='newprofil'),
     path('dashboard/searchmatch', views.searchmatch, name='searchmatch'),
     #path('profile', views.ProfileView.as_view(), name='profile'),
-    #path('dashboard', views.DashboardView.as_view(), name='dashboard'),
+    path('dashboard', views.dashboard, name='dashboard'),
     #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),
     #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),
-    path('gamepage', views.GamePageView.as_view(), name='gamepage'),
+    path('gamepage', views.gamepage, name='gamepage'),
 ]

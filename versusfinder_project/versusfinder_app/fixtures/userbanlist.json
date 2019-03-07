@@ -1,0 +1,18 @@
+[
+  {
+    "model": "versusfinder_app.usercharacterbanlist",
+    "pk": 1,
+    "fields" : {
+      "user_profile" : 1,
+      "character" : 1
+    }
+  },
+  {
+    "model": "versusfinder_app.usercharacterbanlist",
+    "pk": 2,
+    "fields" : {
+      "user_profile" : 1,
+      "character" : 2
+    }
+  }
+]
