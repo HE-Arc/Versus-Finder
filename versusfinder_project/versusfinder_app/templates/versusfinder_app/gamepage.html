@@ -15,7 +15,7 @@
         {% for match in matchs %}
             <p>Joueur 1 : {{ match.user_profile_one.username }}</p>
             {% for char in match.user_profile_one.banlist.all %}
-                <p>Character ban : {{ char.name }}</p>
+                <p>Character ban : {{ char }}</p>
                 {% empty %}
                 Aucun ban!
             {% endfor %}
