@@ -1,16 +1,18 @@
 [
   {
     "model": "versusfinder_app.usertimetable",
+    "pk": 1,
     "fields": {
-      "user_id" : 1,
-      "timetable_id" : 1
+      "user" : 1,
+      "timetable" : 1
     }
   },
   {
     "model": "versusfinder_app.usertimetable",
+    "pk": 2,
     "fields": {
-      "user_id" : 2,
-      "timetable_id" : 1
+      "user" : 2,
+      "timetable" : 1
     }
   }
 ]
