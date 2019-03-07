@@ -3,6 +3,12 @@ from django.db.models.signals import post_save, post_delete
 from django.contrib.auth.models import User
 from datetime import datetime
 
+from django.contrib import auth
+
+def get_user_profile(self):
+    return UserGameProfile.objects.get(user=self)
+
+auth.models.User.add_to_class('get_user_profile', get_user_profile)
 
 # Create your models here.
 # Core class
@@ -24,17 +30,16 @@ class Timetable(models.Model):
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     updated_at = models.DateTimeField(default=datetime.now, blank=True)
 
-
 class UserGameProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    mainchar = models.ForeignKey(Character, on_delete=models.CASCADE)
+    mainchar = models.ForeignKey(Character, related_name="mainchar", on_delete=models.CASCADE)
+    banned_characters = models.ManyToManyField(Character, related_name="banlist")
     username = models.CharField(max_length=200)
     battletag = models.CharField(max_length=200)
     skill_level = models.IntegerField()
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     updated_at = models.DateTimeField(default=datetime.now, blank=True)
-
 
 class Stat(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -62,21 +67,12 @@ class Match(models.Model):
     def get_user_two_profile(self):
         return UserGameProfile.objects.get(user=self.user_two_id)
 
-
 # Pivots
 class UserMatch(models.Model):
     match_id = models.ForeignKey(Match, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now, blank=True)
     updated_at = models.DateTimeField(default=datetime.now, blank=True)
-
-
-class UserCharacterBanList(models.Model):
-    userprofil_id = models.ForeignKey(UserGameProfile, on_delete=models.CASCADE)
-    character_id = models.ForeignKey(Character, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True)
-    updated_at = models.DateTimeField(default=datetime.now, blank=True)
-
 
 class UserTimeTable(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

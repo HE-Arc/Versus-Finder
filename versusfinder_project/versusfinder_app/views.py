@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
-from .models import Character, Match, User
-
+from .models import Character, Match, User, UserGameProfile
+from pprint import pprint
 
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
@@ -30,7 +30,8 @@ def searchmatch(request):
         context['game'] = None
         context['user_id'] = request.user.id
         context['characters'] = Character.objects.all().order_by('name')
-        context['banlist'] = {}
+        context['user_game_profile'] = request.user.get_user_profile()
+        pprint(context['user_game_profile'].banned_characters)
         return render(request, 'versusfinder_app/search.html', context)
     else:
         pass #render error

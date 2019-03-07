@@ -6,6 +6,7 @@
       "user": 1,
       "game": 1,
       "mainchar": 1,
+      "banned_characters": [1, 2, 3 ],
       "username": "Toto_profile",
       "battletag": "0982-2103-1293-0984",
       "skill_level": 5

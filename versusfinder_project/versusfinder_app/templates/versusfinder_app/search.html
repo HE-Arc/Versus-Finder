@@ -39,6 +39,37 @@
     </div>
 
     <div>
+        <div>
+            <label for="input_banlist">
+            <select id="input_banlist">
+                {% for character in characters %}
+                    <option value="{{character.id}}">
+                    {{ character.name }}
+                    </option>
+                {% endfor %}
+            </select> 
+            Character to ban
+            </label>
+        </div>
+        <input type="button" value="Ban" name="input_newban" id="input_newban"/>
+
+        <table>
+            <tr>
+              <th>Banned</th>
+              <th>Name</th>
+              <th>Image</th>
+            </tr>
+            {% for character in banned_characters %}
+            <tr>
+              <input type="checkbox" checked="true"/>
+              <td>character.name</td>
+              <td><img src="" alt="empty"/></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div>
         <p>
             <label for="amount">Skill range:</label>
             <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
