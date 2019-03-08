@@ -30,15 +30,37 @@
   <div>
       <div>
           <label for="input_banlist">
-          <select id="input_banlist">
-              {% for character in characters %}
-                  <option value="{{character.id}}">
-                  {{ character.name }}
-                  </option>
-              {% endfor %}
-          </select> 
+            <ul>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Some Dropdown<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    {% for character in characters %}
+                      <li>
+                        <p>
+                            {% if character.name in banlist %}
+                              <input type="checkbox" id="{{ character.name }}_banned" value="{{ character.name }}_banned" checked/>
+                            {% else %}
+                              <input type="checkbox" id="{{ character.name }}_banned" value="{{ character.name }}_banned"/> 
+                            {% endif %}
+
+                            {{ character.name }} 
+                            <i class="icon-arrow-up"></i>
+                        </p>
+                      </li>
+                          
+                    {% endfor %}
+                  </ul>
+              </li>
+          </ul>
           Character banned
           </label>
+
+          {% for character_name in banlist %}
+            <p>
+              {{ character_name }} 
+            </p>
+          {% endfor %}
+
       </div>
       <input type="button" value="Ban" name="input_newban" id="input_newban"/>
   </div>
