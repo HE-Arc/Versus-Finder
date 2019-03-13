@@ -1,0 +1,45 @@
+<!-- templates/home.html -->
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}Ban list{% endblock %}
+
+{% block content %}
+
+    
+
+{% if user.is_authenticated %}
+
+    <h1>Updating banlist</h1>
+
+    <div class="card-columns">
+    {% for character in characters %}
+    
+        <div class="card bg-dark text-white">
+            <img class="card-img" src="https://via.placeholder.com/468x60?text={{ character.name }}" alt="Card image">
+            <div class="card-img-overlay">
+            <!-- <h5 class="card-title">{{ character.name }} </h5> -->
+            <p class="card-text">
+                <label class="container">
+                    <input type="checkbox" id="checkbox-2-1" class="regular-checkbox big-checkbox" {% if character.id in banlist_keys %} checked {% endif %} />
+                    <label for="checkbox-2-1"></label>
+                </label>
+                <!--  -->
+            </p>
+            </div>
+        </div>
+        
+    {% endfor %}
+    </div>
+
+
+{% else %}
+
+
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">login</a>
+
+
+{% endif %}
+{% endblock %}
+
+<!-- JS nécessaire pour l'envoi du formulaire -->

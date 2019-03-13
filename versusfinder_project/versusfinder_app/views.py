@@ -38,6 +38,21 @@ def searchmatch(request):
     else:
         pass #render error
 
+def alterbanlist(request):
+    if request.user.is_authenticated:
+        context = {}
+        context['game'] = None
+        context['user_id'] = request.user.id
+        context['user_profile'] = UserGameProfile.objects.get(user=request.user.id)
+        context['banlist'] = context['user_profile'].banlist.all()
+        context['banlist_keys'] =  []
+        for ban in context['banlist']:
+            context['banlist_keys'].append(ban.id)
+        context['characters'] = Character.objects.all().order_by('name')
+        return render(request, 'versusfinder_app/alterbanlist.html', context)
+    else:
+        pass #render error
+
 #class GamePageView(generic.TemplateView):
 #    template_name = "versusfinder_app/gamepage.html"
 #
