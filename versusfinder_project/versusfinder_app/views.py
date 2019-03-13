@@ -19,6 +19,8 @@ def newprofil(request):
         context = {}
         context['game'] = None
         context['user_id'] = request.user.id
+        context['user_profile'] = UserGameProfile.objects.get(user=request.user.id)
+        context['banlist'] = context['user_profile'].banlist.all()
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'registration/newprofil.html', context)
     else:
@@ -29,10 +31,25 @@ def searchmatch(request):
         context = {}
         context['game'] = None
         context['user_id'] = request.user.id
+        context['user_profile'] = UserGameProfile.objects.get(user=request.user.id)
+        context['banlist'] = context['user_profile'].banlist.all()
         context['characters'] = Character.objects.all().order_by('name')
-        context['test'] = request.user.get_user_profile()
-        context['banlist'] = {}
         return render(request, 'versusfinder_app/search.html', context)
+    else:
+        pass #render error
+
+def alterbanlist(request):
+    if request.user.is_authenticated:
+        context = {}
+        context['game'] = None
+        context['user_id'] = request.user.id
+        context['user_profile'] = UserGameProfile.objects.get(user=request.user.id)
+        context['banlist'] = context['user_profile'].banlist.all()
+        context['banlist_keys'] =  []
+        for ban in context['banlist']:
+            context['banlist_keys'].append(ban.id)
+        context['characters'] = Character.objects.all().order_by('name')
+        return render(request, 'versusfinder_app/alterbanlist.html', context)
     else:
         pass #render error
 
