@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <title>Super Smash Bros. Ultimate for Nintendo Switch – Official Site | Nintendo Switch | Nintendo</title>
+  <meta name="description" content="Learn more about Super Smash Bros. Ultimate for Nintendo Switch™ on the official site from Nintendo.">
+  <meta name="keywords" content="Nintendo, Nintendo Switch, Super Smash Bros.">
+  <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-NVPD62');
+  </script>
+  <meta property="og:title" content="Super Smash Bros. Ultimate for Nintendo Switch">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Learn more about Super Smash Bros. Ultimate for Nintendo Switch™ on the official site from Nintendo.">
+  <meta property="og:url" content="http://www.smashbros.com/index.html">
+  <meta property="og:image" content="http://www.smashbros.com/assets_v2/img/sns/en.png?180309">
+  <meta property="og:site_name" content="">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@nintendo">
+  <meta name="twitter:creator" content="@nintendo">
+  <meta name="twitter:title" content="Super Smash Bros. Ultimate for Nintendo Switch">
+  <meta name="twitter:description" content="Learn more about Super Smash Bros. Ultimate for Nintendo Switch™ on the official site from Nintendo.">
+  <meta name="twitter:image:src" content="http://www.smashbros.com/assets_v2/img/sns/en.png?180309">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700|Roboto:700" rel="stylesheet">
+  <!-- asset common -->
+  <link rel="stylesheet" href="/assets_v2/css/common.css" media="all">
+  <script src="/assets_v2/js/lib.js"></script>
+  <script src="/assets_v2/js/common.js"></script>
+  <script>
+    svg4everybody();
+  </script>
+  <link rel="stylesheet" href="/assets_v2/css/lang.css" media="all">
+
+                    <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"413761",ustr:"",originlat:"0",clientrtt:"25",ghostip:"92.123.181.5",ipv6:false,pct:"10",clientip:"157.26.107.229",requestid:"3e1212",region:"24231",protocol:"",blver:14,akM:"g1",akN:"ae",akTT:"O",akTX:"1",akTI:"3e1212",ai:"268665",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
+                    </head>
+
+<body>
+  <div class="page-container">
+    <div class="bg"></div>
+    <header class="globalheader">
+      <p class="nintendo-logo"><a href="https://www.nintendo.com/countryselector/"><span><i><svg role="img" title="Nintendo"><use xlink:href="/assets_v2/img/common/sprite.svg#logo-nintendo"></use></svg></i></span></a></p>
+      <p class="switch-logo"><a href="https://www.nintendo.co.jp/software/switch/index.html"><span><i><svg role="img" title="Nintendo Switch"><use xlink:href="/assets_v2/img/common/sprite.svg#logo-switch"></use></svg></i></span></a></p>
+    </header>
+    <main>
+      <h1><img src="./assets_v2/img/lang/url.svg"></h1>
+      <h2>Select Your Language</h2>
+    </main>
+    <section class="selector">
+      <div class="wrap">
+        <h3>Americas</h3>
+        <ul>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="en_US/index.html">English (US)</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="fr_CA/index.html">Français (Canada)</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="es_LA/index.html">Español (Latinoamérica)</a></li>
+        </ul>
+      </div>
+      <div class="wrap europe-block">
+        <h3>Europe</h3>
+        <ul>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="en_GB/index.html">English (Europe)</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="fr_FR/index.html">Français (Europe)</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="es_ES/index.html">Español (Europe)</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="de_DE/index.html">Deutsch</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="it_IT/index.html">Italiano</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="nl_NL/index.html">Nederlands</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="ru_RU/index.html">Русский</a></li>
+        </ul>
+        <ul class="sns-list">
+          <li class="fa"><i class="sns-bnr__arrow"><svg role="img" title="share"><use xlink:href="/assets_v2/img/common/sprite.svg#ico-facebook"></use></svg></i><a href="https://www.facebook.com/SmashBrosPT" target="_blank"><span class="lang-name">Português (Europa)</span><span class="lang-txt">Para ficares a par das novidades sobre o jogo, visita a página<br>facebook.com/smashbrosPT.</span></a></li>
+        </ul>
+      </div>
+      <div class="wrap">
+        <h3>Asia Pacific</h3>
+        <ul>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="ja_JP/index.html">日本語</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="ko_KR/index.html">한국어</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="TC/index.html">繁體中文</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="SC/index.html">简体中文</a></li>
+          <li><i class="sns-bnr__arrow"><svg role="img" title=""><use xlink:href="/assets_v2/img/common/sprite.svg#arrow_s"></use></svg></i><a href="en_AU/index.html">English (Australia/New Zealand)</a></li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <div class="cookie-notes" id="js-cookie-notes">
+    <ul>
+      <li class="cookie-notes__text"></li>
+      <li class="cookie-notes__btn-change"><a href="" class="js-privacypolicy" id="js-cookie-btn-change"></a></li>
+      <li class="cookie-notes__btn-ok"><a href="" id="js-cookie-btn-ok"></a></li>
+    </ul>
+  </div>
+  <div id="privacyModal" class="modal u-hide">
+    <div class="privacyModal__body">
+      <div class="privacyModal__bg js-closeModal"></div>
+      <div class="privacyModal__contents"></div>
+      <div class="privacyModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="productModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents">
+        <p class="productModal__logo"><i><svg role="img" title="Nintendo Switch"><use xlink:href="/assets_v2/img/common/sprite.svg#logo-switch"></use></svg></i></p>
+      </div>
+      <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="ratingModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents"></div>
+    </div>
+    <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+  </div>
+  <div id="twitterModal" class="modal u-hide">
+    <div class="twitterModal__body">
+      <div class="twitterModal__bg js-closeModal"></div>
+      <div class="productModal__contents">
+        <p class="twitterModal__logo"><i><svg role="img" title="twitter"><use xlink:href="/assets_v2/img/common/sprite.svg#box-twitter"></use></svg></i></p>
+      </div>
+      <div class="twitterModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="corporateModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents">
+        <p class="corporateModal__logo"><i><svg role="img" title="Nintendo"><use xlink:href="/assets_v2/img/common/sprite.svg#logo-nintendo"></use></svg></i></p>
+      </div>
+      <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="onlineModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents">
+        <p class="onlineModal__logo"><span><i><svg role="img" title="Nintendo Switch Online"><use xlink:href="/assets_v2/img/common/sprite.svg#logo-online"></use></svg></i></span></p>
+      </div>
+      <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="amiiboModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents">
+        <p class="amiiboModal__logo"><i><img src="/assets_v2/img/common/ico_amiibo.svg" alt=""></i></p>
+      </div>
+      <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+    </div>
+  </div>
+  <div id="directModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents"></div>
+    </div>
+    <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+  </div>
+  <div id="dlcModal" class="modal u-hide">
+    <div class="productModal__body">
+      <div class="productModal__bg js-closeModal"></div>
+      <div class="productModal__contents"></div>
+    </div>
+    <div class="productModal__close"><a href="#" class="js-closeModal"></a></div>
+  </div>
+  <!-- /.page-container -->
+</body>
+
+</html>
