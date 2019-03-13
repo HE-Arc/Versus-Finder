@@ -70,5 +70,8 @@ def gamepage(request):
 #        context = super().get_context_data(**kwargs)
 #        return context
 def dashboard(request):
-    context = {}
-    return render(request, 'versusfinder_app/dashboard.html', context)
+    if request.user.is_authenticated:
+        context = {}
+        return render(request, 'versusfinder_app/dashboard.html', context)
+    else:
+        pass
