@@ -13,4 +13,5 @@ urlpatterns = [
     #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),
     #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),
     path('gamepage', views.gamepage, name='gamepage'),
+    path('matchdetail/<match_pk>/', views.matchdetail, name='matchdetail'),
 ]

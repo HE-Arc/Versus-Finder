@@ -46,22 +46,15 @@ def searchmatch(request):
 def gamepage(request):
     context = {}
     context['matchs'] = Match.objects.all()
-    user = UserGameProfile.objects.get(user=1)
-    #c1 = Character(game=1, name="test")
-    #c1.save()
-    #UserCharacterBanList.objects.all().delete()
-    #c1 = Character.objects.get(id=1)
-    #c1.save()
-    #c2 = Character.objects.get(id=2)
-    #c1.save()
-    #ban1 = UserCharacterBanList(character=c1)
-    #ban1.save()
-    #ban2 = UserCharacterBanList(character=c2)
-    #ban2.save()
-    #user.banlist.add(ban1)
-    #user.banlist.add(ban2)
-    #user.save()
     return render(request, 'versusfinder_app/gamepage.html', context)
+
+def matchdetail(request, match_pk):
+    context = {}
+    context['match'] = Match.objects.get(id=match_pk)
+    return render(request, 'versusfinder_app/matchdetail.html', context)
+
+#class MatchDetailView(generic.DetailView):
+#    model = Match
 
 #class DashboardView(generic.TemplateView):
 #    template_name = "versusfinder_app/dashboard.html"

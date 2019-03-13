@@ -1,0 +1,18 @@
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}Match Detail{% endblock %}
+
+{% block content %}
+    <div>
+        <p>Match Detail</p>
+    </div>
+    <div>
+        <p>{{ match.user_profile_one.mainchar.name }}</p>
+        <p>{{ match.user_profile_one.skill_level }}</p>
+
+        <p>{{ match.timetable }}</p>
+
+        <p>{{ match.user_profile_two.mainchar.name }}</p>
+        <p>{{ match.user_profile_two.skill_level }}</p>
+    </div>
+{% endblock %}
