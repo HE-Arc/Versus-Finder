@@ -10,8 +10,7 @@ python ./manage.py loaddata game.json
 python ./manage.py loaddata fighters.json
 python ./manage.py loaddata timetable.json
 python ./manage.py loaddata usertimetable.json
-python ./manage.py loaddata match.json
 python ./manage.py loaddata usergameprofile.json
-python ./manage.py runserver
+python ./manage.py loaddata match.json
 
 PAUSE

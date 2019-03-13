@@ -51,17 +51,17 @@ def gamepage(request):
     user = UserGameProfile.objects.get(user=1)
     #c1 = Character(game=1, name="test")
     #c1.save()
-    UserCharacterBanList.objects.all().delete()
-    c1 = Character.objects.get(id=1)
+    #UserCharacterBanList.objects.all().delete()
+    #c1 = Character.objects.get(id=1)
     #c1.save()
-    c2 = Character.objects.get(id=2)
+    #c2 = Character.objects.get(id=2)
     #c1.save()
-    ban1 = UserCharacterBanList(character=c1)
-    ban1.save()
-    ban2 = UserCharacterBanList(character=c2)
-    ban2.save()
-    user.banlist.add(ban1)
-    user.banlist.add(ban2)
+    #ban1 = UserCharacterBanList(character=c1)
+    #ban1.save()
+    #ban2 = UserCharacterBanList(character=c2)
+    #ban2.save()
+    #user.banlist.add(ban1)
+    #user.banlist.add(ban2)
     #user.save()
     return render(request, 'versusfinder_app/gamepage.html', context)
 
@@ -72,5 +72,8 @@ def gamepage(request):
 #        context = super().get_context_data(**kwargs)
 #        return context
 def dashboard(request):
-    context = {}
-    return render(request, 'versusfinder_app/dashboard.html', context)
+    if request.user.is_authenticated:
+        context = {}
+        return render(request, 'versusfinder_app/dashboard.html', context)
+    else:
+        pass

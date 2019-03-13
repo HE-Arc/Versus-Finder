@@ -25,7 +25,8 @@ SECRET_KEY = 's2wcjcaj@0gs@ygrlv%9pi-be^tm7tf366trukv7b*91h@voa3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['vsfinder.srvz-webapp.he-arc.ch','localhost']
 
 
 # Application definition
