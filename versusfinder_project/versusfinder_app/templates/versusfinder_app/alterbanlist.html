@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    
+
 
 {% if user.is_authenticated %}
 
@@ -19,11 +19,10 @@
             <div class="card-img-overlay">
             <!-- <h5 class="card-title">{{ character.name }} </h5> -->
             <p class="card-text">
-                <label class="container">
-                    <input type="checkbox" id="checkbox-2-1" class="regular-checkbox big-checkbox" {% if character.id in banlist_keys %} checked {% endif %} />
-                    <label for="checkbox-2-1"></label>
+                <input type="checkbox" id="ban-{{ character.id }}" {% if character.id in banlist_keys %} checked {% endif %} />
+                <label for="ban-{{ character.id }}">
+                    {{ character.name }}
                 </label>
-                <!--  -->
             </p>
             </div>
         </div>
