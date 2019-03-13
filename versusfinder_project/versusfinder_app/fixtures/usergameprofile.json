@@ -1,38 +1,44 @@
 [
-  {
-    "model": "versusfinder_app.usergameprofile",
-    "pk": 1,
-    "fields": {
-      "user": 1,
-      "game": 1,
-      "mainchar": 1,
-      "username": "Toto_profile",
-      "battletag": "0982-2103-1293-0984",
-      "skill_level": 5
-    }
-  },
-  {
-    "model": "versusfinder_app.usergameprofile",
-    "pk": 2,
-    "fields": {
-      "user": 2,
-      "game": 1,
-      "mainchar": 2,
-      "username": "Test_profile",
-      "battletag": "1234-4321-5678-8765",
-      "skill_level": 4
-    }
-  },
-  {
-    "model": "versusfinder_app.usergameprofile",
-    "pk": 3,
-    "fields": {
-      "user": 3,
-      "game": 1,
-      "mainchar": 2,
-      "username": "Fromage_profile",
-      "battletag": "1234-4321-5678-8765",
-      "skill_level": 4
-    }
+{
+  "model": "versusfinder_app.usergameprofile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "game": 1,
+    "mainchar": 1,
+    "username": "Toto_profile",
+    "battletag": "0982-2103-1293-0984",
+    "skill_level": 5,
+    "banlist": [
+      1,
+      2
+    ]
   }
+},
+{
+  "model": "versusfinder_app.usergameprofile",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "game": 1,
+    "mainchar": 2,
+    "username": "Test_profile",
+    "battletag": "1234-4321-5678-8765",
+    "skill_level": 4,
+    "banlist": []
+  }
+},
+{
+  "model": "versusfinder_app.usergameprofile",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "game": 1,
+    "mainchar": 2,
+    "username": "Fromage_profile",
+    "battletag": "1234-4321-5678-8765",
+    "skill_level": 4,
+    "banlist": []
+  }
+}
 ]
