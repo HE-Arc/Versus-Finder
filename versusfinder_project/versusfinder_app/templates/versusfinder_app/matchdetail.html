@@ -7,13 +7,15 @@
         <p>Match Detail</p>
     </div>
     <div>
-        <img src="{{STATIC_URL}}img/{{ match.user_profile_one.mainchar.name }}.png"/>
+        {% load static %}
+        <!-- https://stackoverflow.com/questions/18040941/load-static-file-with-variable-name-in-django -->
+        <img src="{% static '' %}img/{{ match.user_profile_one.mainchar.name }}.png"/>
         <p>{{ match.user_profile_one.mainchar.name }}</p>
         <p>{{ match.user_profile_one.skill_level }}</p>
 
         <p>{{ match.timetable }}</p>
 
-        <img src="{{STATIC_URL}}img/{{ match.user_profile_two.mainchar.name }}.png"/>
+        <img src="{% static '' %}img/{{ match.user_profile_two.mainchar.name }}.png"/>
         <p>{{ match.user_profile_two.mainchar.name }}</p>
         <p>{{ match.user_profile_two.skill_level }}</p>
     </div>
