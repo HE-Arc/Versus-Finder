@@ -1,45 +1,17 @@
 <!-- templates/home.html -->
 {% extends 'versusfinder_app/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Ban list{% endblock %}
 
 {% block content %}
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#example-getting-started').multiselect();
-    });
-</script>
-
-<!-- Build your select: -->
-<select id="example-getting-started" multiple="multiple">
-    <option value="cheese">Cheese</option>
-    <option value="tomatoes">Tomatoes</option>
-    <option value="mozarella">Mozzarella</option>
-    <option value="mushrooms">Mushrooms</option>
-    <option value="pepperoni">Pepperoni</option>
-    <option value="onions">Onions</option>
-</select>
-
-<script>
-    $( function() {
-        $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 10,
-        values: [ 3, 7 ],
-        slide: function( event, ui ) {
-            $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        }
-        });
-        $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-    } );
-</script>
-
+    
 
 {% if user.is_authenticated %}
 
-    <h1>Recherche d'un adversaire</h1>
+    <h1>Modification de la banlist</h1>
+
+    
 
     <div>
         <label for="input_character">
