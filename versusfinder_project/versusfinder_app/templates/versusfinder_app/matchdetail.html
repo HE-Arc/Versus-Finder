@@ -7,11 +7,13 @@
         <p>Match Detail</p>
     </div>
     <div>
+        <img src="{{STATIC_URL}}img/{{ match.user_profile_one.mainchar.name }}.png"/>
         <p>{{ match.user_profile_one.mainchar.name }}</p>
         <p>{{ match.user_profile_one.skill_level }}</p>
 
         <p>{{ match.timetable }}</p>
 
+        <img src="{{STATIC_URL}}img/{{ match.user_profile_two.mainchar.name }}.png"/>
         <p>{{ match.user_profile_two.mainchar.name }}</p>
         <p>{{ match.user_profile_two.skill_level }}</p>
     </div>
