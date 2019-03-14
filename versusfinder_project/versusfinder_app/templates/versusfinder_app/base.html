@@ -4,11 +4,16 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Versus Finder{% endblock %}</title>
+
+    {% load staticfiles %}
+    {% load static %}
     {% load bootstrap4 %}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
-    {% load staticfiles %}
+
+    <!-- jQuery -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<<<<<<< HEAD
 
 
 <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet' />
@@ -23,9 +28,18 @@
 <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
 <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
 <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+=======
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <!-- handmade -->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/checkbox.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/toolbox.js' %}"></script>
+
+>>>>>>> 2a8ffeeb16d5d8e34d27c82834ad85bef6efaa79
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'home' %}">Versus Finder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -50,7 +64,8 @@
                 </li>
                 </ul>
 
-                <a class="nav-link dropdown-toggle nav-item active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle nav-item active" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     Account
                 </a>
@@ -73,8 +88,12 @@
 </nav>
 
 <main>
-    {% block content %}
-    {% endblock %}
+    <div id="maindiv">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
 </main>
 </body>
 </html>

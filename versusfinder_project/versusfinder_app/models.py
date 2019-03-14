@@ -37,27 +37,32 @@ class Timetable(models.Model):
     # created_at = models.DateTimeField(default=datetime.now, blank=True)
     # updated_at = models.DateTimeField(default=datetime.now, blank=True)
 
+<<<<<<< HEAD
     def getDateBeginFormated(self):
         return self.date_begin.strftime("%Y-%m-%dT%H:%M:%S")
 
     def getDateEndFormated(self):
         return self.date_end.strftime("%Y-%m-%dT%H:%M:%S")
+=======
+    def __str__(self):
+        return "Start at : "+self.date_begin.strftime("%Y-%m-%d %H:%M:%S")+" | end at : "+self.date_end.strftime("%Y-%m-%d %H:%M:%S")
+>>>>>>> 2a8ffeeb16d5d8e34d27c82834ad85bef6efaa79
 
 
-class UserCharacterBanList(models.Model):
-    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+#class UserCharacterBanList(models.Model):
+    #    character = models.ForeignKey(Character, on_delete=models.CASCADE)
     # created_at = models.DateTimeField(auto_now_add=True, blank=True)
     # updated_at = models.DateTimeField(default=datetime.now, blank=True)
-
-    def __str__(self):
-        return self.character.name
+    #
+    #def __str__(self):
+#   return self.character.name
 
 
 class UserGameProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
-    mainchar = models.ForeignKey(Character, on_delete=models.CASCADE)
-    banlist = models.ManyToManyField(UserCharacterBanList)
+    mainchar = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='mainchar')
+    banlist = models.ManyToManyField(Character, related_name='banlist')
     username = models.CharField(max_length=200)
     battletag = models.CharField(max_length=200)
     skill_level = models.IntegerField()

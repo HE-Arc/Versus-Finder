@@ -1,6 +1,6 @@
 {% extends 'versusfinder_app/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}GamePage{% endblock %}
 
 {% block content %}
     Hi ???, vous trouverez ??? !
@@ -13,6 +13,7 @@
 
     <div>
         {% for match in matchs %}
+            <p><a href="{% url 'matchdetail' match_pk=match.id %}">Match {{ match.id }}</a></p>
             <p>Joueur 1 : {{ match.user_profile_one.username }}</p>
             {% for char in match.user_profile_one.banlist.all %}
                 <p>Character ban : {{ char }}</p>

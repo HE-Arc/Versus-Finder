@@ -1,0 +1,50 @@
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}Match Detail{% endblock %}
+
+{% block content %}
+    <div>
+        <p>Match Detail</p>
+    </div>
+    <div>
+        {% load static %}
+        <table style="margin: auto;">
+            <tr>
+                <td>
+                    <!-- https://stackoverflow.com/questions/18040941/load-static-file-with-variable-name-in-django -->
+                    <div class="card border border-dark rounded" style="width: 15rem;">
+                        <img class="card-img-left"
+                             src="{% static '' %}img/{{ match.user_profile_one.mainchar.name }}.png"/>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ match.user_profile_one.username }}</h5>
+                            <div class="card-text">
+                                <p>As : {{ match.user_profile_one.mainchar.name }}</p>
+                                <p>Level : {{ match.user_profile_one.skill_level }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <img src="{% static '' %}img/vs.png"/>
+                    <h2>BEGIN AT : {{ date_begin }}</h2>
+                    <h2>END AT : {{ date_end }}</h2>
+                </td>
+
+                <td>
+                    <div class="card border-5 border-dark rounded" style="width: 15rem;">
+                        <img class="card-img-left"
+                             src="{% static '' %}img/{{ match.user_profile_two.mainchar.name }}.png"/>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ match.user_profile_two.username }}</h5>
+                            <div class="card-text">
+                                <p>As : {{ match.user_profile_two.mainchar.name }}</p>
+                                <p>Level : {{ match.user_profile_two.skill_level }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

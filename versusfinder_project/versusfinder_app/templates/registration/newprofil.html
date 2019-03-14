@@ -28,20 +28,14 @@
   </div>
 
   <div>
-      <div>
-          <label for="input_banlist">
-          <select id="input_banlist">
-              {% for character in characters %}
-                  <option value="{{character.id}}">
-                  {{ character.name }}
-                  </option>
-              {% endfor %}
-          </select> 
-          Character banned
-          </label>
-      </div>
-      <input type="button" value="Ban" name="input_newban" id="input_newban"/>
+    {% for character_name in banlist %}
+    <p>
+      {{ character_name }} 
+    </p>
+    {% endfor %}
   </div>
+
+  <input type="button" value="Modifiy banlist"/> <!-- add a redirect -->
 
   <!-- Initialiser la ban list à null -->
 
