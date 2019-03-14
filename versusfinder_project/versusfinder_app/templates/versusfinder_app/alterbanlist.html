@@ -5,22 +5,20 @@
 
 {% block content %}
 
-
 {% if user.is_authenticated %}
 
     <h1>Updating banlist</h1>
 
     <div class="card-columns">
     {% for character in characters %}
-    
         <div class="card bg-dark text-white">
             <img class="card-img" src="https://via.placeholder.com/468x60?text={{ character.name }}" alt="Card image">
             <div class="card-img-overlay">
             <!-- <h5 class="card-title">{{ character.name }} </h5> -->
             <p class="card-text">
-                <input type="checkbox" id="ban-{{ character.id }}" 
-                    {% if character.id in banlist_keys %} checked {% endif %} 
-                    onclick="BanlistTools.alter({{ user_profile.id }}, {{ character.id }})"
+                <input type="checkbox" id="ban-{{ character.id }}"
+                {% if character in banlist %} checked {% endif %}
+                onclick="BanlistTools.alter({{ user_profile.id }}, {{ character.id }})
                 />
                 <label for="ban-{{ character.id }}">
                     {{ character.name }}
@@ -28,7 +26,7 @@
             </p>
             </div>
         </div>
-        
+
     {% endfor %}
     </div>
 

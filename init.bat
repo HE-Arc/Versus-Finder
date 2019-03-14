@@ -10,7 +10,7 @@ python.exe .\manage.py loaddata game.json
 python.exe .\manage.py loaddata fighters.json
 python.exe .\manage.py loaddata timetable.json
 python.exe .\manage.py loaddata usertimetable.json
-python.exe .\manage.py loaddata userbanlist.json
+
 python.exe .\manage.py loaddata usergameprofile.json
 python.exe .\manage.py loaddata match.json
 python.exe .\manage.py runserver
