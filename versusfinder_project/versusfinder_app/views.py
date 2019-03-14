@@ -70,10 +70,17 @@ def matchdetail(request, match_pk):
 def alteruserban(request, profile_id, char_id):
     try:
 
-        Character.objects.get(id=char_id)
-        UserGameProfile.objects.get(id=profile_id)
-
-        #FIXME : add it to ban list or remove it
+        char_to_alter = Character.objects.get(id=char_id)
+        profile_to_update = UserGameProfile.objects.get(id=profile_id)
+        
+        if char_to_alter.id in profile_to_update.banlist.all():
+            ''' remove it from the banlist '''
+            profile_to_update.banlist.remove(char_to_alter)
+            profile_to_update.banlist.save()
+        else:
+            ''' insert into the banlist '''
+            profile_to_update.banlist.add(char_to_alter)
+            profile_to_update.banlist.save()
 
         return HttpResponse("Success")
     except:
