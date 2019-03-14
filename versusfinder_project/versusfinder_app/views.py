@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
-from .models import Character, Match, User, UserGameProfile
+from .models import Character, Match, User, UserGameProfile, UserMatch
 
 
 # from django.contrib.auth.models import User
@@ -67,12 +67,13 @@ def matchdetail(request, match_pk):
     context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
+
 def alteruserban(request, profile_id, char_id):
     try:
 
         char_to_alter = Character.objects.get(id=char_id)
         profile_to_update = UserGameProfile.objects.get(id=profile_id)
-        
+
         if char_to_alter.id in profile_to_update.banlist.all():
             ''' remove it from the banlist '''
             profile_to_update.banlist.remove(char_to_alter)
@@ -87,12 +88,22 @@ def alteruserban(request, profile_id, char_id):
         return HttpResponse("Error occured", status_code=404)
 
 
-#class MatchDetailView(generic.DetailView):
+# class MatchDetailView(generic.DetailView):
 #    model = Match
 
 def dashboard(request):
     if request.user.is_authenticated:
+        userprofile = UserGameProfile.objects.get(user=request.user)
         context = {}
+        context['user_timetable'] = userprofile.timetables.all()
+        matchs = Match.objects.all()
+        user_matchs = []
+        for match in matchs:
+            if match.user_profile_one == userprofile or match.user_profile_two == userprofile:
+                user_matchs.append(match)
+
+        context['user_matchs'] = user_matchs
+
         return render(request, 'versusfinder_app/dashboard.html', context)
     else:
         pass

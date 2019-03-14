@@ -18,7 +18,7 @@
             <p class="card-text">
                 <input type="checkbox" id="ban-{{ character.id }}"
                 {% if character in banlist %} checked {% endif %}
-                onclick="BanlistTools.alter({{ user_profile.id }}, {{ character.id }})
+                onclick="BanlistTools.alter({{ user_profile.id }}, {{ character.id }})"
                 />
                 <label for="ban-{{ character.id }}">
                     {{ character.name }}

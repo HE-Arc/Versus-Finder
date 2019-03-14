@@ -17,11 +17,39 @@
             <p>Joueur 1 : {{ match.user_profile_one.username }}</p>
             {% for char in match.user_profile_one.banlist.all %}
                 <p>Character ban : {{ char }}</p>
-                {% empty %}
+            {% empty %}
                 Aucun ban!
             {% endfor %}
             <p>Joueur 2 : {{ match.user_profile_two.username }}</p>
         {% endfor %}
     </div>
+
+    <div id="calendar">
+
+    </div>
+
+
+    <script>
+        $('#calendar').fullCalendar({
+            defaultDate: '2019-03-14',
+            defaultView: 'agendaWeek',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaWeek,agendaDay'
+            },
+            events: [
+                {% for match in matchs %}
+                    {
+                        title:  'My Event',
+                        start: '{{ match.timetable.getDateBeginFormated }}',
+                        end: '{{ match.timetable.getDateEndFormated}}',
+                        rendering: 'background'
+                    },
+                {% endfor %}
+
+            ]
+        });
+    </script>
 
 {% endblock %}
