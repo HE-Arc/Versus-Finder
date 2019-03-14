@@ -72,6 +72,19 @@ def matchdetail(request, match_pk):
     context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
+def alteruserban(request, profile_id, char_id):
+    try:
+
+        Character.objects.get(id=char_id)
+        UserGameProfile.objects.get(id=profile_id)
+
+        #FIXME : add it to ban list or remove it
+
+        return HttpResponse("Success")
+    except:
+        return HttpResponse("Error occured", status_code=404)
+
+
 #class MatchDetailView(generic.DetailView):
 #    model = Match
 

@@ -17,4 +17,5 @@ urlpatterns = [
     #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),
     path('gamepage', views.gamepage, name='gamepage'),
     path('matchdetail/<match_pk>/', views.matchdetail, name='matchdetail'),
+    path('accounts/<profile_id>/characters/<char_id>/alter', views.alteruserban, name="alteruserban"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
