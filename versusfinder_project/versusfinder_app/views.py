@@ -68,6 +68,8 @@ def gamepage(request):
 def matchdetail(request, match_pk):
     context = {}
     context['match'] = Match.objects.get(id=match_pk)
+    context['date_begin'] = (context['match'].timetable.date_begin).strftime("%Y-%m-%d %H:%M:%S")
+    context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
 #class MatchDetailView(generic.DetailView):
