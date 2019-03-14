@@ -18,7 +18,7 @@
     "fields": {
       "user_profile_one" : 2,
       "user_profile_two" : 3,
-      "timetable_id" : 1,
+      "timetable_id" : 2,
       "game_id" : 1,
       "state" : 0,
       "user_one_score" : 0,
