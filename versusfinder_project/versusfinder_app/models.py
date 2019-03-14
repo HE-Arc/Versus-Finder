@@ -37,17 +37,14 @@ class Timetable(models.Model):
     # created_at = models.DateTimeField(default=datetime.now, blank=True)
     # updated_at = models.DateTimeField(default=datetime.now, blank=True)
 
-<<<<<<< HEAD
     def getDateBeginFormated(self):
         return self.date_begin.strftime("%Y-%m-%dT%H:%M:%S")
 
     def getDateEndFormated(self):
         return self.date_end.strftime("%Y-%m-%dT%H:%M:%S")
-=======
+
     def __str__(self):
         return "Start at : "+self.date_begin.strftime("%Y-%m-%d %H:%M:%S")+" | end at : "+self.date_end.strftime("%Y-%m-%d %H:%M:%S")
->>>>>>> 2a8ffeeb16d5d8e34d27c82834ad85bef6efaa79
-
 
 #class UserCharacterBanList(models.Model):
     #    character = models.ForeignKey(Character, on_delete=models.CASCADE)
