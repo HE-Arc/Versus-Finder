@@ -25,7 +25,10 @@
 
     <h1>Recherche d'un adversaire</h1>
 
-    <input type="button" value="Modifiy banlist" onclick="redirect('alteruserban', permanent=True)"/> <!-- add a redirect -->
+    <form action="/accounts/alterbanlist" method="get">
+        <input type="submit" value="Modifiy banlist" 
+            name="Submit" id="redirect_submit" />
+    </form>
 
     <div>
         <label for="input_character">

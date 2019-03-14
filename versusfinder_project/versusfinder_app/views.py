@@ -74,7 +74,7 @@ def alteruserban(request, profile_id, char_id):
         char_to_alter = Character.objects.get(id=char_id)
         profile_to_update = UserGameProfile.objects.get(id=profile_id)
 
-        if char_to_alter.id in profile_to_update.banlist.all():
+        if char_to_alter in profile_to_update.banlist.all():
             ''' remove it from the banlist '''
             profile_to_update.banlist.remove(char_to_alter)
             profile_to_update.banlist.save()
@@ -85,7 +85,7 @@ def alteruserban(request, profile_id, char_id):
 
         return HttpResponse("Success")
     except:
-        return HttpResponse("Error occured", status_code=404)
+        return HttpResponse("Error occured") #send 404
 
 
 # class MatchDetailView(generic.DetailView):
