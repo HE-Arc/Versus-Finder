@@ -8,4 +8,34 @@
         <a href="#">Nouvelle disponiblité</a>
     </div>
 
+    <script>
+        $('#calendar').fullCalendar({
+            defaultDate: '2019-03-14',
+            defaultView: 'agendaWeek',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaWeek,agendaDay'
+            },
+            events: [
+                {% for timetable in user_timetable %}
+                    {
+                        title:  'SmashBros',
+                        start: '{{ timetable.getDateBeginFormated }}',
+                        end: '{{ timetable.getDateEndFormated}}',
+                        rendering: 'background'
+                    },
+                {% endfor %}
+                {% for match in user_matchs %}
+                    {
+                        title:  '{{ match.user_profile_one.username }} VS {{ match.user_profile_two.username }}',
+                        start: '{{ match.timetable.getDateBeginFormated }}',
+                        end: '{{ match.timetable.getDateEndFormated}}',
+                        rendering: 'background'
+                    },
+                {% endfor %}
+            ]
+        });
+    </script>
+
 {% endblock %}

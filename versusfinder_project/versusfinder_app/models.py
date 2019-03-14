@@ -60,6 +60,7 @@ class UserGameProfile(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     mainchar = models.ForeignKey(Character, on_delete=models.CASCADE, related_name='mainchar')
     banlist = models.ManyToManyField(Character, related_name='banlist')
+    timetables = models.ManyToManyField(Timetable, related_name='timetables')
     username = models.CharField(max_length=200)
     battletag = models.CharField(max_length=200)
     skill_level = models.IntegerField()
@@ -96,8 +97,8 @@ class UserMatch(models.Model):
     # updated_at = models.DateTimeField(default=datetime.now, blank=True)
 
 
-class UserTimeTable(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    timetable = models.ForeignKey(Timetable, on_delete=models.CASCADE)
+#class UserTimeTable(models.Model):
+#    user = models.ForeignKey(User, on_delete=models.CASCADE)
+#   timetable = models.ForeignKey(Timetable, on_delete=models.CASCADE)
     # created_at = models.DateTimeField(default=datetime.now, blank=True)
     # updated_at = models.DateTimeField(default=datetime.now, blank=True)

@@ -19,8 +19,16 @@
     "model": "versusfinder_app.usertimetable",
     "pk": 3,
     "fields": {
+      "user": 2,
+      "timetable": 2
+    }
+  },
+  {
+    "model": "versusfinder_app.usertimetable",
+    "pk": 4,
+    "fields": {
       "user": 3,
-      "timetable": 1
+      "timetable": 2
     }
   }
 ]

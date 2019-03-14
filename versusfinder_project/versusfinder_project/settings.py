@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'versusfinder_app',
     'accounts.apps.AccountsConfig',
     'bootstrap4',
-    'schedule',
 ]
 
 MIDDLEWARE = [
