@@ -8,14 +8,25 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('home', views.home, name='home'),
-    path('accounts/newprofil', views.newprofil, name='newprofil'),
-    path('accounts/alterbanlist', views.alterbanlist, name='alterbanlist'),
-    path('dashboard/searchmatch', views.searchmatch, name='searchmatch'),
-    #path('profile', views.ProfileView.as_view(), name='profile'),
-    path('dashboard', views.dashboard, name='dashboard'),
+
+    # Dashboard
+    path('dashboard/<user_id>', views.dashboard, name='dashboard'),
+
+    # Gameprofile
+    path('games/<game_id>/show', views.game_show, name='game.show'),
+    path('games/<game_id>/gameprofiles/new', views.gameprofile_create, name='gameprofile.new'),
+    path('games/<game_id>/gameprofiles/register', views.gameprofile_register, name="gameprofile.register"),
+
+    # Banlist
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/banlist/modify', views.banlist_modify, name='banlist.modify'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/characters/<char_id>/alter', views.banlist_alter, name="banlist.alter"),
+
+    # Matches
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search', views.match_search, name='match.search'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
+
+    # Timetables
     #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),
-    #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),
-    path('gamepage', views.gamepage, name='gamepage'),
-    path('matchdetail/<match_pk>/', views.matchdetail, name='matchdetail'),
-    path('accounts/<profile_id>/characters/<char_id>/alter', views.alteruserban, name="alteruserban"),
+    #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),    
+    
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

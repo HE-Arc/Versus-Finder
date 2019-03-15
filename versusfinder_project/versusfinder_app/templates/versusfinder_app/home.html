@@ -9,9 +9,9 @@
 {% if user.is_authenticated %}
   Hi {{ user.username }}, son ID est {{user_id}} !
     <p><a href="{% url 'logout' %}">logout</a></p>
-    <p><a href="{% url 'newprofil' %}">new game-profil</a></p>
-    <p><a href="{% url 'searchmatch' %}">search match</a></p>
-    <p><a href="{% url 'gamepage' %}">game page</a></p>
+    <p><a href="{% url 'gameprofile.new' game_id=1 %}">new game-profil</a></p>
+    <p><a href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">search match</a></p>
+    <p><a href="{% url 'game.show' game_id=1 %}">game page</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>

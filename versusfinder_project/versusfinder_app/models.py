@@ -9,8 +9,6 @@ from django.contrib import auth
 
 def get_user_profile(self):
     return UserGameProfile.objects.get(user=self)
-
-
 auth.models.User.add_to_class('get_user_profile', get_user_profile)
 
 
@@ -44,7 +42,7 @@ class Timetable(models.Model):
         return self.date_end.strftime("%Y-%m-%dT%H:%M:%S")
 
     def __str__(self):
-        return "Start at : "+self.date_begin.strftime("%Y-%m-%d %H:%M:%S")+" | end at : "+self.date_end.strftime("%Y-%m-%d %H:%M:%S")
+        return "Start at : {0} | end at : {1}".format([+self.date_begin.strftime("%Y-%m-%d %H:%M:%S"), self.date_end.strftime("%Y-%m-%d %H:%M:%S")])
 
 #class UserCharacterBanList(models.Model):
     #    character = models.ForeignKey(Character, on_delete=models.CASCADE)

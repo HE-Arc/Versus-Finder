@@ -25,9 +25,7 @@
     <!--<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>-->
     <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet'/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet'
-          media='print'/>
-
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
 
     <!-- handmade -->
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
@@ -50,13 +48,15 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'newprofil' %}">New game</a>
+                    <!-- FIXME: game_id should not be hardcoded -->
+                    <a class="nav-link" href="{% url 'gameprofile.new' game_id=1 %}">New game</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'searchmatch' %}">Search Match</a>
+                    <a class="nav-link" href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Search Match</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'gamepage' %}">Game</a>
+                    <!-- FIXME: game_id should not be hardcoded -->
+                    <a class="nav-link" href="{% url 'game.show' game_id=1 %}">Game</a>
                 </li>
                 </ul>
 
