@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Character, Match, User, UserGameProfile, UserMatch
+from datetime import datetime
 
 
 # from django.contrib.auth.models import User
@@ -103,6 +104,7 @@ def dashboard(request):
                 user_matchs.append(match)
 
         context['user_matchs'] = user_matchs
+        context['today'] = datetime.now().strftime("%Y-%m-%d")
 
         return render(request, 'versusfinder_app/dashboard.html', context)
     else:
