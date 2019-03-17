@@ -12,10 +12,13 @@ urlpatterns = [
     # Dashboard
     path('dashboard/<user_id>', views.dashboard, name='dashboard'),
 
-    # Gameprofile
+    # Games
     path('games/<game_id>/show', views.game_show, name='game.show'),
-    path('games/<game_id>/gameprofiles/new', views.gameprofile_create, name='gameprofile.new'),
-    path('games/<game_id>/gameprofiles/register', views.gameprofile_register, name="gameprofile.register"),
+
+    # Gameprofile
+    path('dashboard/<user_id>/gameprofiles/new/<game_id>/', views.gameprofile_create, name='gameprofile.new'),
+    path('dashboard/<user_id>/gameprofiles/register/<game_id>', views.gameprofile_register, name="gameprofile.register"),
+    #path('dashboard/<user_id>/gameprofiles/show/<game_id>', views.gameprofile_show, name="gameprofile.show"),
 
     # Banlist
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/banlist/modify', views.banlist_modify, name='banlist.modify'),

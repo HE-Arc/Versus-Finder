@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch
 from datetime import datetime
-
+from django.forms import Form
 
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
@@ -22,7 +22,7 @@ def home(request):
         context['gameprofile'] = request.user.get_user_profile()
     return render(request, 'versusfinder_app/home.html', context)
 
-def gameprofile_create(request, game_id):
+def gameprofile_create(request, user_id, game_id):
     ''' Block the user from creating a new gameprofile for the selected game, si le profil existe, le redirige vers son profil'''
     if request.user.is_authenticated:
         context = {}
@@ -30,15 +30,52 @@ def gameprofile_create(request, game_id):
         context['game'] = Game.objects.get(id=game_id)
         context['gameprofile'] = request.user.get_user_profile()
         context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'registration/newprofil.html', context)
+        return render(request, 'versusfinder_app/newprofil.html', context)
     else:
         pass  # render error
 
-def gameprofile_register(request, user_id):
+def gameprofile_register(request, user_id, game_id):
     if request.user.is_authenticated:
-        pass
-        ''' create a new gameprofile for the user '''
-    pass
+        if request.method == 'POST':
+            user = request.user
+            gameprofile = user.get_user_profile()
+            
+            # FIXME: to use in case of multi-gameprofiles
+            #for gameprofile in gameprofiles:
+            #    if gameprofile.game == game_id:
+            #        return HttpResponse("Error : only one profile per game is allowed !")
+
+            # Workaround:
+            if game_id == gameprofile.id:
+                return HttpResponse("Error : only one profile per game is allowed !")
+
+            ''' create a new gameprofile for the user '''
+
+            # Fetch data from request
+            print('--------------------------------------------------------')
+            print(request.POST)
+            print('--------------------------------------------------------')
+            print(request.GET)
+            print('--------------------------------------------------------')
+            print(request.FILES)
+            print('--------------------------------------------------------')
+
+            # Build new gameprofile
+            gameprofile = UserGameProfile()
+            gameprofile.user = User.objects.get(id=user_id)
+            gameprofile.game = Game.objects.get(id=game_id)
+            gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+            gameprofile.username = request.POST.get('input_pseudo')
+            gameprofile.battletag = None
+            gameprofile.skill_level = request.POST.get('input_skill')
+            gameprofile.save()
+
+            # update user
+            user.gameprofile = gameprofile
+            user.save()
+
+            # TODO
+            return HttpResponseRedirect('/newgameprofilecreated/') # Redirect after POST
 
 
 def match_search(request, user_id, gameprofile_id):
