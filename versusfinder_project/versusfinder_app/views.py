@@ -17,8 +17,9 @@ from datetime import datetime
 
 def home(request):
     context = {}
-    context['user_id'] = request.user.id
-    context['gameprofile'] = request.user.get_user_profile()
+    if request.user.is_authenticated:
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
     return render(request, 'versusfinder_app/home.html', context)
 
 def gameprofile_create(request, game_id):
@@ -34,7 +35,9 @@ def gameprofile_create(request, game_id):
         pass  # render error
 
 def gameprofile_register(request, user_id):
-    ''' create a new gameprofile for the user '''
+    if request.user.is_authenticated:
+        pass
+        ''' create a new gameprofile for the user '''
     pass
 
 
@@ -56,12 +59,13 @@ def match_search(request, user_id, gameprofile_id):
         pass  # render error
 
 def match_show(request, user_id, gameprofile_id, match_id):
-    context = {}
-    context['user_id'] = request.user.id
-    context['gameprofile'] = request.user.get_user_profile()
-    context['match'] = Match.objects.get(id=match_id)
-    context['date_begin'] = (context['match'].timetable.date_begin).strftime("%Y-%m-%d %H:%M:%S")
-    context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
+        context['match'] = Match.objects.get(id=match_id)
+        context['date_begin'] = (context['match'].timetable.date_begin).strftime("%Y-%m-%d %H:%M:%S")
+        context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
 
@@ -78,29 +82,30 @@ def banlist_modify(request, user_id, gameprofile_id):
         pass  # render error
 
 def banlist_alter(request, user_id, gameprofile_id, char_id):
-    try:
+    if request.user.is_authenticated:
+        try:
+            char_to_alter = Character.objects.get(id=char_id)
+            profile_to_update = UserGameProfile.objects.get(id=gameprofile_id)
 
-        char_to_alter = Character.objects.get(id=char_id)
-        profile_to_update = UserGameProfile.objects.get(id=gameprofile_id)
+            if char_to_alter in profile_to_update.banlist.all():
+                ''' remove it from the banlist '''
+                profile_to_update.banlist.remove(char_to_alter)
+                profile_to_update.banlist.save()
+            else:
+                ''' insert into the banlist '''
+                profile_to_update.banlist.add(char_to_alter)
+                profile_to_update.banlist.save()
 
-        if char_to_alter in profile_to_update.banlist.all():
-            ''' remove it from the banlist '''
-            profile_to_update.banlist.remove(char_to_alter)
-            profile_to_update.banlist.save()
-        else:
-            ''' insert into the banlist '''
-            profile_to_update.banlist.add(char_to_alter)
-            profile_to_update.banlist.save()
-
-        return HttpResponse("Success")
-    except:
-        return HttpResponse("Error occured") #send 404
+            return HttpResponse("Success")
+        except:
+            return HttpResponse("Error occured") #send 404
 
 def game_show(request, game_id):
-    context = {}
-    context['user_id'] = request.user.id
-    context['gameprofile'] = request.user.get_user_profile()
-    context['matchs'] = Match.objects.all()
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
+        context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
 
 # class MatchDetailView(generic.DetailView):
