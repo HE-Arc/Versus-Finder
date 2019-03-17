@@ -1,18 +1,21 @@
 class BanlistTools {
 
-    static alter(user_id, char_id)
+    static alter(user_id, gameprofile_id, char_id)
     {
-      $.ajax({
-          type: 'POST',
-          url : "/accounts/" + user_id + "/characters/" + char_id + "/alter",
-          headers: {
-            'X-CSRFToken': Toolbox.getCookie('csrftoken')
-            // csrftoken 
-          },
-          success : function (data) {
-            console.log('ok');
-          }
-      });
+        console.log(user_id)
+        console.log(gameprofile_id)
+        console.log(char_id)
+        $.ajax({
+            type: 'POST',
+            url : "/dashboard/" + user_id + "/gameprofiles/" + gameprofile_id + "/characters/" + char_id + "/alter",
+            headers: {
+                'X-CSRFToken': Toolbox.getCookie('csrftoken')
+                // csrftoken 
+            },
+            success : function (data) {
+                console.log('ok');
+            }
+        });
     }
 }
 

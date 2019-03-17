@@ -26,8 +26,8 @@ def gameprofile_create(request, game_id):
     ''' Block the user from creating a new gameprofile for the selected game, si le profil existe, le redirige vers son profil'''
     if request.user.is_authenticated:
         context = {}
-        context['game'] = Game.objects.get(id=game_id)
         context['user_id'] = request.user.id
+        context['game'] = Game.objects.get(id=game_id)
         context['gameprofile'] = request.user.get_user_profile()
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'registration/newprofil.html', context)
@@ -73,7 +73,7 @@ def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
         context['game'] = None #FIXME:
-        context['user_id'] = user_id
+        context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
         context['banlist'] = context['gameprofile'].banlist.all()
         context['characters'] = Character.objects.all().order_by('name')
