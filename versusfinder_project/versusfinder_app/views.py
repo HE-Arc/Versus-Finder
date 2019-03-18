@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch
 from datetime import datetime
 from django.forms import Form
+from random import randint
 
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
@@ -21,6 +22,26 @@ def home(request):
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
     return render(request, 'versusfinder_app/home.html', context)
+
+def dashboard(request, user_id):
+    if request.user.is_authenticated:
+        context = {}
+        context['gameprofile'] = request.user.get_user_profile()
+        context['user_timetable'] = context['gameprofile'].timetables.all()
+        context['user_id'] = request.user.id
+
+        matchs = Match.objects.all()
+        user_matchs = []
+        for match in matchs:
+            if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
+                user_matchs.append(match)
+
+        context['user_matchs'] = user_matchs
+        context['today'] = datetime.now().strftime("%Y-%m-%d")
+
+        return render(request, 'versusfinder_app/dashboard.html', context)
+    else:
+        pass
 
 def gameprofile_create(request, user_id, game_id):
     ''' Block the user from creating a new gameprofile for the selected game, si le profil existe, le redirige vers son profil'''
@@ -39,14 +60,17 @@ def gameprofile_register(request, user_id, game_id):
         if request.method == 'POST':
             user = request.user
             gameprofile = user.get_user_profile()
-            
+
             # FIXME: to use in case of multi-gameprofiles
             #for gameprofile in gameprofiles:
             #    if gameprofile.game == game_id:
             #        return HttpResponse("Error : only one profile per game is allowed !")
 
             # Workaround:
-            if game_id == gameprofile.id:
+            print(game_id)
+            print(gameprofile.game.id)
+            print(game_id==gameprofile.game.id)
+            if game_id == gameprofile.game:
                 return HttpResponse("Error : only one profile per game is allowed !")
 
             ''' create a new gameprofile for the user '''
@@ -66,7 +90,7 @@ def gameprofile_register(request, user_id, game_id):
             gameprofile.game = Game.objects.get(id=game_id)
             gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
             gameprofile.username = request.POST.get('input_pseudo')
-            gameprofile.battletag = None
+            gameprofile.battletag = randint(1000, 9999)
             gameprofile.skill_level = request.POST.get('input_skill')
             gameprofile.save()
 
@@ -75,7 +99,7 @@ def gameprofile_register(request, user_id, game_id):
             user.save()
 
             # TODO
-            return HttpResponseRedirect('/newgameprofilecreated/') # Redirect after POST
+            return HttpResponse("Success")
 
 
 def match_search(request, user_id, gameprofile_id):
@@ -144,26 +168,3 @@ def game_show(request, game_id):
         context['gameprofile'] = request.user.get_user_profile()
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
-
-# class MatchDetailView(generic.DetailView):
-#    model = Match
-
-def dashboard(request, user_id):
-    if request.user.is_authenticated:
-        context = {}
-        context['gameprofile'] = request.user.get_user_profile()
-        context['user_timetable'] = context['gameprofile'].timetables.all()
-        context['user_id'] = request.user.id
-
-        matchs = Match.objects.all()
-        user_matchs = []
-        for match in matchs:
-            if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
-                user_matchs.append(match)
-
-        context['user_matchs'] = user_matchs
-        context['today'] = datetime.now().strftime("%Y-%m-%d")
-
-        return render(request, 'versusfinder_app/dashboard.html', context)
-    else:
-        pass
