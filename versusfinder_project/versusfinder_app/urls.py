@@ -10,7 +10,7 @@ urlpatterns = [
     path('home', views.home, name='home'),
 
     # Dashboard
-    path('dashboard/<user_id>', views.dashboard, name='dashboard'),
+    path('dashboard', views.dashboard, name='dashboard'),
 
     # Games
     path('games/<game_id>/show', views.game_show, name='game.show'),
