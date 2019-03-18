@@ -150,14 +150,15 @@ def game_show(request, game_id):
 
 def dashboard(request, user_id):
     if request.user.is_authenticated:
-        userprofile = user.get_user_profile()
-
         context = {}
-        context['user_timetable'] = userprofile.timetables.all()
+        context['gameprofile'] = request.user.get_user_profile()
+        context['user_timetable'] = context['gameprofile'].timetables.all()
+        context['user_id'] = request.user.id
+
         matchs = Match.objects.all()
         user_matchs = []
         for match in matchs:
-            if match.user_profile_one == userprofile or match.user_profile_two == userprofile:
+            if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
                 user_matchs.append(match)
 
         context['user_matchs'] = user_matchs
