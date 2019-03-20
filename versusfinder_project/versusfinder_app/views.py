@@ -4,6 +4,7 @@ from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch
 from datetime import datetime
+from datetime import timedelta
 from django.forms import Form
 from django.contrib import messages
 from random import randint
@@ -42,11 +43,23 @@ def dashboard(request, user_id):
         context['user_matchs'] = user_matchs
         context['today'] = datetime.now().strftime("%Y-%m-%d")
 
+        ref_match = datetime.now() + timedelta(days=730)
+        next_match = None
+        for match in matchs:
+            if match.timetable.date_begin > datetime.now(match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                next_match = match
+                ref_match = match.timetable.date_begin
+
+        if next_match != None:
+            context['next_match'] = next_match
+
+        old_matchs = []
         winlose = []
         win = 0
         lose = 0
         for match in user_matchs:
             if match.timetable.date_end < datetime.now(match.timetable.date_end.tzinfo):
+                old_matchs.append(match)
                 if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
                     win += 1
                 elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
@@ -58,6 +71,7 @@ def dashboard(request, user_id):
         winlose.append(lose)
 
         context['user_stats'] = winlose
+        context['user_old_matchs'] = old_matchs
 
         return render(request, 'versusfinder_app/dashboard.html', context)
     else:
