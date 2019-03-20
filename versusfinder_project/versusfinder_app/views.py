@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch
 from datetime import datetime
 from django.forms import Form
+from django.contrib import messages
 from random import randint
 
 # from django.contrib.auth.models import User
@@ -51,7 +52,7 @@ def gameprofile_create(request, user_id, game_id):
         context['game'] = Game.objects.get(id=game_id)
         context['gameprofile'] = request.user.get_user_profile()
         context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/newprofil.html', context)
+        return render(request, 'versusfinder_app/gameprofile/new.html', context)
     else:
         pass  # render error
 
@@ -60,6 +61,7 @@ def gameprofile_register(request, user_id, game_id):
         if request.method == 'POST':
             user = request.user
             gameprofile = user.get_user_profile()
+            game = gameprofile.game
 
             # FIXME: to use in case of multi-gameprofiles
             #for gameprofile in gameprofiles:
@@ -67,27 +69,13 @@ def gameprofile_register(request, user_id, game_id):
             #        return HttpResponse("Error : only one profile per game is allowed !")
 
             # Workaround:
-            print(game_id)
-            print(gameprofile.game.id)
-            print(game_id==gameprofile.game.id)
-            if game_id == gameprofile.game:
-                return HttpResponse("Error : only one profile per game is allowed !")
-
-            ''' create a new gameprofile for the user '''
-
-            # Fetch data from request
-            print('--------------------------------------------------------')
-            print(request.POST)
-            print('--------------------------------------------------------')
-            print(request.GET)
-            print('--------------------------------------------------------')
-            print(request.FILES)
-            print('--------------------------------------------------------')
+            if int(game_id) == int(game.id):
+                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}") 
 
             # Build new gameprofile
             gameprofile = UserGameProfile()
-            gameprofile.user = User.objects.get(id=user_id)
-            gameprofile.game = Game.objects.get(id=game_id)
+            gameprofile.user = user
+            gameprofile.game = game
             gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
             gameprofile.username = request.POST.get('input_pseudo')
             gameprofile.battletag = randint(1000, 9999)
@@ -99,7 +87,42 @@ def gameprofile_register(request, user_id, game_id):
             user.save()
 
             # TODO
-            return HttpResponse("Success")
+            messages.success(request,"Gameprofile successfully created !")
+            return HttpResponseRedirect('/') 
+
+def gameprofile_show(request, user_id, gameprofile_id):
+    ''' TODO '''
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = context['gameprofile'].game
+        context['characters'] = Character.objects.all().order_by('name')
+        return render(request, 'versusfinder_app/gameprofile/show.html', context)
+    else:
+        pass  # render error
+
+def gameprofile_edit(request, user_id, gameprofile_id):
+    ''' TODO '''
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = context['gameprofile'].game
+        context['characters'] = Character.objects.all().order_by('name')
+        return render(request, 'versusfinder_app/gameprofile/edit.html', context)
+    else:
+        pass  # render error
+
+def gameprofile_update(request, user_id, gameprofile_id):
+    ''' TODO '''
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            gameprofile = user.get_user_profile()
+
+    else:
+        pass  # render error
 
 
 def match_search(request, user_id, gameprofile_id):
