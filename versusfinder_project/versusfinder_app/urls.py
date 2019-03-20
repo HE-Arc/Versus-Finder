@@ -16,9 +16,12 @@ urlpatterns = [
     path('games/<game_id>/show', views.game_show, name='game.show'),
 
     # Gameprofile
-    path('dashboard/<user_id>/gameprofiles/new/<game_id>/', views.gameprofile_create, name='gameprofile.new'),
-    path('dashboard/<user_id>/gameprofiles/register/<game_id>', views.gameprofile_register, name="gameprofile.register"),
-    #path('dashboard/<user_id>/gameprofiles/show/<game_id>', views.gameprofile_show, name="gameprofile.show"),
+    path('dashboard/<user_id>/gameprofiles/<game_id>/new', views.gameprofile_create, name='gameprofile.new'),
+    path('dashboard/<user_id>/gameprofiles/<game_id>/register', views.gameprofile_register, name="gameprofile.register"),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>', views.gameprofile_show),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/show', views.gameprofile_show, name="gameprofile.show"),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/edit', views.gameprofile_edit, name="gameprofile.edit"),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/update', views.gameprofile_update, name="gameprofile.update"),
 
     # Banlist
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/banlist/modify', views.banlist_modify, name='banlist.modify'),

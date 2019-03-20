@@ -27,6 +27,9 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet'
           media='print'/>
 
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
     <!-- handmade -->
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/checkbox.css' %}"/>
@@ -90,6 +93,15 @@
 
 <main>
     <div id="maindiv">
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
         <div class="container">
             {% block content %}
             {% endblock %}
