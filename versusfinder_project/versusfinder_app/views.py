@@ -86,7 +86,6 @@ def gameprofile_register(request, user_id, game_id):
             user.gameprofile = gameprofile
             user.save()
 
-            # TODO
             messages.success(request,"Gameprofile successfully created !")
             return HttpResponseRedirect('/') 
 
@@ -120,6 +119,20 @@ def gameprofile_update(request, user_id, gameprofile_id):
         if request.method == 'POST':
             user = request.user
             gameprofile = user.get_user_profile()
+            game = gameprofile.game
+
+            try:
+                gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                gameprofile.username = request.POST.get('input_pseudo')
+                gameprofile.skill_level = request.POST.get('input_skill')
+                gameprofile.save()
+
+                messages.error(request,"Error occured while updating !")
+                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}") 
+            except:
+                messages.success(request,"Gameprofile successfully created !")
+                return HttpResponseRedirect('/') 
+
 
     else:
         pass  # render error
