@@ -46,7 +46,8 @@ def dashboard(request, user_id):
         ref_match = datetime.now() + timedelta(days=730)
         next_match = None
         for match in matchs:
-            if match.timetable.date_begin > datetime.now(match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+            if match.timetable.date_begin > datetime.now(
+                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
                 next_match = match
                 ref_match = match.timetable.date_begin
 
@@ -165,10 +166,10 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile.skill_level = request.POST.get('input_skill')
                 gameprofile.save()
 
-                messages.success(request,"Gameprofile successfully created !")
+                messages.success(request, "Gameprofile successfully created !")
                 return redirect('/')
             except:
-                messages.error(request,"Error occured while updating !")
+                messages.error(request, "Error occured while updating !")
                 return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
     else:
         pass  # render error
@@ -243,6 +244,7 @@ def game_show(request, game_id):
         context['gameprofile'] = request.user.get_user_profile()
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
+
 
 def game_search(request):
     if request.user.is_authenticated:
