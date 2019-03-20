@@ -6,6 +6,7 @@ from .models import Game, Character, Match, User, UserGameProfile, UserMatch
 from datetime import datetime
 from django.forms import Form
 
+
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
 # from rest_framework import viewsets
@@ -22,6 +23,7 @@ def home(request):
         context['gameprofile'] = request.user.get_user_profile()
     return render(request, 'versusfinder_app/home.html', context)
 
+
 def gameprofile_create(request, user_id, game_id):
     ''' Block the user from creating a new gameprofile for the selected game, si le profil existe, le redirige vers son profil'''
     if request.user.is_authenticated:
@@ -34,14 +36,15 @@ def gameprofile_create(request, user_id, game_id):
     else:
         pass  # render error
 
+
 def gameprofile_register(request, user_id, game_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
             gameprofile = user.get_user_profile()
-            
+
             # FIXME: to use in case of multi-gameprofiles
-            #for gameprofile in gameprofiles:
+            # for gameprofile in gameprofiles:
             #    if gameprofile.game == game_id:
             #        return HttpResponse("Error : only one profile per game is allowed !")
 
@@ -75,7 +78,7 @@ def gameprofile_register(request, user_id, game_id):
             user.save()
 
             # TODO
-            return HttpResponseRedirect('/newgameprofilecreated/') # Redirect after POST
+            return HttpResponseRedirect('/newgameprofilecreated/')  # Redirect after POST
 
 
 def match_search(request, user_id, gameprofile_id):
@@ -83,10 +86,10 @@ def match_search(request, user_id, gameprofile_id):
 
         if gameprofile_id == -1:
             ''' User has no gameprofile, redirect '''
-            #FIXME:game_id should not be hardcoded
+            # FIXME:game_id should not be hardcoded
             redirect("{% url 'gameprofile.new' game_id=1 %}")
         else:
-            #TODO:finish me
+            # TODO:finish me
             context = {}
             context['user_id'] = request.user.id
             context['gameprofile'] = request.user.get_user_profile()
@@ -94,6 +97,7 @@ def match_search(request, user_id, gameprofile_id):
             return render(request, 'versusfinder_app/search.html', context)
     else:
         pass  # render error
+
 
 def match_show(request, user_id, gameprofile_id, match_id):
     if request.user.is_authenticated:
@@ -109,7 +113,7 @@ def match_show(request, user_id, gameprofile_id, match_id):
 def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
-        context['game'] = None #FIXME:
+        context['game'] = None  # FIXME:
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
         context['banlist'] = context['gameprofile'].banlist.all()
@@ -117,6 +121,7 @@ def banlist_modify(request, user_id, gameprofile_id):
         return render(request, 'versusfinder_app/alterbanlist.html', context)
     else:
         pass  # render error
+
 
 def banlist_alter(request, user_id, gameprofile_id, char_id):
     if request.user.is_authenticated:
@@ -135,7 +140,8 @@ def banlist_alter(request, user_id, gameprofile_id, char_id):
 
             return HttpResponse("Success")
         except:
-            return HttpResponse("Error occured") #send 404
+            return HttpResponse("Error occured")  # send 404
+
 
 def game_show(request, game_id):
     if request.user.is_authenticated:
@@ -144,6 +150,7 @@ def game_show(request, game_id):
         context['gameprofile'] = request.user.get_user_profile()
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
+
 
 # class MatchDetailView(generic.DetailView):
 #    model = Match
@@ -163,6 +170,23 @@ def dashboard(request, user_id):
 
         context['user_matchs'] = user_matchs
         context['today'] = datetime.now().strftime("%Y-%m-%d")
+
+        winlose = []
+        win = 0
+        lose = 0
+        for match in user_matchs:
+            if match.timetable < context['today']:
+                if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
+                    win += 1
+                elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
+                    win += 1
+                else:
+                    lose += 1
+
+        winlose.append(win)
+        winlose.append(lose)
+
+        context['user_stats'] = winlose
 
         return render(request, 'versusfinder_app/dashboard.html', context)
     else:
