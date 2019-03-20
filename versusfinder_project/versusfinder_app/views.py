@@ -91,7 +91,7 @@ def gameprofile_register(request, user_id, game_id):
 
             # Workaround:
             if int(game_id) == int(game.id):
-                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}")
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
 
                 # Build new gameprofile
             gameprofile = UserGameProfile()
@@ -108,7 +108,7 @@ def gameprofile_register(request, user_id, game_id):
             user.save()
 
             messages.success(request, "Gameprofile successfully created !")
-            return HttpResponseRedirect('/')
+            return redirect('/')
 
 
 def gameprofile_show(request, user_id, gameprofile_id):
@@ -151,13 +151,11 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile.skill_level = request.POST.get('input_skill')
                 gameprofile.save()
 
-                messages.error(request,"Error occured while updating !")
-                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}")
-            except:
                 messages.success(request,"Gameprofile successfully created !")
-                return HttpResponseRedirect('/')
-
-
+                return redirect('/')
+            except:
+                messages.error(request,"Error occured while updating !")
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
     else:
         pass  # render error
 
@@ -168,7 +166,7 @@ def match_search(request, user_id, gameprofile_id):
         if gameprofile_id == -1:
             ''' User has no gameprofile, redirect '''
             # FIXME:game_id should not be hardcoded
-            redirect("{% url 'gameprofile.new' game_id=1 %}")
+            redirect('gameprofile.new', game_id=1)
         else:
             # TODO:finish me
             context = {}
@@ -231,3 +229,9 @@ def game_show(request, game_id):
         context['gameprofile'] = request.user.get_user_profile()
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
+
+def game_search(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        pass
