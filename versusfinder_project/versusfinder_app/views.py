@@ -46,7 +46,7 @@ def dashboard(request, user_id):
         win = 0
         lose = 0
         for match in user_matchs:
-            if match.timetable < context['today']:
+            if match.timetable.date_end < datetime.now(match.timetable.date_end.tzinfo):
                 if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
                     win += 1
                 elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
