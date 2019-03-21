@@ -245,7 +245,6 @@ def game_show(request, game_id):
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
 
-<<<<<<< HEAD
 def timetable(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
