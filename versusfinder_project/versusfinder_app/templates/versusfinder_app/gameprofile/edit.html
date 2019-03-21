@@ -17,7 +17,7 @@
   <label for="input_character">
     <select id="input_character" name="input_character">
         {% for character in characters %}
-          <option value="{{character.id}} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} ">
+          <option value="{{ character.id }} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} ">
             {{ character.name }}
           </option>
         {% endfor %}

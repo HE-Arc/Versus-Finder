@@ -4,6 +4,7 @@ from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
 from datetime import datetime
+from datetime import timedelta
 from django.forms import Form
 from django.contrib import messages
 from random import randint
@@ -42,11 +43,24 @@ def dashboard(request, user_id):
         context['user_matchs'] = user_matchs
         context['today'] = datetime.now().strftime("%Y-%m-%d")
 
+        ref_match = datetime.now() + timedelta(days=730)
+        next_match = None
+        for match in matchs:
+            if match.timetable.date_begin > datetime.now(
+                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                next_match = match
+                ref_match = match.timetable.date_begin
+
+        if next_match != None:
+            context['next_match'] = next_match
+
+        old_matchs = []
         winlose = []
         win = 0
         lose = 0
         for match in user_matchs:
             if match.timetable.date_end < datetime.now(match.timetable.date_end.tzinfo):
+                old_matchs.append(match)
                 if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
                     win += 1
                 elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
@@ -58,6 +72,7 @@ def dashboard(request, user_id):
         winlose.append(lose)
 
         context['user_stats'] = winlose
+        context['user_old_matchs'] = old_matchs
 
         return render(request, 'versusfinder_app/dashboard.html', context)
     else:
@@ -91,7 +106,7 @@ def gameprofile_register(request, user_id, game_id):
 
             # Workaround:
             if int(game_id) == int(game.id):
-                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}")
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
 
                 # Build new gameprofile
             gameprofile = UserGameProfile()
@@ -108,7 +123,7 @@ def gameprofile_register(request, user_id, game_id):
             user.save()
 
             messages.success(request, "Gameprofile successfully created !")
-            return HttpResponseRedirect('/')
+            return redirect('/')
 
 
 def gameprofile_show(request, user_id, gameprofile_id):
@@ -151,13 +166,11 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile.skill_level = request.POST.get('input_skill')
                 gameprofile.save()
 
-                messages.error(request,"Error occured while updating !")
-                return HttpResponseRedirect("{% url 'gameprofile.edit' user_id=user.id gameprofile_id=game.id %}")
+                messages.success(request, "Gameprofile successfully created !")
+                return redirect('/')
             except:
-                messages.success(request,"Gameprofile successfully created !")
-                return HttpResponseRedirect('/')
-
-
+                messages.error(request, "Error occured while updating !")
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
     else:
         pass  # render error
 
@@ -168,7 +181,7 @@ def match_search(request, user_id, gameprofile_id):
         if gameprofile_id == -1:
             ''' User has no gameprofile, redirect '''
             # FIXME:game_id should not be hardcoded
-            redirect("{% url 'gameprofile.new' game_id=1 %}")
+            redirect('gameprofile.new', game_id=1)
         else:
             # TODO:finish me
             context = {}
@@ -232,6 +245,7 @@ def game_show(request, game_id):
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
 
+<<<<<<< HEAD
 def timetable(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
@@ -258,3 +272,9 @@ def timetable_new(request, user_id, gameprofile_id):
 
             messages.success(request, "Timetable successfully created !")
             return redirect("dashboard", user_id=user.id)
+
+def game_search(request):
+    if request.user.is_authenticated:
+        pass
+    else:
+        pass

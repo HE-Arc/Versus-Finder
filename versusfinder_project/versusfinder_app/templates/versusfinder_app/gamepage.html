@@ -3,9 +3,9 @@
 {% block title %}GamePage{% endblock %}
 
 {% block content %}
-    Hi ???, vous trouverez ??? !
+    <h1 class="display-1">Super Smash Bros Ultimate</h1>
     <div>
-        <a href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Rechercher un adversaire !</a>
+        <a class="btn btn-primary btn-lg btn-block" href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Rechercher un adversaire !</a>
     </div>
     <div>
         <p>Les matchs à venir</p>

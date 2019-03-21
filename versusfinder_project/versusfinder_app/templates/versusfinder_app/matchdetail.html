@@ -3,9 +3,8 @@
 {% block title %}Match Detail{% endblock %}
 
 {% block content %}
-    <div>
-        <p>Match Detail</p>
-    </div>
+    <h1 class="display-1">Match Detail</h1>
+    <hr>
     <div>
         {% load static %}
         <table style="margin: auto;">
@@ -25,7 +24,7 @@
                     </div>
                 </td>
 
-                <td>
+                <td align="center">
                     <img src="{% static '' %}img/vs.png"/>
                     <h2>BEGIN AT : {{ date_begin }}</h2>
                     <h2>END AT : {{ date_end }}</h2>
