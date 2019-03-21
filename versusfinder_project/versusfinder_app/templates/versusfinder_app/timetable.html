@@ -3,18 +3,26 @@
 {% block title %}Timetable{% endblock %}
 
 {% block content %}
-<form action="{% url 'timetable.new' user_id=user_id gameprofile_id=gameprofile.id %}" method="post" class="form-example">
-{% csrf_token %}
-  <div class="form-example">
-    <label for="date_begin">Date begin</label>
-    <input type="datetime-local" name="date_begin" id="date_begin" required>
-  </div>
-  <div class="form-example">
-    <label for="date_end">Date end</label>
-    <input type="datetime-local" name="date_end" id="date_end" required>
-  </div>
-  <div class="form-example">
-    <input type="submit" value="Subscribe!">
-  </div>
-</form>
+    <div class="card" style="margin: 0 auto; float: none; margin-bottom: 10px;">
+        <div class="card-header">
+            New timetable
+        </div>
+        <div class="card-body">
+            <form action="{% url 'timetable.new' user_id=user_id gameprofile_id=gameprofile.id %}" method="post"
+                  class="form-example">
+                {% csrf_token %}
+                <div class="form-example">
+                    <label for="date_begin">Date begin</label>
+                    <input type="datetime-local" name="date_begin" id="date_begin" required>
+                </div>
+                <div class="form-example">
+                    <label for="date_end">Date end</label>
+                    <input type="datetime-local" name="date_end" id="date_end" required>
+                </div>
+                <div class="form-example">
+                    <input type="submit" value="Subscribe!">
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}
