@@ -117,7 +117,8 @@
                         title: '{{ match.user_profile_one.username }} VS {{ match.user_profile_two.username }}',
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated}}',
-                        rendering: 'background'
+                        rendering: 'background',
+                        url: '{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}'
                     },
                 {% endfor %}
             ]

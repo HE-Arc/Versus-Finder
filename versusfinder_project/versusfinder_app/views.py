@@ -109,8 +109,8 @@ def gameprofile_register(request, user_id, game_id):
             #        return HttpResponse("Error : only one profile per game is allowed !")
 
             # Workaround:
-            if user.get_user_profile:
-                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
+            #if user.get_user_profile:
+            #    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
 
                 # Build new gameprofile
             gameprofile = UserGameProfile()
@@ -269,17 +269,24 @@ def match_show(request, user_id, gameprofile_id, match_id):
 
 def match_alterscore(request, user_id, gameprofile_id, match_id):
     if request.user.is_authenticated:
-        match = Match.objects.get(id=match_id)
-        if request.user.get_user_profile == match.user_profile_one or request.user.get_user_profile == match.user_profile_two:
-            if match.user_one_score != 3 and match.user_two_score != 3:
-                data = request.POST.copy()
-                score_player_1 = data.get('score_player_1')
-                score_player_2 = data.get('score_player_2')
-                match.user_one_score = score_player_1
-                match.user_two_score = score_player_2
-                return redirect('dashboard/'+user_id+'/gameprofiles/'+gameprofile_id+'/matchs/'+match_id+'/show')
+        if request.method == 'POST':
+            match = Match.objects.get(id=match_id)
+            if int(gameprofile_id) == match.user_profile_one.id or int(gameprofile_id) == match.user_profile_two.id:
+                if match.user_one_score != 3 and match.user_two_score != 3:
+                    data = request.POST.copy()
+                    score_player_1 = data.get('score_player_1')
+                    score_player_2 = data.get('score_player_2')
+                    match.user_one_score = score_player_1
+                    match.user_two_score = score_player_2
+                    match.save()
+                    messages.success(request, "Score successfully changed !")
+                    return redirect('/dashboard/'+user_id+'/gameprofiles/'+gameprofile_id+'/matchs/'+match_id+'/show')
+            else:
+                print("CUL")
+        else:
+            print("LEL")
     else:
-        pass
+        print("LOL")
 
 def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
