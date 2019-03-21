@@ -35,23 +35,20 @@
         $('#calendar').fullCalendar({
             plugins: ['interaction', 'dayGrid', 'timeGrid'],
             navLinks: true,
-            defaultView: 'agendaWeek',
+            defaultView: 'month',
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'agendaDay,agendaWeek,month'
             },
-  navLinkDayClick: function(date, jsEvent) {
-    console.log('day', date.toISOString());
-    console.log('coords', jsEvent.pageX, jsEvent.pageY);
-  },
             events: [
                 {% for match in matchs %}
                     {
-                        title: '{{ match.id }}',
+                        title: '{{ match.user_profile_one.username }} VS {{  match.user_profile_two.username }}',
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated}}',
                         rendering: 'background',
+                        color: '#ff0000',
                         url: '{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}'
                     },
 

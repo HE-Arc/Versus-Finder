@@ -32,7 +32,7 @@ urlpatterns = [
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
 
     # Timetables
-    #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),
-    #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),    
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable', views.timetable, name='timetable'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable/new', views.timetable_new, name='timetable.new'),
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

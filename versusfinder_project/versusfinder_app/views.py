@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic, View
 from django.urls import reverse_lazy
-from .models import Game, Character, Match, User, UserGameProfile, UserMatch
+from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
 from datetime import datetime
 from django.forms import Form
 from django.contrib import messages
@@ -231,3 +231,30 @@ def game_show(request, game_id):
         context['gameprofile'] = request.user.get_user_profile()
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
+
+def timetable(request, user_id, gameprofile_id):
+    if request.user.is_authenticated:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = request.user.get_user_profile()
+        return render(request, 'versusfinder_app/timetable.html', context)
+
+def timetable_new(request, user_id, gameprofile_id):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            gameprofile = user.get_user_profile()
+
+            # Build new timetable
+            timetable = Timetable()
+            timetable.date_begin = request.POST.get('date_begin')
+            timetable.date_end = request.POST.get('date_end')
+            timetable.save()
+
+            gameprofile.timetables.add(timetable)
+            gameprofile.save()
+
+            user.save()
+
+            messages.success(request, "Timetable successfully created !")
+            return redirect("dashboard", user_id=user.id)

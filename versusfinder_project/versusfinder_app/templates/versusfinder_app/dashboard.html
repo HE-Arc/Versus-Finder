@@ -47,7 +47,7 @@
         </table>
     </div>
     <div>
-        <a href="#">Nouvelle disponiblité</a>
+       <a href="{% url 'timetable' user_id=user_id gameprofile_id=gameprofile.id%}">Nouvelle disponibilité</a>
     </div>
 
     <div id="calendar">
@@ -65,7 +65,7 @@
                         "#00FF00",
                         "#FF0000"
                     ],
-                    data: [{% for stat in user_stats %}{{ stat }},{% endfor %}]
+                    data: [{% for stat in user_stats %}{{ stat }}, {% endfor %}]
                 }]
             }
         });
@@ -76,7 +76,7 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'agendaWeek,agendaDay'
+                right: 'agendaDay,  agendaWeek,month'
             },
             events: [
                 {% for timetable in user_timetable %}
