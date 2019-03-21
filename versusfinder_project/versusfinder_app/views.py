@@ -7,6 +7,7 @@ from datetime import datetime
 from django.forms import Form
 from django.contrib import messages
 from random import randint
+from django.db.models import Q
 
 
 # from django.contrib.auth.models import User
@@ -166,16 +167,75 @@ def match_search(request, user_id, gameprofile_id):
         if gameprofile_id == -1:
             ''' User has no gameprofile, redirect '''
             # FIXME:game_id should not be hardcoded
-            redirect('gameprofile.new', game_id=1)
+            return redirect('gameprofile.new', game_id=1)
         else:
             # TODO:finish me
             context = {}
             context['user_id'] = request.user.id
             context['gameprofile'] = request.user.get_user_profile()
-            context['characters'] = Character.objects.all().order_by('name')
             return render(request, 'versusfinder_app/search.html', context)
     else:
         pass  # render error
+
+def search_process(request, user_id, gameprofile_id):
+    ''' returns a list of opponents '''
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+
+            user = request.user
+            gameprofile = user.get_user_profile()
+
+            skill_min = int(request.POST.get('skill_min'))
+            skill_max = int(request.POST.get('skill_max'))
+            time_begin = request.POST.get('input_hour_begin')
+            time_end = request.POST.get('input_hour_end')
+            date = request.POST.get('input_date')
+
+            # Split time into hour and minutes
+            time_begin_hour = time_begin[:2]
+            time_begin_minute = time_begin[3:]
+
+            time_end_hour = time_end[:2]
+            time_end_minute = time_end[3:]
+
+            # Validate times
+            if time_begin_hour > time_end_hour and time_begin_minute >= time_end_minute:
+                return HttpResponse("Error !")
+
+            # Exclude opponents that banned the user main character
+            opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
+            valid_opponents = []
+
+            # now fetch opponents
+            for opponent in opponents:
+                # Remove those who are playing a character banned by the player
+                if opponent.mainchar in gameprofile.banlist.all():
+                    continue #User doesn't want to play againt this character
+                
+                # Remove those who do not match the skill requirements
+                if opponent.skill_level < skill_min or opponent.skill_level > skill_max :
+                    continue #User doesn't want to play againt this character
+
+                # Date
+                opponent_timetables = opponent.timetables
+                begin_date = opponent_timetables.getDateBeginFormated()
+                end_date = opponent_timetables.getDateEndFormated()
+
+                # TODO: Remove those who are not available at the given date
+
+                # TODO: Remove those who are not available at the given time slot
+
+                # Opponent is valid
+                valid_opponents.append(opponent)
+
+            # TODO: UPDATE TIMETABLES
+
+            if not valid_opponents:
+                return HttpResponse("Not opponent found !")
+            else:
+                return valid_opponents #FIXME : JSONResponse ?
+
+    return HttpResponse("Error occured !")
 
 
 def match_show(request, user_id, gameprofile_id, match_id):

@@ -17,6 +17,8 @@
         }
         });
         $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
+        $( "#skill_min").val($( "#slider-range" ).slider( "values", 0 ))
+        $( "#skill_max").val($( "#slider-range" ).slider( "values", 1 ))
     } );
 </script>
 
@@ -30,42 +32,40 @@
             name="Submit" id="redirect_submit" />
     </form>
 
-    <div>
-        <label for="input_character">
-            <select id="input_character">
-                {% for character in characters %}
-                <option value="{{character.id}}">
-                    {{ character.name }}
-                </option>
-                {% endfor %}
-            </select>
-            Opponent searched
-        </label>
-    </div>
+    <form method="POST" action="{% url 'search.process' user_id=user_id gameprofile_id=gameprofile.id %}">
+        {% csrf_token %}
 
-    <div>
-        <p>
-            <label for="amount">Skill range:</label>
-            <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-        </p>
-        <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
-    </div>
+        <div>
+            <p>
+                <label for="amount">Skill range:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+            <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
+            <input type="hidden" id="skill_min" name="skill_min"/>
+            <input type="hidden" id="skill_max" name="skill_max"/>
+        </div>
 
-    <div>
-        <label>
-            <input type="time" id="input_hour" name="input_hour" min="0:00" max="24:00" required>
-            Hour
-        </label>
-    </div>
+        <div>
+            <label>
+                <input type="time" id="input_hour_begin" name="input_hour_begin" min="0:00" max="24:00" required>
+                Hour (begin)
+            </label>
+            </br>
+            <label>
+                <input type="time" id="input_hour_end" name="input_hour_end" min="0:00" max="24:00" required>
+                Hour (end)
+            </label>
+        </div>
 
-    <div>
-        <label>
-            <input type="date" id="input_date" name="input_date" min="2019-01-01">
-            Date
-        </label>
-    </div>
+        <div>
+            <label>
+                <input type="date" id="input_date" name="input_date" min="2019-01-01">
+                Date
+            </label>
+        </div>
 
-    <button type="submit">Search</button>
+        <button type="submit">Search</button>
+    </form>
 
     <div>
         <!-- CALENDAR -->

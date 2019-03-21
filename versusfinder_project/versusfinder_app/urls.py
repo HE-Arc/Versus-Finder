@@ -30,8 +30,9 @@ urlpatterns = [
 
     # Matches
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search', views.match_search, name='match.search'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search/process', views.search_process, name='search.process'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
-
+    
     # Timetables
     #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),
     #path('dashboard/timetable/new', views.TimetableView.as_view(), name='timetable-new'),    
