@@ -12,21 +12,6 @@
         <p>Les matchs à venir</p>
     </div>
 
-    <div>
-        {% for match in matchs %}
-            <p>
-                <a href="{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}">Match {{ match.id }}</a>
-            </p>
-            <p>Joueur 1 : {{ match.user_profile_one.username }}</p>
-            {% for char in match.user_profile_one.banlist.all %}
-                <p>Character ban : {{ char }}</p>
-            {% empty %}
-                Aucun ban!
-            {% endfor %}
-            <p>Joueur 2 : {{ match.user_profile_two.username }}</p>
-        {% endfor %}
-    </div>
-
     <div id="calendar">
 
     </div>
@@ -34,25 +19,30 @@
 
     <script>
         $('#calendar').fullCalendar({
-            defaultDate: '2019-03-14',
-            defaultView: 'agendaWeek',
+            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+            navLinks: true,
+            defaultView: 'month',
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'agendaWeek,agendaDay'
+                right: 'agendaDay,agendaWeek,month'
             },
             events: [
                 {% for match in matchs %}
                     {
-                        title: 'My Event',
+                        title: '{{ match.user_profile_one.username }} VS {{  match.user_profile_two.username }}',
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated}}',
-                        rendering: 'background'
+                        rendering: 'background',
+                        color: '#ff0000',
+                        url: '{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}'
                     },
+
                 {% endfor %}
 
-            ]
-        });
+        ]
+        })
+        ;
     </script>
 
 {% endblock %}
