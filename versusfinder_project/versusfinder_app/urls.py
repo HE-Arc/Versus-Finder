@@ -30,11 +30,12 @@ urlpatterns = [
 
     # Matches
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search', views.match_search, name='match.search'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search/process', views.search_process, name='search.process'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/alter_score', views.match_alterscore, name='match.alterscore'),
 
     # Timetables
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable', views.timetable, name='timetable'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable/new', views.timetable_new, name='timetable.new'),
-    
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
