@@ -5,7 +5,8 @@
 {% block content %}
     <h1 class="display-1">Super Smash Bros Ultimate</h1>
     <div>
-        <a class="btn btn-primary btn-lg btn-block" href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Rechercher un adversaire !</a>
+        <a class="btn btn-primary btn-lg btn-block"
+           href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Rechercher un adversaire !</a>
     </div>
     <div>
         <p>Les matchs à venir</p>
@@ -13,7 +14,9 @@
 
     <div>
         {% for match in matchs %}
-            <p><a href="{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}">Match {{ match.id }}</a></p>
+            <p>
+                <a href="{% url 'match.show' user_id=user_id gameprofile_id=gameprofile.id match_id=match.id %}">Match {{ match.id }}</a>
+            </p>
             <p>Joueur 1 : {{ match.user_profile_one.username }}</p>
             {% for char in match.user_profile_one.banlist.all %}
                 <p>Character ban : {{ char }}</p>
@@ -41,7 +44,7 @@
             events: [
                 {% for match in matchs %}
                     {
-                        title:  'My Event',
+                        title: 'My Event',
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated}}',
                         rendering: 'background'

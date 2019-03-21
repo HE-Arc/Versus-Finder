@@ -28,6 +28,27 @@
                     <img src="{% static '' %}img/vs.png"/>
                     <h2>BEGIN AT : {{ date_begin }}</h2>
                     <h2>END AT : {{ date_end }}</h2>
+                    <hr>
+                    <h3>Score</h3>
+                    <!-- could be abuse by sore loser
+                    protect it by send a request to the other player of the match to confirm the score -->
+                    {% if gameprofile.id == match.user_profile_one.id or gameprofile.id == match.user_profile_two %}
+                        {% if match.user_one_score != 3 and match.user_profile_two != 3 %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <input id="score_player_1" name="score_player_1" type="number"
+                                       placeholder="Score of {{ match.user_profile_one.username }}"
+                                       step="1" min="0" max="3" value="{{ match.user_one_score }}">
+                                <input id="score_player_2" name="score_player_2" type="number"
+                                       placeholder="Score of {{ match.user_profile_two.username }}"
+                                       step="1" min="0" max="3" value="{{ match.user_two_score }}">
+                                <input type="submit" value="Validate">
+                            </form>
+                        {% else %}
+                            <h4>{{ match.user_profile_one.username }} : {{ match.user_one_score }}</h4>
+                            <h4>{{ match.user_profile_two.username }} : {{ match.user_two_score }}</h4>
+                        {% endif %}
+                    {% endif %}
                 </td>
 
                 <td>

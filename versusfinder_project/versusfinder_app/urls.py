@@ -31,6 +31,7 @@ urlpatterns = [
     # Matches
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search', views.match_search, name='match.search'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/alter_score', views.match_alterscore, name='match.alterscore'),
 
     # Timetables
     #path('dashboard/timetable', views.TimetableView.as_view(), name='timetable'),

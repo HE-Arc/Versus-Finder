@@ -60,10 +60,6 @@
                     {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'match.search' user_id=user_id gameprofile_id=gameprofile.id %}">Search
-                        Match</a>
-                </li>
-                <li class="nav-item">
                     <!-- FIXME: game_id should not be hardcoded -->
                     <a class="nav-link" href="{% url 'game.show' game_id=1 %}">SSBU</a>
                 </li>
@@ -96,11 +92,11 @@
     <div id="maindiv">
 
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
 
         <div class="container">

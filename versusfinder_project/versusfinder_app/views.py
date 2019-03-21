@@ -23,7 +23,10 @@ def home(request):
     context = {}
     if request.user.is_authenticated:
         context['user_id'] = request.user.id
-        context['gameprofile'] = request.user.get_user_profile()
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass
     return render(request, 'versusfinder_app/home.html', context)
 
 
@@ -85,7 +88,7 @@ def gameprofile_create(request, user_id, game_id):
         context = {}
         context['user_id'] = request.user.id
         context['game'] = Game.objects.get(id=game_id)
-        context['gameprofile'] = request.user.get_user_profile()
+        #context['gameprofile'] = request.user.get_user_profile()
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/gameprofile/new.html', context)
     else:
@@ -96,8 +99,8 @@ def gameprofile_register(request, user_id, game_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
-            gameprofile = user.get_user_profile()
-            game = gameprofile.game
+            #gameprofile = user.get_user_profile()
+            #game = gameprofile.game
 
             # FIXME: to use in case of multi-gameprofiles
             # for gameprofile in gameprofiles:
@@ -105,13 +108,13 @@ def gameprofile_register(request, user_id, game_id):
             #        return HttpResponse("Error : only one profile per game is allowed !")
 
             # Workaround:
-            if int(game_id) == int(game.id):
-                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
+            if user.get_user_profile:
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
 
                 # Build new gameprofile
             gameprofile = UserGameProfile()
             gameprofile.user = user
-            gameprofile.game = game
+            gameprofile.game = Game.objects.get(id=game_id)
             gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
             gameprofile.username = request.POST.get('input_pseudo')
             gameprofile.battletag = randint(1000, 9999)
@@ -144,8 +147,8 @@ def gameprofile_edit(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
         context['user_id'] = request.user.id
-        context['gameprofile'] = request.user.get_user_profile()
-        context['game'] = context['gameprofile'].game
+        context['gameprofile'] = UserGameProfile.objects.get(id=gameprofile_id)
+        context['game'] = 1
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/gameprofile/edit.html', context)
     else:
@@ -157,7 +160,7 @@ def gameprofile_update(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
-            gameprofile = user.get_user_profile()
+            gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
             game = gameprofile.game
 
             try:
@@ -203,6 +206,20 @@ def match_show(request, user_id, gameprofile_id, match_id):
         context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
+
+def match_alterscore(request, user_id, gameprofile_id, match_id):
+    if request.user.is_authenticated:
+        match = Match.objects.get(id=match_id)
+        if request.user.get_user_profile == match.user_profile_one or request.user.get_user_profile == match.user_profile_two:
+            if match.user_one_score != 3 and match.user_two_score != 3:
+                data = request.POST.copy()
+                score_player_1 = data.get('score_player_1')
+                score_player_2 = data.get('score_player_2')
+                match.user_one_score = score_player_1
+                match.user_two_score = score_player_2
+                return redirect('dashboard/'+user_id+'/gameprofiles/'+gameprofile_id+'/matchs/'+match_id+'/show')
+    else:
+        pass
 
 def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
