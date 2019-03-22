@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
-from datetime import datetime
-from datetime import timedelta
+import datetime
+import time
 from django.forms import Form
 from django.contrib import messages
 from random import randint
@@ -200,9 +200,11 @@ def search_process(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
 
+            # Get data from uri
             user = request.user
-            gameprofile = user.get_user_profile()
+            gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
 
+            # Get data from form
             skill_min = int(request.POST.get('skill_min'))
             skill_max = int(request.POST.get('skill_max'))
             time_begin = request.POST.get('input_hour_begin')
@@ -210,15 +212,25 @@ def search_process(request, user_id, gameprofile_id):
             date = request.POST.get('input_date')
 
             # Split time into hour and minutes
-            time_begin_hour = time_begin[:2]
-            time_begin_minute = time_begin[3:]
+            user_begin_time = datetime.time(int(time_begin[:2]), int(time_begin[3:]))
+            user_end_time = datetime.time(int(time_end[:2]), int(time_end[3:]))
 
-            time_end_hour = time_end[:2]
-            time_end_minute = time_end[3:]
+            # Process date
+            user_begin_year = int(date[:4])
+            user_begin_month= int(date[5:7])
+            user_begin_day  = int(date[8:])
 
-            # Validate times
-            if time_begin_hour > time_end_hour and time_begin_minute >= time_end_minute:
-                return HttpResponse("Error !")
+            user_end_year = int(date[:4])
+            user_end_month= int(date[5:7])
+            user_end_day  = int(date[8:])
+
+            # Build datetime
+            user_date_begin = datetime.datetime(user_begin_year, user_begin_month, user_begin_day, user_begin_time.hour, user_begin_time.minute)
+            user_date_end = datetime.datetime(user_end_year, user_end_month, user_end_day, user_end_time.hour, user_end_time.minute)
+
+            # Validate time fields
+            if user_date_end < user_date_begin:
+                return HttpResponse("Error ! time fields are not coherent")
 
             # Exclude opponents that banned the user main character
             opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
@@ -236,17 +248,15 @@ def search_process(request, user_id, gameprofile_id):
 
                 # Date
                 opponent_timetables = opponent.timetables
-                begin_date = opponent_timetables.getDateBeginFormated()
-                end_date = opponent_timetables.getDateEndFormated()
 
-                # TODO: Remove those who are not available at the given date
+                # Check if datetimes are valid
+                if opponent_timetables.date_begin < user_date_end and opponent_timetables.date_end > user_date_begin:
+                    # Opponent is valid
+                    valid_opponents.append(opponent)
+                else:
+                    continue # Remove those who are not available at the given date                    
 
-                # TODO: Remove those who are not available at the given time slot
-
-                # Opponent is valid
-                valid_opponents.append(opponent)
-
-            # TODO: UPDATE TIMETABLES
+            # TODO: UPDATE TIMETABLES (depuis la vue des résultats de la recherche)
 
             if not valid_opponents:
                 return HttpResponse("Not opponent found !")

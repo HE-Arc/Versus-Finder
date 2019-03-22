@@ -12,23 +12,30 @@
     {% bootstrap_javascript jquery='full' %}
 
     <!-- jQuery -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <!-- jQueryUI -->
+    <script type="text/javascript" src="{% static 'css/jquery-ui.css' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'css/jquery-ui.min.css' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'css/jquery-ui.structure.css' %}"></script>
+    <script type="text/javascript" src="{% static 'css/jquery-ui.structure.min.css' %}"></script>
+    <script type="text/javascript" src="{% static 'css/jquery-ui.theme.css' %}"></script>
+    <script type="text/javascript" src="{% static 'css/jquery-ui.theme.min.css' %}"></script>
 
     <!-- Calendar -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+    <script type="text/javascript" src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
     <!--<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>-->
     <!--<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>-->
-    <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+    <script type="text/javascript" src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet'/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet'
-          media='print'/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
 
     <!-- Chart.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
     <!-- handmade -->
     <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>

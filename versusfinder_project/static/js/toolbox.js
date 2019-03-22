@@ -38,6 +38,4 @@ class Toolbox
         }
         return cookieValue;
     }
-
-    static sendForm(uri)
 }

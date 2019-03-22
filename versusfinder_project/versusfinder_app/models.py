@@ -42,7 +42,7 @@ class Timetable(models.Model):
         return self.date_end.strftime("%Y-%m-%dT%H:%M:%S")
 
     def __str__(self):
-        return "Start at : {0} | end at : {1}".format([+self.date_begin.strftime("%Y-%m-%d %H:%M:%S"), self.date_end.strftime("%Y-%m-%d %H:%M:%S")])
+        return "Start at : {0} | end at : {1}".format([self.date_begin.strftime("%Y-%m-%d %H:%M:%S"), self.date_end.strftime("%Y-%m-%d %H:%M:%S")])
 
 #class UserCharacterBanList(models.Model):
     #    character = models.ForeignKey(Character, on_delete=models.CASCADE)
