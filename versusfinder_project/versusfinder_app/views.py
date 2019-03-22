@@ -4,6 +4,8 @@ from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
 import datetime
+from datetime import datetime
+from datetime import timedelta
 import time
 from django.forms import Form
 from django.contrib import messages
