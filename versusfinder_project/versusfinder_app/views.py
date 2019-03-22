@@ -271,6 +271,8 @@ def match_alterscore(request, user_id, gameprofile_id, match_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             match = Match.objects.get(id=match_id)
+            gameprofile = request.user.get_user_profile
+            print(gameprofile.pk)
             if int(gameprofile_id) == match.user_profile_one.id or int(gameprofile_id) == match.user_profile_two.id:
                 if match.user_one_score != 3 and match.user_two_score != 3:
                     data = request.POST.copy()
