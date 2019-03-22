@@ -184,10 +184,8 @@ def match_search(request, user_id, gameprofile_id):
 
         if gameprofile_id == -1:
             ''' User has no gameprofile, redirect '''
-            # FIXME:game_id should not be hardcoded
-            return redirect('gameprofile.new', game_id=1)
+            return redirect('gameprofile.new', game_id=gameprofile_id.game.id)
         else:
-            # TODO:finish me
             context = {}
             context['user_id'] = request.user.id
             context['gameprofile'] = request.user.get_user_profile()
@@ -367,9 +365,3 @@ def timetable_new(request, user_id, gameprofile_id):
 
             messages.success(request, "Timetable successfully created !")
             return redirect("dashboard", user_id=user.id)
-
-def game_search(request):
-    if request.user.is_authenticated:
-        pass
-    else:
-        pass
