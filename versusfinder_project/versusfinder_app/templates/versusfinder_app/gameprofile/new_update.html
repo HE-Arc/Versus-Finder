@@ -5,48 +5,66 @@
 
 {% block content %}
 
-{% if gameprofile is None %}
-<h2>New profile for {{ game.name }}</h2>
-{% else %}
-<h2>Update profile for {{ game.name }}</h2>
-{% endif %}
 
-<form method="post" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
 
-  {% csrf_token %}
+<div style="padding:30px">
+  <div class="card">
+    <div  class="card-header">
+      {% if gameprofile is None %}
+        <h2>New profile for {{ game.name }}</h2>
+      {% else %}
+        <h2>Update profile for {{ game.name }}</h2>
+      {% endif %}
+    </div>
+    <div class="card-body">
 
-  <div class="form-group">
-    <label for="input_pseudo">
-      <input type="text" class="form-control" name="input_pseudo" id="input_pseudo" {% if gameprofile is not None %} value="{{ gameprofile.username }}" {% endif %}/>
-      Pseudo
-    </label>
+      <!-- Banlist button -->
+      {% if gameprofile is not None %}
+      <div style="padding: 10px 10px 50px 10px;">
+        <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="get">
+          <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+        </form>
+      </div>
+      {% endif %}
+      <!-- END OF Banlist button -->
+
+      <div class="card-text">
+        <form method="post" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
+          {% csrf_token %}
+
+          <div class="form-group row">
+            <label for="input_pseudo" class="col-sm-2 col-form-label col-form-label-lg">Pseudo</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control form-control-lg" id="input_pseudo" id="input_pseudo" {% if gameprofile is not None %} value="{{ gameprofile.username }}" {% endif %}>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="input_character" class="col-sm-2 col-form-label col-form-label-lg">Main</label>
+            <div class="col-sm-10">
+              <select id="input_character" class="form-control form-control-lg" name="input_character">
+                  {% for character in characters %}
+                    <option value="{{character.id}}" {% if gameprofile is not None %} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} {% endif %}>
+                      {{ character.name }}
+                    </option>
+                  {% endfor %}
+              </select> 
+            </div>
+          </div>
+
+          <div class="form-group row">
+              <label for="input_skill" class="col-sm-2 col-form-label col-form-label-lg">Skill</label>
+              <div class="col-sm-10">
+                <input type="range" min="1" max="10" class="form-control form-control-lg slider" id="input_skill" id="input_skill" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %} >
+              </div>
+            </div>
+
+          <blockquote class="blockquote mb-0">
+            <button class="btn btn-primary btn-lg" type="submit"> {% if gameprofile is None %}New profil{% else %}Update{% endif %}</button>
+          </blockquote>
+        </form>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label for="input_character">
-      <select id="input_character" class="form-control" name="input_character">
-          {% for character in characters %}
-            <option value="{{character.id}}" {% if gameprofile is not None %} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} {% endif %}>
-              {{ character.name }}
-            </option>
-          {% endfor %}
-      </select> 
-      Character played
-    </label>
-  </div>
-
-  <div class="form-group">
-    <label for="input_skill">
-      <input id="input_skill" class="form-control slider" name="input_skill" type="range" min="1" max="10" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %}>
-      Competence level
-    </label>
-  </div>
-  
-  {% if gameprofile is None %}
-  <button type="submit">New profil</button>
-  {% else %}
-  <button type="submit">Update</button>
-  {% endif %}
-
-</form>
+</div>
 {% endblock %}

@@ -67,8 +67,6 @@
                         <a class="nav-link" href="{% url 'dashboard' user_id=user_id %}">Dashboard</a>
                     {% endif %}
                 </li>
-                <li class="nav-item">
-                    <!-- FIXME: game_id should not be hardcoded -->
                     <a class="nav-link" href="{% url 'game.show' game_id=1 %}">SSBU</a>
                 </li>
                 </ul>
@@ -101,12 +99,14 @@
 
         <!-- Display messages -->
         {% if messages %}
+        <div style="position: absolute">
             {% for message in messages %}
             <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} alert-dismissible fade show">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 {{ message }}
             </div>
             {% endfor %}
+        </div>
         {% endif %}
         <!-- END OF MESSAGES -->
 

@@ -319,21 +319,23 @@ def banlist_alter(request, user_id, gameprofile_id, char_id):
         try:
             char_to_alter = Character.objects.get(id=char_id)
             profile_to_update = UserGameProfile.objects.get(id=gameprofile_id)
+            character_is_banned = char_to_alter in profile_to_update.banlist.all()
 
-            if char_to_alter in profile_to_update.banlist.all():
-                ''' remove it from the banlist '''
+            if character_is_banned:
+                # Remove character to gameprofile's banlist
                 profile_to_update.banlist.remove(char_to_alter)
-                profile_to_update.banlist.save()
+                messages.success(request, "Character "+char_to_alter.name+" succesfully unbanned !")
             else:
-                ''' insert into the banlist '''
+                # Add character to gameprofile's banlist
                 profile_to_update.banlist.add(char_to_alter)
-                profile_to_update.banlist.save()
+                messages.success(request, "Character "+char_to_alter.name+" succesfully banned !")
 
-
-            messages.success(request, "Gameprofile successfully updated !")
-            return redirect('/')
+            # Save gameprofile
+            profile_to_update.banlist.save()
+            
+            return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
         except:
-            messages.error(request, "Error occured while banning !")
+            messages.error(request, "Error occured !")
             return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
 
 
