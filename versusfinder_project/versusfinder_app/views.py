@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
@@ -91,9 +91,8 @@ def gameprofile_create(request, user_id, game_id):
         context = {}
         context['user_id'] = request.user.id
         context['game'] = Game.objects.get(id=game_id)
-        #context['gameprofile'] = request.user.get_user_profile()
         context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/gameprofile/new.html', context)
+        return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
     else:
         pass  # render error
 
@@ -128,7 +127,7 @@ def gameprofile_register(request, user_id, game_id):
             user.gameprofile = gameprofile
             user.save()
 
-            messages.success(request, "Gameprofile successfully created !")
+            messages.success(request,  "Gameprofile successfully created !")
             return redirect('/')
 
 
@@ -146,20 +145,20 @@ def gameprofile_show(request, user_id, gameprofile_id):
 
 
 def gameprofile_edit(request, user_id, gameprofile_id):
-    ''' TODO '''
+    ''' Open the page to edit the gameprofile '''
     if request.user.is_authenticated:
         context = {}
         context['user_id'] = request.user.id
         context['gameprofile'] = UserGameProfile.objects.get(id=gameprofile_id)
-        context['game'] = 1
+        context['game'] = context['gameprofile'].game
         context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/gameprofile/edit.html', context)
+        return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
     else:
         pass  # render error
 
 
 def gameprofile_update(request, user_id, gameprofile_id):
-    ''' TODO '''
+    ''' Update the gameprofile '''
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
@@ -172,11 +171,11 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile.skill_level = request.POST.get('input_skill')
                 gameprofile.save()
 
-                messages.success(request, "Gameprofile successfully created !")
+                messages.success(request,  "Gameprofile successfully updated !")
                 return redirect('/')
             except:
                 messages.error(request, "Error occured while updating !")
-                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game.id)
+                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=gameprofile_id)
     else:
         pass  # render error
 
@@ -203,6 +202,7 @@ def search_process(request, user_id, gameprofile_id):
             # Get data from uri
             user = request.user
             gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+            game = gameprofile.game
 
             # Get data from form
             skill_min = int(request.POST.get('skill_min'))
@@ -230,7 +230,8 @@ def search_process(request, user_id, gameprofile_id):
 
             # Validate time fields
             if user_date_end < user_date_begin:
-                return HttpResponse("Error ! time fields are not coherent")
+                messages.error(request, "Error ! time fields are not coherent")
+                return redirect('match.search', user_id=user.id, gameprofile_id=game.id)
 
             # Exclude opponents that banned the user main character
             opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
@@ -259,9 +260,10 @@ def search_process(request, user_id, gameprofile_id):
             # TODO: UPDATE TIMETABLES (depuis la vue des résultats de la recherche)
 
             if not valid_opponents:
-                return HttpResponse("Not opponent found !")
+                messages.error(request, "No opponent found !")
+                return redirect('match.search', user_id=user.id, gameprofile_id=game.id)
             else:
-                return valid_opponents #FIXME : JSONResponse ?
+                return JsonResponse(valid_opponents)
 
     return HttpResponse("Error occured !")
 
@@ -291,20 +293,20 @@ def match_alterscore(request, user_id, gameprofile_id, match_id):
                     match.user_two_score = score_player_2
                     match.save()
                     messages.success(request, "Score successfully changed !")
-                    return redirect('/dashboard/'+user_id+'/gameprofiles/'+gameprofile_id+'/matchs/'+match_id+'/show')
+                    return redirect('match.show', user_id=user_id, gameprofile_id=gameprofile_id, match_id=match_id)
             else:
-                print("CUL")
+                print("CUL") #FIXME ? x)
         else:
-            print("LEL")
+            print("LEL") #FIXME ? x)
     else:
-        print("LOL")
+        print("LOL") #FIXME ? x)
 
 def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
-        context['game'] = None  # FIXME:
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = context['gameprofile'].game
         context['banlist'] = context['gameprofile'].banlist.all()
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/alterbanlist.html', context)
@@ -327,9 +329,12 @@ def banlist_alter(request, user_id, gameprofile_id, char_id):
                 profile_to_update.banlist.add(char_to_alter)
                 profile_to_update.banlist.save()
 
-            return HttpResponse("Success")
+
+            messages.success(request, "Gameprofile successfully updated !")
+            return redirect('/')
         except:
-            return HttpResponse("Error occured")  # send 404
+            messages.error(request, "Error occured while banning !")
+            return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
 
 
 def game_show(request, game_id):
@@ -364,5 +369,5 @@ def timetable_new(request, user_id, gameprofile_id):
 
             user.save()
 
-            messages.success(request, "Timetable successfully created !")
+            messages.success(request,  "Timetable successfully created !")
             return redirect("dashboard", user_id=user.id)

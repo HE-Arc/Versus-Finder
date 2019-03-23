@@ -1,0 +1,52 @@
+<!-- templates/registration/login.html -->
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}New profil{% endblock %}
+
+{% block content %}
+
+{% if gameprofile is None %}
+<h2>New profile for {{ game.name }}</h2>
+{% else %}
+<h2>Update profile for {{ game.name }}</h2>
+{% endif %}
+
+<form method="post" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
+
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="input_pseudo">
+      <input type="text" class="form-control" name="input_pseudo" id="input_pseudo" {% if gameprofile is not None %} value="{{ gameprofile.username }}" {% endif %}/>
+      Pseudo
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="input_character">
+      <select id="input_character" class="form-control" name="input_character">
+          {% for character in characters %}
+            <option value="{{character.id}}" {% if gameprofile is not None %} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} {% endif %}>
+              {{ character.name }}
+            </option>
+          {% endfor %}
+      </select> 
+      Character played
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="input_skill">
+      <input id="input_skill" class="form-control slider" name="input_skill" type="range" min="1" max="10" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %}>
+      Competence level
+    </label>
+  </div>
+  
+  {% if gameprofile is None %}
+  <button type="submit">New profil</button>
+  {% else %}
+  <button type="submit">Update</button>
+  {% endif %}
+
+</form>
+{% endblock %}
