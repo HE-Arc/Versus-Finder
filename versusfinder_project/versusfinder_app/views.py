@@ -4,8 +4,6 @@ from django.views import generic, View
 from django.urls import reverse_lazy
 from .models import Game, Character, Match, User, UserGameProfile, UserMatch, Timetable
 import datetime
-from datetime import datetime
-from datetime import timedelta
 import time
 from django.forms import Form
 from django.contrib import messages
@@ -48,12 +46,12 @@ def dashboard(request, user_id):
                 user_matchs.append(match)
 
         context['user_matchs'] = user_matchs
-        context['today'] = datetime.now().strftime("%Y-%m-%d")
+        context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        ref_match = datetime.now() + timedelta(days=730)
+        ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
         next_match = None
         for match in matchs:
-            if match.timetable.date_begin > datetime.now(
+            if match.timetable.date_begin > datetime.datetime.now(
                     match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
                 next_match = match
                 ref_match = match.timetable.date_begin
@@ -66,7 +64,7 @@ def dashboard(request, user_id):
         win = 0
         lose = 0
         for match in user_matchs:
-            if match.timetable.date_end < datetime.now(match.timetable.date_end.tzinfo):
+            if match.timetable.date_end < datetime.datetime.now(match.timetable.date_end.tzinfo):
                 old_matchs.append(match)
                 if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
                     win += 1
@@ -210,8 +208,10 @@ def search_process(request, game_id):
             game = gameprofile.game
 
             # Get data from form
-            skill_min = int(request.POST.get('skill_min'))
-            skill_max = int(request.POST.get('skill_max'))
+            #skill_min = int(request.POST.get('skill_min'))
+            #skill_max = int(request.POST.get('skill_max'))
+            skill_min = 0
+            skill_max = 10
             time_begin = request.POST.get('input_hour_begin')
             time_end = request.POST.get('input_hour_end')
             date = request.POST.get('input_date')
