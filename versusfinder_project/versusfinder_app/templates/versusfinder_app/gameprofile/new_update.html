@@ -1,7 +1,13 @@
 <!-- templates/registration/login.html -->
 {% extends 'versusfinder_app/base.html' %}
 
-{% block title %}New profil{% endblock %}
+{% block title %}
+  {% if gameprofile is None %}
+    New profile for {{ game.name }}
+  {% else %}
+    Update profile for {{ game.name }}
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 
