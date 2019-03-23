@@ -11,8 +11,6 @@
 
 {% block content %}
 
-
-
 <div style="padding:30px">
   <div class="card">
     <div  class="card-header">
@@ -27,7 +25,7 @@
       <!-- Banlist button -->
       {% if gameprofile is not None %}
       <div style="padding: 10px 10px 50px 10px;">
-        <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="get">
+        <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
           <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
         </form>
       </div>
@@ -35,7 +33,7 @@
       <!-- END OF Banlist button -->
 
       <div class="card-text">
-        <form method="post" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
+        <form method="POST" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
           {% csrf_token %}
 
           <div class="form-group row">

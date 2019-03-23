@@ -22,72 +22,79 @@
     } );
 </script>
 
-
 {% if user.is_authenticated %}
 
-    <h1>Recherche d'un adversaire</h1>
+    <div style="padding:30px">
+        <div class="card">
+            <div  class="card-header">
+                <h2>Opponents lookup</h2>
+            </div>
+            <div class="card-body">
 
-    <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="get">
-        <input type="submit" value="Modifiy banlist" 
-            name="Submit" id="redirect_submit" />
-    </form>
+                <!-- Banlist button -->
+                {% if gameprofile is not None %}
+                <div style="padding: 10px 10px 50px 10px;">
+                    <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="get">
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                    </form>
+                </div>
+                {% endif %}
+                <!-- END OF Banlist button -->
 
-    <form method="POST" action="{% url 'search.process' user_id=user_id gameprofile_id=gameprofile.id %}">
-        {% csrf_token %}
+                <div class="card-text">
+                    <form method="POST" action="{% url 'search.process' user_id=user_id gameprofile_id=gameprofile.id %}">
+                    {% csrf_token %}
 
-        <div>
-            <p>
-                <label for="amount">Skill range:</label>
-                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-            </p>
-            <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
-            <input type="hidden" id="skill_min" name="skill_min"/>
-            <input type="hidden" id="skill_max" name="skill_max"/>
+                    <div class="form-group row">
+                        <label for="amount" class="col-sm-2 col-form-label col-form-label-lg">Skill range</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-lg" id="amount" name="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        </div>
+                        <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
+                    </div>
+                    <input type="hidden" id="skill_min" name="skill_min"/>
+                    <input type="hidden" id="skill_max" name="skill_max"/>
+
+                    <div class="form-group row">
+                        <label for="input_hour_begin" class="col-sm-2 col-form-label col-form-label-lg">Hour (begin)</label>
+                        <div class="col-sm-10">
+                            <input type="time" class="form-control form-control-lg" id="input_hour_begin" name="input_hour_begin" min="0:00" max="24:00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="input_hour_end" class="col-sm-2 col-form-label col-form-label-lg">Hour (end)</label>
+                        <div class="col-sm-10">
+                            <input type="time" class="form-control form-control-lg" id="input_hour_end" name="input_hour_end" min="0:00" max="24:00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="input_date" class="col-sm-2 col-form-label col-form-label-lg">Date</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control form-control-lg" id="input_date" name="input_date" min="2019-01-01" required>
+                        </div>
+                    </div>
+
+                    <blockquote class="blockquote mb-0">
+                        <button class="btn btn-primary btn-lg" type="submit">Search !</button>
+                    </blockquote>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label>
-                <input type="time" id="input_hour_begin" name="input_hour_begin" min="0:00" max="24:00" required>
-                Hour (begin)
-            </label>
-            </br>
-            <label>
-                <input type="time" id="input_hour_end" name="input_hour_end" min="0:00" max="24:00" required>
-                Hour (end)
-            </label>
-        </div>
-
-        <div>
-            <label>
-                <input type="date" id="input_date" name="input_date" min="2019-01-01">
-                Date
-            </label>
-        </div>
-
-        <button type="submit">Search</button>
-    </form>
-
-    <div>
-        <!-- CALENDAR -->
-    {{ test.username }}
     </div>
-
-    <div style="float:right">
-        <!-- FLOAT RIGHT -->
-        <p>{{ info.playeronline|default:"0" }} players online</p>
-        <p>{{ info.playersearching|default:"0" }} players searching</p>
-        <p>{{ info.matchsplanned|default:"0" }} matchs planned</p>
-        <p>{{ info.opponentfound|default:"0" }} opponents found</p>
-    </div>
-
-{% else %}
-
-
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">login</a>
-
-
-{% endif %}
+    <script>
+        // FROM : https://stackoverflow.com/a/13052187
+        Date.prototype.toDateInputValue = (function() {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0,10);
+        });
+        $('#input_date').val(new Date().toDateInputValue());
+    </script>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
 {% endblock %}
-
-<!-- JS nécessaire pour l'envoi du formulaire -->
