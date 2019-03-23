@@ -41,14 +41,14 @@
           <div class="form-group row">
             <label for="input_pseudo" class="col-sm-2 col-form-label col-form-label-lg">Pseudo</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control form-control-lg" id="input_pseudo" id="input_pseudo" {% if gameprofile is not None %} value="{{ gameprofile.username }}" {% endif %}>
+              <input type="text" class="form-control form-control-lg" id="input_pseudo" name="input_pseudo" {% if gameprofile is not None %} value="{{ gameprofile.username }}" {% endif %}>
             </div>
           </div>
 
           <div class="form-group row">
             <label for="input_character" class="col-sm-2 col-form-label col-form-label-lg">Main</label>
             <div class="col-sm-10">
-              <select id="input_character" class="form-control form-control-lg" name="input_character">
+              <select id="input_character" name="input_character" class="form-control form-control-lg" >
                   {% for character in characters %}
                     <option value="{{character.id}}" {% if gameprofile is not None %} {% if character.id == gameprofile.mainchar.id %} selected {% endif %} {% endif %}>
                       {{ character.name }}
@@ -61,7 +61,7 @@
           <div class="form-group row">
               <label for="input_skill" class="col-sm-2 col-form-label col-form-label-lg">Skill</label>
               <div class="col-sm-10">
-                <input type="range" min="1" max="10" class="form-control form-control-lg slider" id="input_skill" id="input_skill" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %} >
+                <input type="range" min="1" max="10" class="form-control form-control-lg slider" name="input_skill" id="input_skill" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %} >
               </div>
             </div>
 

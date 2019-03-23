@@ -163,7 +163,6 @@ def gameprofile_update(request, user_id, gameprofile_id):
         if request.method == 'POST':
             user = request.user
             gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
-            game = gameprofile.game
 
             try:
                 gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
@@ -171,7 +170,7 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile.skill_level = request.POST.get('input_skill')
                 gameprofile.save()
 
-                messages.success(request,  "Gameprofile successfully updated !")
+                messages.success(request, "Gameprofile successfully updated !")
                 return redirect('/')
             except:
                 messages.error(request, "Error occured while updating !")
