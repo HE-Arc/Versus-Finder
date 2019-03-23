@@ -26,13 +26,15 @@
     <script type="text/javascript" src="{% static 'css/jquery-ui.theme.min.css' %}"></script>
 
     <!-- Calendar -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
     <script type="text/javascript" src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
     <!--<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>-->
     <!--<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>-->
     <script type="text/javascript" src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet'/>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet' media='print'/>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.print.css' rel='stylesheet'
+          media='print'/>
 
     <!-- Chart.js -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -46,132 +48,144 @@
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}"/>
 
     <!-- Font Awesome JS -->
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+            integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+            crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+            integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+            crossorigin="anonymous"></script>
 
 </head>
 <body>
-        <div class="wrapper">
-            <!-- Sidebar  -->
-            <nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3>Versus Finder</h3>
-                    <strong>VF</strong>
-                </div>
-    
-                <ul class="list-unstyled components">
-                    <li class="active">
-                        <a href="{% url 'home' %}">
-                            <i class="fas fa-briefcase"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-briefcase"></i>
-                            About
-                        </a>
-                        {% if user.is_authenticated %}
-                        <a href="{% url 'dashboard' user_id=user_id %}">
-                            <i class="fas fa-briefcase"></i>
-                            Dashboard
-                        </a>
-                        {% endif %}
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="fas fa-copy"></i>
-                            SSBU
-                        </a>
-                        <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li>
-                                <a href="{% url 'game.show' game_id=1 %}">Game informations</a>
-                            </li>
-                            {% if user.is_authenticated %}
-                            <li>
-                                {% if user.get_user_profile == null %}
-                                    <a href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">Gameprofile</a>
-                                {% else %}
-                                    <a href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=1 %}">Gameprofile</a>
-                                {% endif %}
-                            </li>
-                            <li>
-                                <a href="{% url 'match.search' game_id=1 %}">Match</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-    
-            <!-- Page Content  -->
-            <div id="content">
-    
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <div class="container-fluid">
-    
-                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            <i class="fas fa-align-left"></i>
-                            <span>Toggle Sidebar</span>
-                        </button>
-                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fas fa-align-justify"></i>
-                        </button>
-    
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link dropdown-toggle nav-item active" href="#" id="navbarDropdown" role="button"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        Account
-                                     </a>
-                                     <div class="dropdown-menu align-right" aria-labelledby="navbarDropdown">
-                                         <a class="dropdown-item" href="#">Your profil</a>
-                                         <div class="dropdown-divider"></div>
-                                         <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
-                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-    
-                <!-- MAIN CONTENT -->
-                <main>
-                    <div id="maindiv">
-                
-                        <!-- Display messages -->
-                        {% if messages %}
-                            {% for message in messages %}
-                            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} alert-dismissible fade show">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                {{ message }}
-                            </div>
-                            {% endfor %}
-                        {% endif %}
-                        <!-- END OF MESSAGES -->
-                
-                        <div class="container">
-                            <div class="content">
-                                {% block content %}
-                                {% endblock %}
-                            </div>
-                        </div>
-                    </div>
-                </main>
-                <!-- END OF MAIN CONTENT -->
-                
-            </div>
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Versus Finder</h3>
+            <strong>VF</strong>
         </div>
-    
-        <!-- Popper.JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
-                });
-            });
-        </script>
-    </body>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="{% url 'home' %}">
+                    <i class="fas fa-briefcase"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-briefcase"></i>
+                    About
+                </a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'dashboard' user_id=user_id %}">
+                        <i class="fas fa-briefcase"></i>
+                        Dashboard
+                    </a>
+                {% endif %}
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <i class="fas fa-copy"></i>
+                    SSBU
+                </a>
+
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        <a href="{% url 'game.show' game_id=1 %}">Game informations</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            {% if user.get_user_profile == null %}
+                                <a href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">Gameprofile</a>
+                            {% else %}
+                                <a href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=1 %}">Gameprofile</a>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <a href="{% url 'match.search' game_id=1 %}">Match</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-right"></i>
+                    <span>Toggle Sidebar</span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-align-justify"></i>
+                </button>
+
+                {% if user.is_authenticated %}
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% if gameprofile == None %}
+                                <a class="dropdown-item" href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">New profil</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Your profil</a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <div id="maindiv">
+
+                <!-- Display messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <!-- END OF MESSAGES -->
+
+                <div class="container">
+                    <div class="content">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- END OF MAIN CONTENT -->
+
+    </div>
+</div>
+
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+        integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+</script>
+</body>
 </html>
