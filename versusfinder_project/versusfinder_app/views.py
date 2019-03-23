@@ -37,6 +37,7 @@ def dashboard(request, user_id):
     if request.user.is_authenticated:
         context = {}
         context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = context['gameprofile'].game
         context['user_timetable'] = context['gameprofile'].timetables.all()
         context['user_id'] = request.user.id
 
@@ -179,28 +180,33 @@ def gameprofile_update(request, user_id, gameprofile_id):
         pass  # render error
 
 
-def match_search(request, user_id, gameprofile_id):
+def match_search(request, game_id):
     if request.user.is_authenticated:
 
-        if gameprofile_id == -1:
-            ''' User has no gameprofile, redirect '''
-            return redirect('gameprofile.new', game_id=gameprofile_id.game.id)
+        user = request.user
+        gameprofile = user.get_user_profile()
+        game = Game.objects.get(id=game_id)
+
+        if gameprofile.id == -1:
+            # User has no gameprofile, redirect '''
+            return redirect('gameprofile.new', game_id=game.id)
         else:
             context = {}
-            context['user_id'] = request.user.id
-            context['gameprofile'] = request.user.get_user_profile()
+            context['user_id'] = user.id
+            context['gameprofile'] = gameprofile
+            context['game'] = Game.objects.get(id=game_id)
             return render(request, 'versusfinder_app/search.html', context)
     else:
         pass  # render error
 
-def search_process(request, user_id, gameprofile_id):
+def search_process(request, game_id):
     ''' returns a list of opponents '''
     if request.user.is_authenticated:
         if request.method == 'POST':
 
             # Get data from uri
             user = request.user
-            gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+            gameprofile = user.get_user_profile()
             game = gameprofile.game
 
             # Get data from form
@@ -260,25 +266,26 @@ def search_process(request, user_id, gameprofile_id):
 
             if not valid_opponents:
                 messages.error(request, "No opponent found !")
-                return redirect('match.search', user_id=user.id, gameprofile_id=game.id)
+                return redirect('match.search', game_id=game_id)
             else:
                 return JsonResponse(valid_opponents)
 
     return HttpResponse("Error occured !")
 
 
-def match_show(request, user_id, gameprofile_id, match_id):
+def match_show(request, game_id, match_id):
     if request.user.is_authenticated:
         context = {}
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = Game.objects.get(id=game_id)
         context['match'] = Match.objects.get(id=match_id)
         context['date_begin'] = (context['match'].timetable.date_begin).strftime("%Y-%m-%d %H:%M:%S")
         context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
 
-def match_alterscore(request, user_id, gameprofile_id, match_id):
+def match_alterscore(request, game_id, match_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             match = Match.objects.get(id=match_id)
@@ -292,7 +299,7 @@ def match_alterscore(request, user_id, gameprofile_id, match_id):
                     match.user_two_score = score_player_2
                     match.save()
                     messages.success(request, "Score successfully changed !")
-                    return redirect('match.show', user_id=user_id, gameprofile_id=gameprofile_id, match_id=match_id)
+                    return redirect('match.show', game_id=game_id, match_id=match_id)
             else:
                 print("CUL") #FIXME ? x)
         else:
@@ -343,6 +350,7 @@ def game_show(request, game_id):
         context = {}
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
+        context['game'] = Game.objects.get(id=game_id)
         context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
 

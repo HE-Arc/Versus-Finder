@@ -15,6 +15,12 @@ urlpatterns = [
     # Games
     path('games/<game_id>/show', views.game_show, name='game.show'),
 
+    # Matches
+    path('games/<game_id>/matchs/search', views.match_search, name='match.search'),
+    path('games/<game_id>/matchs/search/process', views.search_process, name='search.process'),
+    path('games/<game_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
+    path('games/<game_id>/matchs/<match_id>/alter_score', views.match_alterscore, name='match.alterscore'),
+
     # Gameprofile
     path('dashboard/<user_id>/gameprofiles/<game_id>/new', views.gameprofile_create, name='gameprofile.new'),
     path('dashboard/<user_id>/gameprofiles/<game_id>/register', views.gameprofile_register, name="gameprofile.register"),
@@ -26,12 +32,6 @@ urlpatterns = [
     # Banlist
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/banlist/modify', views.banlist_modify, name='banlist.modify'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/characters/<char_id>/alter', views.banlist_alter, name="banlist.alter"),
-
-    # Matches
-    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search', views.match_search, name='match.search'),
-    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/search/process', views.search_process, name='search.process'),
-    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
-    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/matchs/<match_id>/alter_score', views.match_alterscore, name='match.alterscore'),
 
     # Timetables
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable', views.timetable, name='timetable'),

@@ -26,6 +26,7 @@
       {% if gameprofile is not None %}
       <div style="padding: 10px 10px 50px 10px;">
         <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
+            {% csrf_token %}
           <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
         </form>
       </div>
