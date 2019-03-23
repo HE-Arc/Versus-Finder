@@ -3,27 +3,38 @@
 
 {% block title %}Ban list{% endblock %}
 
+{% load static %}
+
 {% block content %}
 
 {% if user.is_authenticated %}
 
-    <h1>Updating banlist</h1>
+    <div class="card" style="padding: 30px 50px 15px 30px;">
+        <div class="card-title">
+            <h1>Updating banlist</h1>
+        </div>
+        <div class="card-body">
+            <blockquote class="blockquote mb-0">
+                <footer class="blockquote-footer">Automatically updates</footer>
+            </blockquote>
+        </div>
+    </div>
 
-    <div class="card-columns">
+    <div class="card-columns" style="column-count: 5;">
     {% for character in characters %}
         <div class="card bg-dark text-white">
-            <img class="card-img" src="https://via.placeholder.com/468x60?text={{ character.name }}" alt="Card image">
+            <img class="card-img rounded mx-auto d-block " src="{% static '' %}img/{{ character.name }}.png" alt="{{ character.name }}" style="max-width: 50%;"/>
             <div class="card-img-overlay">
-            <!-- <h5 class="card-title">{{ character.name }} </h5> -->
-            <p class="card-text">
-                <input type="checkbox" id="ban-{{ character.id }}"
-                {% if character in banlist %} checked {% endif %}
-                onclick="BanlistTools.alter({{ user_id }}, {{ gameprofile.id }}, {{ character.id }})"
-                />
-                <label for="ban-{{ character.id }}">
-                    {{ character.name }}
-                </label>
-            </p>
+                <div class="card-title form-group">
+                    <input type="checkbox" id="ban-{{ character.id }}"
+                    {% if character in banlist %} checked {% endif %}
+                    onclick="BanlistTools.alter({{ user_id }}, {{ gameprofile.id }}, {{ character.id }})"
+                    class="form-control"
+                    />
+                    <label for="ban-{{ character.id }}">
+                        {{ character.name }}
+                    </label>
+                </div>
             </div>
         </div>
 
