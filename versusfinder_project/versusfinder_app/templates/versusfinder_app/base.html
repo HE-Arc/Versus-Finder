@@ -73,10 +73,6 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class="fas fa-briefcase"></i>
-                    About
-                </a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'dashboard' user_id=user_id %}">
                         <i class="fas fa-briefcase"></i>
@@ -105,6 +101,10 @@
                         </li>
                     {% endif %}
                 </ul>
+                <a href="#">
+                    <i class="fas fa-briefcase"></i>
+                    About
+                </a>
             </li>
         </ul>
     </nav>
@@ -127,15 +127,18 @@
 
                 {% if user.is_authenticated %}
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        <button class="btn btn-secondary" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             Account
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             {% if gameprofile == None %}
-                                <a class="dropdown-item" href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">New profil</a>
+                                <a class="dropdown-item" href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">New
+                                    profil</a>
                             {% else %}
-                                <a class="dropdown-item" href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Your profil</a>
+                                <a class="dropdown-item"
+                                   href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Your
+                                    profil</a>
                             {% endif %}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
