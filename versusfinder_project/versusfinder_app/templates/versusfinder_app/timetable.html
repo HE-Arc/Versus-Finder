@@ -5,20 +5,24 @@
 {% block content %}
     <div class="card" style="margin: 0 auto; float: none; margin-bottom: 10px;">
         <div class="card-header">
-            Create a new timetable
+            <h2>Create a new timetable</h2>
         </div>
         <div class="card-body">
             <form action="{% url 'timetable.new' user_id=user_id gameprofile_id=gameprofile.id %}" method="post"
                   class="form-example">
                 {% csrf_token %}
-                <div class="form-example">
-                    <label for="date_begin">Date begin :</label>
-                    <input type="datetime-local" name="date_begin" id="date_begin" required>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-lg" for="date_begin">Date begin :</label>
+                    <div class="col-sm-10">
+                    <input class="form-control form-control-lg" type="datetime-local" name="date_begin" id="date_begin" required>
+                    </div>
                 </div>
                 <br />
-                <div class="form-example">
-                    <label for="date_end">Date end :</label>
-                    <input type="datetime-local" name="date_end" id="date_end" required>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label col-form-label-lg" for="date_end">Date end :</label>
+                    <div class="col-sm-10">
+                    <input class="form-control form-control-lg" type="datetime-local" name="date_end" id="date_end" required>
+                    </div>
                 </div>
                 <hr>
                 <div class="form-example">
