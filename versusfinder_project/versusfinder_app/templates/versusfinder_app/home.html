@@ -65,14 +65,6 @@
                 </div>
             </div>
         </div>
-        {% if gameprofile == None %}
-            <p><a href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">new game-profil</a></p>
-        {% else %}
-            <p><a href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Edit
-                game-profil</a></p>
-        {% endif %}
-        <p><a href="{% url 'game.show' game_id=1 %}">game page</a></p>
-        <p><a href="{% url 'dashboard' user_id=user_id %}">dashboard</a></p>
     {% else %}
         <div class="jumbotron">
             <div class="container">
@@ -80,8 +72,7 @@
                     Welcome to Versus Finder
                 </h1>
                 <p class="lead">
-                    Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus
-                    commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                    Find an opponent of your choice !
                 </p>
                 <hr>
                 <p><strong>Do you already have an account ?</strong>
