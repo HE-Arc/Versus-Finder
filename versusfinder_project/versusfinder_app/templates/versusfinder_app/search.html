@@ -5,23 +5,6 @@
 
 {% block content %}
 
-<script>
-    $( function() {
-        $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 10,
-        values: [ 3, 7 ],
-        slide: function( event, ui ) {
-            $( "#amount" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        }
-        });
-        $( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) + " - " + $( "#slider-range" ).slider( "values", 1 ) );
-        $( "#skill_min").val($( "#slider-range" ).slider( "values", 0 ))
-        $( "#skill_max").val($( "#slider-range" ).slider( "values", 1 ))
-    } );
-</script>
-
 {% if user.is_authenticated %}
 
     <div style="padding:30px">
@@ -36,7 +19,7 @@
                 <div style="padding: 10px 10px 50px 10px;">
                     <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
                         {% csrf_token %}
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
                     </form>
                 </div>
                 {% endif %}
@@ -47,11 +30,15 @@
                     {% csrf_token %}
 
                     <div class="form-group row">
-                        <label for="amount" class="col-sm-2 col-form-label col-form-label-lg">Skill range</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control form-control-lg" id="amount" name="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+                        <label for="skill_input" class="col-sm-2 col-form-label col-form-label-lg">Skill range</label>
+                            <div class="col-sm-1"><p>Noob</p></div>
+                            <div class="col-sm-8">
+                                <!-- SLider from : https://refreshless.com/nouislider/examples/ -->
+                                <div id="skill_input" name="skill_input"></div>
+                            </div>
+                            <div class="col-sm-1"><p>Pro</p></div>
                         </div>
-                        <div id="slider-range" style="margin-bottom: 10px; width: 25%;"></div>
+
                     </div>
                     <input type="hidden" id="skill_min" name="skill_min"/>
                     <input type="hidden" id="skill_max" name="skill_max"/>
@@ -86,6 +73,32 @@
         </div>
     </div>
     <script>
+    
+        var skill_input = document.getElementById('skill_input');
+
+        noUiSlider.create(skill_input, {
+            start: [3, 7],
+            connect: true,
+            step: 1,
+            range: {
+                'min': 0,
+                'max': 10
+            }
+        });
+
+        var skill_min = document.getElementById('skill_min');
+        var skill_max = document.getElementById('skill_max');
+        
+        skill_input.on('update', function (values, handle) {
+            var value = values[handle];
+            if (handle) {
+                skill_min.value = Math.round(value);
+            } else {
+                skill_max.value = Math.round(value);
+            }
+        });
+
+
         // FROM : https://stackoverflow.com/a/13052187
         Date.prototype.toDateInputValue = (function() {
             var local = new Date(this);
