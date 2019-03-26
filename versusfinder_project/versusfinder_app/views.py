@@ -276,6 +276,14 @@ def search_process(request, game_id):
                 UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
             valid_opponents = []
 
+            # Create initial data package
+            data = {}
+            data['user'] = {}
+            data['user']['gameprofile'] = gameprofile
+            data['user']['user_date_begin'] = user_date_begin
+            data['user']['user_date_end'] = user_date_end
+            data['opponents'] = []
+
             # now fetch opponents
             for opponent in opponents:
                 # Remove those who are playing a character banned by the player
@@ -289,20 +297,27 @@ def search_process(request, game_id):
                 # Date
                 opponent_timetables = opponent.timetables
 
-                # Check if datetimes are valid
-                if opponent_timetables.date_begin < user_date_end and opponent_timetables.date_end > user_date_begin:
-                    # Opponent is valid
-                    valid_opponents.append(opponent)
-                else:
-                    continue  # Remove those who are not available at the given date
+                # New opponent entry
+                valid_opponent = {}
+                valid_opponent['opponent_timetables'] = []
+                valid_opponent['opponent_gameprofil'] = opponent
 
+                for opponent_timetable in opponent_timetables:
+                    # Check if datetimes are valid
+                    if opponent_timetable.date_begin < user_date_end and opponent_timetable.date_end > user_date_begin:
+                        valid_opponent['opponent_timetables'].add(opponent_timetable)
+
+                # If any timetable is matching, add it as a valide opponent
+                if valid_opponent['opponent_timetables']:
+                    data['opponents'].add(valid_opponent)
+                    
             # TODO: UPDATE TIMETABLES (depuis la vue des résultats de la recherche)
 
-            if not valid_opponents:
-                messages.error(request, "No opponent found !")
+            if not data['opponents']:
+                messages.warning(request, "No opponent found !")
                 return redirect('match.search', game_id=game_id)
             else:
-                return JsonResponse(valid_opponents)
+                return JsonResponse(data)
 
     return HttpResponse("Error occured !")
 
