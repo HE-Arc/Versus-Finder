@@ -27,7 +27,7 @@
                                                 <h4 class="card-title">No Match in coming :(</h4>
                                             {% endif %}
                                         </div>
-                                        <div style="background-color: cornflowerblue">
+                                        <div style="background-color: gainsboro">
                                             <div id="carouselExampleControls" class="carousel slide"
                                                  data-ride="carousel">
                                                 <div class="carousel-inner">
@@ -97,12 +97,13 @@
         });
 
         $('#calendar').fullCalendar({
-            defaultDate: '{{ today }}',
-            defaultView: 'agendaWeek',
+            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+            navLinks: true,
+            defaultView: 'month',
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'agendaDay,  agendaWeek,month'
+                right: 'agendaDay,agendaWeek,month'
             },
             events: [
                 {% for timetable in user_timetable %}
