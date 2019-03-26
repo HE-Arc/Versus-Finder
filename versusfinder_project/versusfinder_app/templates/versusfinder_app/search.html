@@ -76,7 +76,7 @@
     
         var skill_input = document.getElementById('skill_input');
 
-        noUiSlider.create(skill_input, {
+        var slider = noUiSlider.create(skill_input, {
             start: [3, 7],
             connect: true,
             step: 1,
@@ -89,7 +89,7 @@
         var skill_min = document.getElementById('skill_min');
         var skill_max = document.getElementById('skill_max');
         
-        skill_input.on('update', function (values, handle) {
+        slider.on('update', function (values, handle) {
             var value = values[handle];
             if (handle) {
                 skill_min.value = Math.round(value);
