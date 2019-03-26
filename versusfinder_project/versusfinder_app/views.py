@@ -10,6 +10,7 @@ from django.forms import Form
 from django.contrib import messages
 from random import randint
 from django.db.models import Q
+import re
 
 
 # from django.contrib.auth.models import User
@@ -115,14 +116,26 @@ def gameprofile_register(request, user_id, game_id):
                 # if user.get_user_profile:
                 #    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
 
+                # Validate pseudo
+                pseudo = request.POST.get('input_pseudo')
+                if not re.match('^[a-zA-Z0-9_]+$', pseudo):
+                    messages.error(request, "Invalid pseudo ! Must be alphanumerical")
+                    return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+
+                # Validate skill
+                skill = int(request.POST.get('input_skill'))
+                if skill < 0 or skill > 10:
+                    messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
+                    return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+
                 # Build new gameprofile
                 gameprofile = UserGameProfile()
                 gameprofile.user = user
                 gameprofile.game = Game.objects.get(id=game_id)
                 gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
-                gameprofile.username = request.POST.get('input_pseudo')
+                gameprofile.username = pseudo
                 gameprofile.battletag = randint(1000, 9999)
-                gameprofile.skill_level = request.POST.get('input_skill')
+                gameprofile.skill_level = skill
                 gameprofile.save()
 
                 # update user
@@ -169,9 +182,22 @@ def gameprofile_update(request, user_id, gameprofile_id):
                 gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
 
                 try:
+                    # Validate pseudo
+                    pseudo = request.POST.get('input_pseudo')
+                    if not re.match('^[a-zA-Z0-9_]+$', pseudo):
+                        messages.error(request, "Invalid pseudo ! Must be alphanumerical")
+                        return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+
+                    # Validate skill
+                    skill = int(request.POST.get('input_skill'))
+                    if skill < 0 or skill > 10:
+                        messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
+                        return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+
+                    # Build new gameprofile
                     gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
-                    gameprofile.username = request.POST.get('input_pseudo')
-                    gameprofile.skill_level = request.POST.get('input_skill')
+                    gameprofile.username = pseudo
+                    gameprofile.skill_level = skill
                     gameprofile.save()
 
                     messages.success(request, "Gameprofile successfully updated !")
