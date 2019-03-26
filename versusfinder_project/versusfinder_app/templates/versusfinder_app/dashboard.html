@@ -32,7 +32,7 @@
                                                  data-ride="carousel">
                                                 <div class="carousel-inner">
                                                     {% for match in user_old_matchs %}
-                                                    <div class="carousel-item active">
+                                                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
                                                        <div>
                                                            <p>{{ match.user_profile_one.mainchar.name }} VS {{ match.user_profile_two.mainchar.name }}</p>
                                                            <h4>Score</h4>
