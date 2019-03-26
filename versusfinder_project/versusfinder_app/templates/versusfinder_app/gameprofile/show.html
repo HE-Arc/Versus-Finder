@@ -3,12 +3,59 @@
 
 {% block title %}Gameprofile{% endblock %}
 
+{% load static %}
+
 {% block content %}
 
-son nom
-son battletag
-son perso
-son niveau
-sa banlist ?
+<div class="container h-100">
+    <div class="card mb-10 shadow-sm flex-row flex-wrap h-100">
+        <div class="col-sm-3">
+            <div class="card-header border-0">
+                <img class="card-img-top"
+                src="{% static '' %}img/{{ gameprofile.mainchar.name }}.png"
+                alt="Card image cap"
+                style="max-width: 100%; max-height:100%; background-position: 50% 50%;">
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="card-body">
+                <div class="card-text h1">
+                    {{ gameprofile.username }}
+                    <em class="text-muted">
+                        #{{ gameprofile.battletag }}
+                    </em>
+                    <div class="right">
+                        {% if user_id == user.id %}
+                            <a class="btn btn-sm btn-outline-secondary"
+                                href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Edit gameprofile
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-2"><p>Noob</p></div>
+                    <div class="col-sm-8">
+                        <input type="range" min="1" max="10" class="form-control form-control-lg slider" value="{{ gameprofile.skill_level }}" disabled/>
+                    </div>
+                    <div class="col-sm-2"><p>Pro</p></div>
+                </div>
+
+                <p class="card-text h3">Banlist</p>
+                <div class="card-columns" style="column-count: 5;">
+                    {% for character in gameprofile.banlist.all %}
+                        <div class="card bg-dark text-white">
+                            <img class="card-img rounded mx-auto d-block " src="{% static '' %}img/{{ character.name }}.png" alt="{{ character.name }}" style="max-width: 50%;"/>
+                            <div class="card-img-overlay">
+                                <div class="card-title form-group">
+                                    {{ character.name }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
