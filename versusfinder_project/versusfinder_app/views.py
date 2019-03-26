@@ -34,55 +34,58 @@ def home(request):
 
 def dashboard(request, user_id):
     if request.user.is_authenticated:
-        context = {}
-        context['gameprofile'] = request.user.get_user_profile()
-        context['game'] = context['gameprofile'].game
-        context['user_timetable'] = context['gameprofile'].timetables.all()
-        context['user_id'] = request.user.id
+        if User.objects.get(id=user_id) == request.user:
+            context = {}
+            context['user'] = request.user
+            context['gameprofile'] = request.user.get_user_profile()
+            context['game'] = context['gameprofile'].game
+            context['user_timetable'] = context['gameprofile'].timetables.all()
+            context['user_id'] = request.user.id
 
-        matchs = Match.objects.all()
-        user_matchs = []
-        for match in matchs:
-            if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
-                user_matchs.append(match)
+            matchs = Match.objects.all()
+            user_matchs = []
+            for match in matchs:
+                if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
+                    user_matchs.append(match)
 
-        context['user_matchs'] = user_matchs
-        context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
+            context['user_matchs'] = user_matchs
+            context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
-        next_match = None
-        for match in matchs:
-            if match.timetable.date_begin > datetime.datetime.now(
-                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
-                next_match = match
-                ref_match = match.timetable.date_begin
+            ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
+            next_match = None
+            for match in matchs:
+                if match.timetable.date_begin > datetime.datetime.now(
+                        match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                    next_match = match
+                    ref_match = match.timetable.date_begin
 
-        if next_match != None:
-            context['next_match'] = next_match
+            if next_match != None:
+                context['next_match'] = next_match
 
-        old_matchs = []
-        winlose = []
-        win = 0
-        lose = 0
-        for match in user_matchs:
-            if match.timetable.date_end < datetime.datetime.now(match.timetable.date_end.tzinfo):
-                old_matchs.append(match)
-                if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
-                    win += 1
-                elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
-                    win += 1
-                else:
-                    lose += 1
+            old_matchs = []
+            winlose = []
+            win = 0
+            lose = 0
+            for match in user_matchs:
+                if match.timetable.date_end < datetime.datetime.now(match.timetable.date_end.tzinfo):
+                    old_matchs.append(match)
+                    if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
+                        win += 1
+                    elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
+                        win += 1
+                    else:
+                        lose += 1
 
-        winlose.append(win)
-        winlose.append(lose)
+            winlose.append(win)
+            winlose.append(lose)
 
-        context['user_stats'] = winlose
-        context['user_old_matchs'] = old_matchs
+            context['user_stats'] = winlose
+            context['user_old_matchs'] = old_matchs
 
-        return render(request, 'versusfinder_app/dashboard.html', context)
-    else:
-        pass
+            return render(request, 'versusfinder_app/dashboard.html', context)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard", user_id=request.user.id)
 
 
 def gameprofile_create(request, user_id, game_id):
@@ -93,42 +96,44 @@ def gameprofile_create(request, user_id, game_id):
         context['game'] = Game.objects.get(id=game_id)
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
-    else:
-        pass  # render error
 
 
 def gameprofile_register(request, user_id, game_id):
     if request.user.is_authenticated:
-        if request.method == 'POST':
-            user = request.user
-            # gameprofile = user.get_user_profile()
-            # game = gameprofile.game
+        if User.objects.get(id=user_id) == request.user:
+            if request.method == 'POST':
+                user = request.user
+                # gameprofile = user.get_user_profile()
+                # game = gameprofile.game
 
-            # FIXME: to use in case of multi-gameprofiles
-            # for gameprofile in gameprofiles:
-            #    if gameprofile.game == game_id:
-            #        return HttpResponse("Error : only one profile per game is allowed !")
+                # FIXME: to use in case of multi-gameprofiles
+                # for gameprofile in gameprofiles:
+                #    if gameprofile.game == game_id:
+                #        return HttpResponse("Error : only one profile per game is allowed !")
 
-            # Workaround:
-            # if user.get_user_profile:
-            #    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
+                # Workaround:
+                # if user.get_user_profile:
+                #    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=game_id)
 
-            # Build new gameprofile
-            gameprofile = UserGameProfile()
-            gameprofile.user = user
-            gameprofile.game = Game.objects.get(id=game_id)
-            gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
-            gameprofile.username = request.POST.get('input_pseudo')
-            gameprofile.battletag = randint(1000, 9999)
-            gameprofile.skill_level = request.POST.get('input_skill')
-            gameprofile.save()
+                # Build new gameprofile
+                gameprofile = UserGameProfile()
+                gameprofile.user = user
+                gameprofile.game = Game.objects.get(id=game_id)
+                gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                gameprofile.username = request.POST.get('input_pseudo')
+                gameprofile.battletag = randint(1000, 9999)
+                gameprofile.skill_level = request.POST.get('input_skill')
+                gameprofile.save()
 
-            # update user
-            user.gameprofile = gameprofile
-            user.save()
+                # update user
+                user.gameprofile = gameprofile
+                user.save()
 
-            messages.success(request, "Gameprofile successfully created !")
-            return redirect('/')
+                messages.success(request, "Gameprofile successfully created !")
+                return redirect('/')
+            else:
+                messages.warning(request, "Unallowed operation !")
+                return redirect("dashboard", user_id=request.user.id)
 
 
 def gameprofile_show(request, user_id, gameprofile_id):
@@ -140,43 +145,43 @@ def gameprofile_show(request, user_id, gameprofile_id):
         context['game'] = context['gameprofile'].game
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/gameprofile/show.html', context)
-    else:
-        pass  # render error
-
 
 def gameprofile_edit(request, user_id, gameprofile_id):
     ''' Open the page to edit the gameprofile '''
     if request.user.is_authenticated:
-        context = {}
-        context['user_id'] = request.user.id
-        context['gameprofile'] = UserGameProfile.objects.get(id=gameprofile_id)
-        context['game'] = context['gameprofile'].game
-        context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
-    else:
-        pass  # render error
-
+        if User.objects.get(id=user_id) == request.user:
+            context = {}
+            context['user_id'] = request.user.id
+            context['gameprofile'] = UserGameProfile.objects.get(id=gameprofile_id)
+            context['game'] = context['gameprofile'].game
+            context['characters'] = Character.objects.all().order_by('name')
+            return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard", user_id=request.user.id)
 
 def gameprofile_update(request, user_id, gameprofile_id):
     ''' Update the gameprofile '''
     if request.user.is_authenticated:
-        if request.method == 'POST':
-            user = request.user
-            gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+        if User.objects.get(id=user_id) == request.user:
+            if request.method == 'POST':
+                user = request.user
+                gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
 
-            try:
-                gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
-                gameprofile.username = request.POST.get('input_pseudo')
-                gameprofile.skill_level = request.POST.get('input_skill')
-                gameprofile.save()
+                try:
+                    gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                    gameprofile.username = request.POST.get('input_pseudo')
+                    gameprofile.skill_level = request.POST.get('input_skill')
+                    gameprofile.save()
 
-                messages.success(request, "Gameprofile successfully updated !")
-                return redirect('/')
-            except:
-                messages.error(request, "Error occured while updating !")
-                return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=gameprofile_id)
-    else:
-        pass  # render error
+                    messages.success(request, "Gameprofile successfully updated !")
+                    return redirect('/')
+                except:
+                    messages.error(request, "Error occured while updating !")
+                    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=gameprofile_id)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard", user_id=request.user.id)
 
 
 def match_search(request, game_id):
@@ -195,8 +200,6 @@ def match_search(request, game_id):
             context['gameprofile'] = gameprofile
             context['game'] = Game.objects.get(id=game_id)
             return render(request, 'versusfinder_app/search.html', context)
-    else:
-        pass  # render error
 
 
 def search_process(request, game_id):
@@ -305,50 +308,50 @@ def match_alterscore(request, game_id, match_id):
                     match.save()
                     messages.success(request, "Score successfully changed !")
                     return redirect('match.show', game_id=game_id, match_id=match_id)
-            else:
-                print("CUL")  # FIXME ? x)
-        else:
-            print("LEL")  # FIXME ? x)
-    else:
-        print("LOL")  # FIXME ? x)
 
 
 def banlist_modify(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
-        context = {}
-        context['user_id'] = request.user.id
-        context['gameprofile'] = request.user.get_user_profile()
-        context['game'] = context['gameprofile'].game
-        context['banlist'] = context['gameprofile'].banlist.all()
-        context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/alterbanlist.html', context)
-    else:
-        pass  # render error
+        if User.objects.get(id=user_id) == request.user:
+            context = {}
+            context['user_id'] = request.user.id
+            context['gameprofile'] = request.user.get_user_profile()
+            context['game'] = context['gameprofile'].game
+            context['banlist'] = context['gameprofile'].banlist.all()
+            context['characters'] = Character.objects.all().order_by('name')
+            return render(request, 'versusfinder_app/alterbanlist.html', context)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard", user_id=request.user.id)
 
 
 def banlist_alter(request, user_id, gameprofile_id, char_id):
     if request.user.is_authenticated:
-        try:
-            char_to_alter = Character.objects.get(id=char_id)
-            profile_to_update = UserGameProfile.objects.get(id=gameprofile_id)
-            character_is_banned = char_to_alter in profile_to_update.banlist.all()
+        if User.objects.get(id=user_id) == request.user:
+            try:
+                char_to_alter = Character.objects.get(id=char_id)
+                profile_to_update = UserGameProfile.objects.get(id=gameprofile_id)
+                character_is_banned = char_to_alter in profile_to_update.banlist.all()
 
-            if character_is_banned:
-                # Remove character to gameprofile's banlist
-                profile_to_update.banlist.remove(char_to_alter)
-                messages.success(request, "Character " + char_to_alter.name + " succesfully unbanned !")
-            else:
-                # Add character to gameprofile's banlist
-                profile_to_update.banlist.add(char_to_alter)
-                messages.success(request, "Character " + char_to_alter.name + " succesfully banned !")
+                if character_is_banned:
+                    # Remove character to gameprofile's banlist
+                    profile_to_update.banlist.remove(char_to_alter)
+                    messages.success(request, "Character " + char_to_alter.name + " succesfully unbanned !")
+                else:
+                    # Add character to gameprofile's banlist
+                    profile_to_update.banlist.add(char_to_alter)
+                    messages.success(request, "Character " + char_to_alter.name + " succesfully banned !")
 
-            # Save gameprofile
-            profile_to_update.banlist.save()
+                # Save gameprofile
+                profile_to_update.banlist.save()
 
-            return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
-        except:
-            messages.error(request, "Error occured !")
-            return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
+                return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
+            except:
+                messages.error(request, "Error occured !")
+                return redirect('banlist.modify', user_id=user_id, gameprofile_id=gameprofile_id)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard", user_id=request.user.id)
 
 
 def game_show(request, game_id):
@@ -371,46 +374,50 @@ def timetable(request, user_id, gameprofile_id):
 
 def timetable_new(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
-        if request.method == 'POST':
-            user = request.user
-            gameprofile = user.get_user_profile()
+        if User.objects.get(id=user_id) == request.user:
+            if request.method == 'POST':
+                user = request.user
+                gameprofile = user.get_user_profile()
 
-            # Check if the new timetable already exist
+                # Check if the new timetable already exist
 
-            isOk = True
-            start = request.POST.get('date_begin')
-            end = request.POST.get('date_end')
-            start_obj = datetime.datetime.strptime(start, '%Y-%m-%dT%H:%M')
-            end_obj = datetime.datetime.strptime(end, '%Y-%m-%dT%H:%M')
-            for timetable in gameprofile.timetables.all():
-                start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
-                start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
-                end_timetable = timetable.date_end.strftime('%Y-%m-%d %H:%M:%S')
-                end_timetable_obj = datetime.datetime.strptime(end_timetable, '%Y-%m-%d %H:%M:%S')
+                isOk = True
+                start = request.POST.get('date_begin')
+                end = request.POST.get('date_end')
+                start_obj = datetime.datetime.strptime(start, '%Y-%m-%dT%H:%M')
+                end_obj = datetime.datetime.strptime(end, '%Y-%m-%dT%H:%M')
+                for timetable in gameprofile.timetables.all():
+                    start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
+                    start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
+                    end_timetable = timetable.date_end.strftime('%Y-%m-%d %H:%M:%S')
+                    end_timetable_obj = datetime.datetime.strptime(end_timetable, '%Y-%m-%d %H:%M:%S')
 
-                condition1 = ((start_obj <= start_timetable_obj) and (end_obj >= end_timetable_obj))
-                condition2 = ((start_obj <= start_timetable_obj) and (end_obj >= start_timetable_obj))
-                condition3 = ((start_obj <= end_timetable_obj) and (end_obj >= end_timetable_obj))
-                condition4 = ((start_obj >= start_timetable_obj) and (end_obj <= end_timetable_obj))
+                    condition1 = ((start_obj <= start_timetable_obj) and (end_obj >= end_timetable_obj))
+                    condition2 = ((start_obj <= start_timetable_obj) and (end_obj >= start_timetable_obj))
+                    condition3 = ((start_obj <= end_timetable_obj) and (end_obj >= end_timetable_obj))
+                    condition4 = ((start_obj >= start_timetable_obj) and (end_obj <= end_timetable_obj))
 
-                if condition1 or condition2 or condition3 or condition4:
-                    isOk = False
-                    break
+                    if condition1 or condition2 or condition3 or condition4:
+                        isOk = False
+                        break
 
-            # Build new timetable
-            if isOk:
-                timetable = Timetable()
-                timetable.date_begin = start
-                timetable.date_end = end
-                timetable.save()
+                # Build new timetable
+                if isOk:
+                    timetable = Timetable()
+                    timetable.date_begin = start
+                    timetable.date_end = end
+                    timetable.save()
 
-                gameprofile.timetables.add(timetable)
-                gameprofile.save()
+                    gameprofile.timetables.add(timetable)
+                    gameprofile.save()
 
-                user.save()
+                    user.save()
 
-                messages.success(request, "Timetable successfully created !")
+                    messages.success(request, "Timetable successfully created !")
+                else:
+                    messages.error(request, "Timetable already exist")
             else:
-                messages.error(request, "Timetable already exist")
+                messages.warning(request, "Unallowed operation !")
+                return redirect("dashboard", user_id=request.user.id)
 
         return redirect("dashboard", user_id=user.id)
