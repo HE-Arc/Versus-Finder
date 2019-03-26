@@ -14,14 +14,14 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label col-form-label-lg" for="date_begin">Date begin :</label>
                     <div class="col-sm-10">
-                    <input class="form-control form-control-lg" type="datetime-local" name="date_begin" id="date_begin" required>
+                    <input placeholder="2019-03-26 08:30" class="form-control form-control-lg" type="datetime-local" min="{{ today }}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" name="date_begin" id="date_begin" required>
                     </div>
                 </div>
                 <br />
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label col-form-label-lg" for="date_end">Date end :</label>
                     <div class="col-sm-10">
-                    <input class="form-control form-control-lg" type="datetime-local" name="date_end" id="date_end" required>
+                    <input class="form-control form-control-lg" type="datetime-local" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" name="date_end" id="date_end" placeholder="2019-03-26 10:30" required>
                     </div>
                 </div>
                 <hr>

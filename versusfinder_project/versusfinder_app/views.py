@@ -423,10 +423,10 @@ def timetable_new(request, user_id, gameprofile_id):
                 # Check if the new timetable already exist
 
                 isOk = True
-                start = request.POST.get('date_begin')
-                end = request.POST.get('date_end')
-                start_obj = datetime.datetime.strptime(start, '%Y-%m-%dT%H:%M')
-                end_obj = datetime.datetime.strptime(end, '%Y-%m-%dT%H:%M')
+                start = request.POST.get('date_begin').replace('T', ' ')
+                end = request.POST.get('date_end').replace('T', ' ')
+                start_obj = datetime.datetime.strptime(start, '%Y-%m-%d %H:%M')
+                end_obj = datetime.datetime.strptime(end, '%Y-%m-%d %H:%M')
                 for timetable in gameprofile.timetables.all():
                     start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
                     start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
