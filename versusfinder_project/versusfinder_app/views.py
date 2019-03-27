@@ -258,7 +258,8 @@ def search_process(request, game_id):
             opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
 
             # Remove the current user from the list
-            opponents.remove(gameprofile)
+            if gameprofile in opponents:
+                opponents.remove(gameprofile)
 
             # Create initial data package
             context = {}
