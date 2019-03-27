@@ -321,6 +321,8 @@ def search_process(request, game_id):
 
     return HttpResponse("Error occured !")
 
+def search_show(request, game_id):
+    return None
 
 def match_show(request, game_id, match_id):
     if request.user.is_authenticated:
