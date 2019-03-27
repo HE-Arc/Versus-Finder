@@ -28,7 +28,7 @@ namespace :django do
     desc 'Collect static files'
     task :collect_static do
         on roles([:app, :web]) do |h|
-        execute "#{venv_path}/bin/python #{release_path}/manage.py collectstatic --noinput"
+        execute "#{venv_path}/bin/python #{release_path}/versusfinder_project/manage.py collectstatic --noinput"
         end
     end
 
