@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+﻿from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic, View
 from django.urls import reverse_lazy
@@ -11,7 +11,6 @@ from django.contrib import messages
 from random import randint
 from django.db.models import Q
 import re
-
 
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
@@ -246,9 +245,9 @@ def search_process(request, game_id):
 
             # Build datetime
             user_date_begin = datetime.datetime(user_begin_year, user_begin_month, user_begin_day, user_begin_time.hour,
-                                                user_begin_time.minute)
+                                                user_begin_time.minute, tzinfo=pytz.UTC)
             user_date_end = datetime.datetime(user_end_year, user_end_month, user_end_day, user_end_time.hour,
-                                              user_end_time.minute)
+                                              user_end_time.minute, tzinfo=pytz.UTC)
 
             # Validate time fields
             if user_date_end < user_date_begin:
@@ -256,17 +255,19 @@ def search_process(request, game_id):
                 return redirect('match.search', user_id=user.id, gameprofile_id=game.id)
 
             # Exclude opponents that banned the user main character
-            opponents = list(
-                UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
-            valid_opponents = []
+            opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
+
+            # Remove the current user from the list
+            if gameprofile in opponents:
+                opponents.remove(gameprofile)
 
             # Create initial data package
-            data = {}
-            data['user'] = {}
-            data['user']['gameprofile'] = gameprofile
-            data['user']['user_date_begin'] = user_date_begin
-            data['user']['user_date_end'] = user_date_end
-            data['opponents'] = []
+            context = {}
+            context['user_id'] = request.user.id
+            context['user_gameprofile'] = gameprofile
+            context['user_date_begin'] = user_date_begin
+            context['user_date_end'] = user_date_end
+            context['opponents'] = []
 
             # now fetch opponents
             for opponent in opponents:
@@ -278,30 +279,33 @@ def search_process(request, game_id):
                 if opponent.skill_level < skill_min or opponent.skill_level > skill_max:
                     continue  # User doesn't want to play againt this character
 
-                # Date
+                # Opponent timetables
                 opponent_timetables = opponent.timetables
 
-                # New opponent entry
-                valid_opponent = {}
-                valid_opponent['opponent_timetables'] = []
-                valid_opponent['opponent_gameprofil'] = opponent
+                # Matching opponent timetables
+                valid_opponent_timetables = []
 
-                for opponent_timetable in opponent_timetables:
+                for opponent_timetable in opponent_timetables.all():
                     # Check if datetimes are valid
                     if opponent_timetable.date_begin < user_date_end and opponent_timetable.date_end > user_date_begin:
-                        valid_opponent['opponent_timetables'].add(opponent_timetable)
+                        valid_opponent_timetables.append(opponent_timetable)
 
                 # If any timetable is matching, add it as a valide opponent
-                if valid_opponent['opponent_timetables']:
-                    data['opponents'].add(valid_opponent)
+                if valid_opponent_timetables:
+                    # New opponent entry
+                    valid_opponent = {}
+                    valid_opponent['gameprofile'] = opponent
+                    valid_opponent['timetables'] = valid_opponent_timetables
+                    
+                   # Append new opponent to the context
+                    context['opponents'].append(valid_opponent)
 
-            # TODO: UPDATE TIMETABLES (depuis la vue des résultats de la recherche)
-
-            if not data['opponents']:
+            # If no opponent found
+            if not context['opponents']:
                 messages.warning(request, "No opponent found !")
                 return redirect('match.search', game_id=game_id)
             else:
-                return JsonResponse(data)
+                return render(request, 'versusfinder_app/searchdetail.html', context)
 
     return HttpResponse("Error occured !")
 

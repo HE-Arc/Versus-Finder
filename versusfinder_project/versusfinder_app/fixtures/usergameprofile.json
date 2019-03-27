@@ -9,13 +9,7 @@
       "username": "Toto_profile",
       "battletag": "1982",
       "skill_level": 5,
-      "banlist": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
+      "banlist": [],
       "timetables": [
         1
       ]

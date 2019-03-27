@@ -99,7 +99,7 @@
                             {% if user.get_user_profile == null %}
                                 <a href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">Gameprofile</a>
                             {% else %}
-                                <a href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=1 %}">Gameprofile</a>
+                                <a href="{% url 'gameprofile.show' user_id=user_id gameprofile_id=1 %}">Gameprofile</a>
                             {% endif %}
                         </li>
                         <li>
