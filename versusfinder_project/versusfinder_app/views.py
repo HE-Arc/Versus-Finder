@@ -159,6 +159,7 @@ def gameprofile_show(request, user_id, gameprofile_id):
         context['characters'] = Character.objects.all().order_by('name')
         return render(request, 'versusfinder_app/gameprofile/show.html', context)
 
+
 def gameprofile_edit(request, user_id, gameprofile_id):
     ''' Open the page to edit the gameprofile '''
     if request.user.is_authenticated:
@@ -172,6 +173,7 @@ def gameprofile_edit(request, user_id, gameprofile_id):
         else:
             messages.warning(request, "Unallowed operation !")
             return redirect("dashboard", user_id=request.user.id)
+
 
 def gameprofile_update(request, user_id, gameprofile_id):
     ''' Update the gameprofile '''
@@ -208,24 +210,6 @@ def gameprofile_update(request, user_id, gameprofile_id):
         else:
             messages.warning(request, "Unallowed operation !")
             return redirect("dashboard", user_id=request.user.id)
-
-
-def match_search(request, game_id):
-    if request.user.is_authenticated:
-
-        user = request.user
-        gameprofile = user.get_user_profile()
-        game = Game.objects.get(id=game_id)
-
-        if gameprofile.id == -1:
-            # User has no gameprofile, redirect '''
-            return redirect('gameprofile.new', game_id=game.id)
-        else:
-            context = {}
-            context['user_id'] = user.id
-            context['gameprofile'] = gameprofile
-            context['game'] = Game.objects.get(id=game_id)
-            return render(request, 'versusfinder_app/search.html', context)
 
 
 def search_process(request, game_id):
@@ -320,6 +304,39 @@ def search_process(request, game_id):
                 return JsonResponse(data)
 
     return HttpResponse("Error occured !")
+
+
+def match_search(request, game_id):
+    if request.user.is_authenticated:
+
+        user = request.user
+        gameprofile = user.get_user_profile()
+        game = Game.objects.get(id=game_id)
+
+        if gameprofile.id == -1:
+            # User has no gameprofile, redirect '''
+            return redirect('gameprofile.new', game_id=game.id)
+        else:
+            context = {}
+            context['user_id'] = user.id
+            context['gameprofile'] = gameprofile
+            context['game'] = Game.objects.get(id=game_id)
+            return render(request, 'versusfinder_app/search.html', context)
+
+
+def match_validate(request, gameprofile_id):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user = request.user
+            gameprofile = user.get_user_profile()
+            opponent_gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+
+            # TO VALIDATE
+            time_begin = request.POST.get('input_hour_begin')
+            time_end = request.POST.get('input_hour_end')
+            date = request.POST.get('input_date')
+
+            
 
 
 def match_show(request, game_id, match_id):
