@@ -2,6 +2,7 @@
 lock "~> 3.11.0"
 
 set :application, "Versus-Finder"
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 set :repo_url, "github.com/HE-Arc/Versus-Finder.git"
 
 after 'deploy:publishing', 'uwsgi:restart'
