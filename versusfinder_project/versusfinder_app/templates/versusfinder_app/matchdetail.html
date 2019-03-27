@@ -15,7 +15,9 @@
                         <img class="card-img-left"
                              src="{% static '' %}img/{{ match.user_profile_one.mainchar.name }}.png"/>
                         <div class="card-body">
-                            <h5 class="card-title">{{ match.user_profile_one.username }}</h5>
+                            <div class="btn btn-info"><a
+                                    href="{% url 'gameprofile.show' user_id=match.user_profile_one.user.id gameprofile_id=match.user_profile_one.id %}">
+                                <h5 class="card-title">{{ match.user_profile_one.username }}</h5></a></div>
                             <div class="card-text">
                                 <p>As : {{ match.user_profile_one.mainchar.name }}</p>
                                 <p>Level : {{ match.user_profile_one.skill_level }}</p>
@@ -34,7 +36,7 @@
                     protect it by send a request to the other player of the match to confirm the score -->
                     {% if gameprofile.id == match.user_profile_one.id or gameprofile.id == match.user_profile_two %}
                         {% if match.user_one_score != 3 and match.user_profile_two != 3 %}
-                            <form action="{% url 'match.alterscore' game_id=game.id match_id=match.id%}" method="post">
+                            <form action="{% url 'match.alterscore' game_id=game.id match_id=match.id %}" method="post">
                                 {% csrf_token %}
                                 <input id="score_player_1" name="score_player_1" type="number"
                                        placeholder="Score of {{ match.user_profile_one.username }}"
@@ -59,13 +61,15 @@
                         <img class="card-img-left"
                              src="{% static '' %}img/{{ match.user_profile_two.mainchar.name }}.png"/>
                         <div class="card-body">
-                            <h5 class="card-title">{{ match.user_profile_two.username }}</h5>
-                            <div class="card-text">
-                                <p>As : {{ match.user_profile_two.mainchar.name }}</p>
-                                <p>Level : {{ match.user_profile_two.skill_level }}</p>
+                            <div class="btn btn-info"><a
+                                    href="{% url 'gameprofile.show' user_id=match.user_profile_two.user.id gameprofile_id=match.user_profile_two.id %}">
+                                <h5 class="card-title">{{ match.user_profile_two.username }}</h5></a></div>
+                                <div class="card-text">
+                                    <p>As : {{ match.user_profile_two.mainchar.name }}</p>
+                                    <p>Level : {{ match.user_profile_two.skill_level }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </td>
             </tr>
         </table>

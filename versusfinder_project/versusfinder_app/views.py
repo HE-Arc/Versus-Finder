@@ -188,13 +188,13 @@ def gameprofile_update(request, user_id, gameprofile_id):
                     pseudo = request.POST.get('input_pseudo')
                     if not re.match('^[a-zA-Z0-9_]+$', pseudo):
                         messages.error(request, "Invalid pseudo ! Must be alphanumerical")
-                        return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+                        return redirect('gameprofile.register', user_id=user.id, game_id=gameprofile.game.id)
 
                     # Validate skill
                     skill = int(request.POST.get('input_skill'))
                     if skill < 0 or skill > 10:
                         messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-                        return redirect('gameprofile.register', user_id=user.id, game_id=game_id)
+                        return redirect('gameprofile.register', user_id=user.id, game_id=gameprofile.game.id)
 
                     # Build new gameprofile
                     gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
@@ -294,7 +294,7 @@ def search_process(request, game_id):
                 # If any timetable is matching, add it as a valide opponent
                 if valid_opponent['opponent_timetables']:
                     data['opponents'].add(valid_opponent)
-                    
+
             # TODO: UPDATE TIMETABLES (depuis la vue des résultats de la recherche)
 
             if not data['opponents']:
@@ -305,8 +305,10 @@ def search_process(request, game_id):
 
     return HttpResponse("Error occured !")
 
+
 def search_show(request, game_id):
     return None
+
 
 def match_search(request, game_id):
     if request.user.is_authenticated:
@@ -326,7 +328,7 @@ def match_search(request, game_id):
             return render(request, 'versusfinder_app/search.html', context)
 
 
-def match_validate(request, gameprofile_id):
+def match_validate(request, game_id, gameprofile_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
@@ -338,7 +340,46 @@ def match_validate(request, gameprofile_id):
             time_end = request.POST.get('input_hour_end')
             date = request.POST.get('input_date')
 
-            
+            begin_time = datetime.time(int(time_begin[:2]), int(time_begin[3:]))
+            end_time = datetime.time(int(time_end[:2]), int(time_end[3:]))
+
+            # Process date
+            begin_year = int(date[:4])
+            begin_month = int(date[5:7])
+            begin_day = int(date[8:])
+
+            end_year = int(date[:4])
+            end_month = int(date[5:7])
+            end_day = int(date[8:])
+
+            # Build datetime
+            date_begin = datetime.datetime(begin_year, begin_month, begin_day, begin_time.hour,
+                                           begin_time.minute)
+            date_end = datetime.datetime(end_year, end_month, end_day, end_time.hour,
+                                         end_time.minute)
+
+            # First way where we don't check if user already have match at this moment
+            # Suppose to check if he already have a timetable at this moment and modify opponent timetables
+            # First step without this and could maybe have 2 match at the same time.
+            timetable = Timetable()
+            timetable.date_begin = date_begin
+            timetable.date_end = date_end
+            timetable.save()
+
+            match = Match()
+            match.game = game_id
+            match.user_profile_one = gameprofile
+            match.user_profile_two = opponent_gameprofile
+            match.timetable = timetable
+            match.user_one_score = 0
+            match.user_two_score = 0
+            match.state = 0
+            match.save()
+
+            messages.success(request, "Match successfully accepted !")
+            return redirect('match.search', game_id=game_id)
+
+    return HttpResponse("Error occured !")
 
 
 def match_show(request, game_id, match_id):
