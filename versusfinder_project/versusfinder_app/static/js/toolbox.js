@@ -1,13 +1,10 @@
 class BanlistTools {
 
-    static alter(user_id, gameprofile_id, char_id)
+    static alter(gameprofile_id, char_id)
     {
-        console.log(user_id)
-        console.log(gameprofile_id)
-        console.log(char_id)
         $.ajax({
             type: 'POST',
-            url : "/dashboard/" + user_id + "/gameprofiles/" + gameprofile_id + "/characters/" + char_id + "/alter",
+            url : "/dashboard/gameprofiles/" + gameprofile_id + "/characters/" + char_id + "/alter",
             headers: {
                 'X-CSRFToken': Toolbox.getCookie('csrftoken')
                 // csrftoken 

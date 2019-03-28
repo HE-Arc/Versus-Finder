@@ -16,7 +16,7 @@
                              src="{% static '' %}img/{{ match.user_profile_one.mainchar.name }}.png"/>
                         <div class="card-body">
                             <div class="btn btn-info"><a
-                                    href="{% url 'gameprofile.show' user_id=match.user_profile_one.user.id gameprofile_id=match.user_profile_one.id %}">
+                                    href="{% url 'gameprofile.show' gameprofile_id=match.user_profile_one.id %}">
                                 <h5 class="card-title">{{ match.user_profile_one.username }}</h5></a></div>
                             <div class="card-text">
                                 <p>As : {{ match.user_profile_one.mainchar.name }}</p>
@@ -62,7 +62,7 @@
                              src="{% static '' %}img/{{ match.user_profile_two.mainchar.name }}.png"/>
                         <div class="card-body">
                             <div class="btn btn-info"><a
-                                    href="{% url 'gameprofile.show' user_id=match.user_profile_two.user.id gameprofile_id=match.user_profile_two.id %}">
+                                    href="{% url 'gameprofile.show' gameprofile_id=match.user_profile_two.id %}">
                                 <h5 class="card-title">{{ match.user_profile_two.username }}</h5></a></div>
                                 <div class="card-text">
                                     <p>As : {{ match.user_profile_two.mainchar.name }}</p>

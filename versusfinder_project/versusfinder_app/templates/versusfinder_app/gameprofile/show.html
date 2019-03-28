@@ -12,7 +12,7 @@
         <div class="col-sm-3">
             <div class="card-header border-0">
                 <img class="card-img-top"
-                src="{% static '' %}img/{{ gameprofile.mainchar.name }}.png"
+                src="{% static '' %}img/{{ content_gameprofile.mainchar.name }}.png"
                 alt="Card image cap"
                 style="max-width: 100%; max-height:100%; background-position: 50% 50%;">
             </div>
@@ -20,14 +20,14 @@
         <div class="col-sm-9">
             <div class="card-body">
                 <div class="card-text h1">
-                    {{ gameprofile.username }}
+                    {{ content_gameprofile.username }}
                     <em class="text-muted">
-                        #{{ gameprofile.battletag }}
+                        #{{ content_gameprofile.battletag }}
                     </em>
                     <div class="right">
-                        {% if user_id == user.id %}
+                        {% if content_gameprofile is not None and content_gameprofile.id == gameprofile.id %}
                             <a class="btn btn-sm btn-outline-secondary"
-                                href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Edit gameprofile
+                                href="{% url 'gameprofile.edit' gameprofile_id=gameprofile.id %}">Edit gameprofile
                             </a>
                         {% endif %}
                     </div>
@@ -37,26 +37,26 @@
                     <div class="col-sm-2"><p>Noob</p></div>
                     <div class="col-sm-6">
                         <div id="input_skill" name="input_skill"></div>
-                        <input type="hidden" id="input_skill_value" name="input_skill_value" value="{{ gameprofile.skill_level }}"/>
+                        <input type="hidden" id="input_skill_value" name="input_skill_value" value="{{ content_gameprofile.skill_level }}"/>
                     </div>
                     <div class="col-sm-2"><p>Pro</p></div>
                 </div>
 
                 <p class="card-text h3">Banlist</p>
 
-                <!-- Banlist button -->
-                {% if gameprofile is not None %}
-                <div style="padding: 10px 10px 50px 10px;">
-                    <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
-                        {% csrf_token %}
-                    <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
-                    </form>
-                </div>
+                {% if content_gameprofile is not None and content_gameprofile.id == gameprofile.id %}
+                    <!-- Banlist button -->
+                    <div style="padding: 10px 10px 50px 10px;">
+                        <form action="{% url 'banlist.modify' gameprofile_id=gameprofile.id %}" method="POST">
+                            {% csrf_token %}
+                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                        </form>
+                    </div>
+                    <!-- END OF Banlist button -->
                 {% endif %}
-                <!-- END OF Banlist button -->
 
                 <div class="card-columns" style="column-count: 5;">
-                    {% for character in gameprofile.banlist.all %}
+                    {% for character in content_gameprofile.banlist.all %}
                         <div class="card bg-dark text-white">
                             <img class="card-img rounded mx-auto d-block " src="{% static '' %}img/{{ character.name }}.png" alt="{{ character.name }}" style="max-width: 50%;"/>
                             <div class="card-img-overlay">
