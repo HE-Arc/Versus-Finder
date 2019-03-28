@@ -161,54 +161,60 @@ def gameprofile_show(request, user_id, gameprofile_id):
 
 def gameprofile_edit(request, user_id, gameprofile_id):
     ''' Open the page to edit the gameprofile '''
-    if request.user.is_authenticated:
-        if User.objects.get(id=user_id) == request.user:
-            context = {}
-            context['user_id'] = request.user.id
-            context['gameprofile'] = UserGameProfile.objects.get(id=gameprofile_id)
-            context['game'] = context['gameprofile'].game
-            context['characters'] = Character.objects.all().order_by('name')
-            return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
-        else:
-            messages.warning(request, "Unallowed operation !")
-            return redirect("dashboard", user_id=request.user.id)
+    user_from_uri = User.objects.get(id=user_id)
+    gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
+
+    # Check is user is allowed
+    if request.user.is_authenticated and request.user.id == user_from_uri.id:
+        context = {}
+        context['user_id'] = request.user.id
+        context['gameprofile'] = gameprofile_from_uri
+        context['game'] = gameprofile_from_uri.game
+        context['characters'] = Character.objects.all().order_by('name')
+        return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
+    else:
+        messages.warning(request, "Unallowed operation !")
+        return redirect("dashboard", user_id=request.user.id)
+
 
 
 def gameprofile_update(request, user_id, gameprofile_id):
     ''' Update the gameprofile '''
-    if request.user.is_authenticated:
-        if User.objects.get(id=user_id) == request.user:
-            if request.method == 'POST':
-                user = request.user
-                gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+    user_from_uri = User.objects.get(id=user_id)
+    gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
 
-                try:
-                    # Validate pseudo
-                    pseudo = request.POST.get('input_pseudo')
-                    if not re.match('^[a-zA-Z0-9_]+$', pseudo):
-                        messages.error(request, "Invalid pseudo ! Must be alphanumerical")
-                        return redirect('gameprofile.register', user_id=user.id, game_id=gameprofile.game.id)
+    # Check is user is allowed
+    if request.user.is_authenticated and request.user.id == user_from_uri.id:
+        if request.method == 'POST':
 
-                    # Validate skill
-                    skill = int(request.POST.get('input_skill'))
-                    if skill < 0 or skill > 10:
-                        messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-                        return redirect('gameprofile.register', user_id=user.id, game_id=gameprofile.game.id)
+            #try:
+                # Validate pseudo
+                pseudo = request.POST.get('input_pseudo')
+                if not re.match('^[a-zA-Z0-9_]+$', pseudo):
+                    messages.error(request, "Invalid pseudo ! Must be alphanumerical")
+                    return redirect('gameprofile.register', user_id=user_from_uri.id, game_id=gameprofile_from_uri.game.id)
 
-                    # Build new gameprofile
-                    gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
-                    gameprofile.username = pseudo
-                    gameprofile.skill_level = skill
-                    gameprofile.save()
+                # Validate skill
+                skill = int(request.POST.get('input_skill_value'))
+                print(skill)
+                if skill < 0 or skill > 10:
+                    messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
+                    return redirect('gameprofile.register', user_id=user_from_uri.id, game_id=gameprofile_from_uri.game.id)
 
-                    messages.success(request, "Gameprofile successfully updated !")
-                    return redirect('/')
-                except:
-                    messages.error(request, "Error occured while updating !")
-                    return redirect('gameprofile.edit', user_id=user.id, gameprofile_id=gameprofile_id)
-        else:
-            messages.warning(request, "Unallowed operation !")
-            return redirect("dashboard", user_id=request.user.id)
+                # Build new gameprofile
+                gameprofile_from_uri.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                gameprofile_from_uri.username = pseudo
+                gameprofile_from_uri.skill_level = skill
+                gameprofile_from_uri.save()
+
+                messages.success(request, "Gameprofile successfully updated !")
+                return redirect('/')
+            #except:
+                messages.error(request, "Error occured while updating !")
+                return redirect('gameprofile.edit', user_id=user_from_uri.id, gameprofile_id=gameprofile_from_uri.id)
+    else:
+        messages.error(request, "Unallowed operation !")
+        return redirect("dashboard", user_id=request.user.id)
 
 
 def search_process(request, game_id):

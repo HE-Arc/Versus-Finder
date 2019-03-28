@@ -33,9 +33,11 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="input_skill" class="col-sm-2 col-form-label col-form-label-lg">Skill</label>
                     <div class="col-sm-2"><p>Noob</p></div>
-                    <div class="col-sm-8">
-                        <input type="range" min="1" max="10" class="form-control form-control-lg slider" value="{{ gameprofile.skill_level }}" disabled/>
+                    <div class="col-sm-6">
+                        <div id="input_skill" name="input_skill"></div>
+                        <input type="hidden" id="input_skill_value" name="input_skill_value" value="{{ gameprofile.skill_level }}"/>
                     </div>
                     <div class="col-sm-2"><p>Pro</p></div>
                 </div>
@@ -69,5 +71,28 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    var skill_input = document.getElementById('input_skill');
+    var skill_value = document.getElementById('input_skill_value');
+    
+    var slider = noUiSlider.create(skill_input, {
+        step: 1,
+        start: skill_value.value,
+        connect: [true, false],
+        range: {
+            'min': 0,
+            'max': 10
+        }
+    });
+
+    slider.on('update', function (values, handle) {
+        skill_value.value = Math.round(values[handle]);
+    });
+
+    skill_input.setAttribute('disabled', true);
+    
+    </script>
 
 {% endblock %}
