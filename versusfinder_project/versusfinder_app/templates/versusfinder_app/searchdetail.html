@@ -5,39 +5,57 @@
 {% block content %}
     <h1 class="display-1">Search Detail</h1>
     <hr>
-    <div>
-        {% for opponent in opponents %}
-            <h2>
-                {{ opponent.gameprofile.username }}
-            </h2>
-            {{ opponent.gameprofile.mainchar }}
-            <table class="table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Opponent</th>
-                    <th scope="col">Mainchar</th>
-                    <th scope="col">Begin</th>
-                    <th scope="col">End</th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for timetable in opponent.timetables %}
-                    <form>
-                        <tr>
-                            <td id="username"><h2>{{ opponent.gameprofile.username }}</h2></td>
-                            <td id="mainchar">{{ opponent.gameprofile.mainchar }}</td>
-                            <td id="date_begin">{{ timetable.date_begin }}</td>
-                            <td id="date_end">{{ timetable.date_end }}</td>
-                            <td><input class="btn btn-primary btn-lg" type="submit" value="Choose"></td>
-                        </tr>
-                    </form>
 
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endfor %}
-
+    <div class="container h-100">
+        <div class="card mb-10 shadow-sm flex-row flex-wrap h-100">
+            {% for opponent in opponents %}
+                <div class="col-sm-3">
+                    <div class="card-header border-0">
+                        <img class="card-img-top"
+                             src=""
+                             alt="Card image cap"
+                             style="max-width: 100%; max-height:100%; background-position: 50% 50%;">
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="card-body">
+                        <div class="card-text h1">
+                            <h1>{{ opponent.gameprofile.username }}</h1>
+                        </div>
+                        <p class="card-text h3">List of his timetable</p>
+                        <div>
+                            <table class="table table-hover">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Date begin</th>
+                                    <th scope="col">Date end</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for timetable in opponent.timetables %}
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        <tr>
+                                            <input type='hidden' value='{{ opponent.gameprofile.username }}'
+                                                   name="username" id='username'>
+                                            <input type='hidden' value='{{ timetable.date_begin }}' name="date_begin"
+                                                   id='date_begin'>
+                                            <input type='hidden' value='{{ timetable.date_end }}' name="date_begin"
+                                                   id='date_end'>
+                                            <td>{{ timetable.date_begin }}</td>
+                                            <td>{{ timetable.date_end }}</td>
+                                            <td><input class="btn btn-primary" type="submit" value="Choose"></td>
+                                        </tr>
+                                    </form>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
     </div>
 
 
