@@ -2,6 +2,7 @@
 lock "~> 3.11.0"
 
 set :application, "Versus-Finder"
+set :branch, ENV['BRANCH'] if ENV['BRANCH']
 set :repo_url, "github.com/HE-Arc/Versus-Finder.git"
 
 after 'deploy:publishing', 'uwsgi:restart'
@@ -14,9 +15,33 @@ namespace :uwsgi do
 	end
     end
 end
-
+	
 
 after 'deploy:updating', 'python:create_venv'
+
+
+
+after 'deploy:updated', 'django:collect_static'
+after 'deploy:updated', 'django:setProd'
+
+namespace :django do
+# thanks PayPixPlace
+    desc 'Collect static files'
+    task :collect_static do
+        on roles([:app, :web]) do |h|
+        execute "#{venv_path}/bin/python #{release_path}/versusfinder_project/manage.py collectstatic --noinput"
+        end
+    end
+
+    desc 'set debug to False'
+    task :setProd do
+        on roles([:app, :web]) do |h|
+        execute "sed -i 's/DEBUG = True/DEBUG = False/g' #{release_path}/versusfinder_project/versusfinder_project/settings.py"
+        end
+    end
+end
+
+
 
 namespace :python do
 
