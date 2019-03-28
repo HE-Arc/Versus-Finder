@@ -19,6 +19,7 @@ urlpatterns = [
     path('games/<game_id>/matchs/search', views.match_search, name='match.search'),
     path('games/<game_id>/matchs/search/process', views.search_process, name='search.process'),
     path('games/<game_id>/matchs/search/show', views.search_show, name='search.show'),
+    path('games/<game_id>/matchs/search/show/validate', views.match_validate, name='match.validate'),
     path('games/<game_id>/matchs/<match_id>/show', views.match_show, name='match.show'),
     path('games/<game_id>/matchs/<match_id>/alter_score', views.match_alterscore, name='match.alterscore'),
 
