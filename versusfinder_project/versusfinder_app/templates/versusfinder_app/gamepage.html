@@ -5,8 +5,10 @@
 {% block content %}
     <h1 class="display-1">Super Smash Bros Ultimate</h1>
     <div>
+    {% if user_id != Null %}
         <a class="btn btn-primary btn-lg btn-block"
            href="{% url 'match.search' game_id=game.id %}">Search an opponent</a>
+    {% endif %}
     </div>
     <div>
         <p>The matchs to come</p>
