@@ -38,13 +38,14 @@
                                 </thead>
                                 <tbody>
                                 {% for timetable in opponent.timetables %}
-                                    <form action="{% url 'match.validate' game_id=opponent.gameprofile.game %}" method="POST">
+                                    <form action="{% url 'match.validate' game_id=opponent.gameprofile.game.id %}"
+                                          method="POST">
                                         {% csrf_token %}
                                         <tr>
                                             <input type='hidden' value='{{ opponent.gameprofile.id }}'
-                                                   name="username" id='username'>
+                                                   name="opponent" id='opponent'>
                                             <input type='hidden' value='{{ timetable.id }}'
-                                                   name="timetable" id='username'>
+                                                   name="timetable" id='timetable'>
                                             <input type='hidden' value='{{ timetable.date_begin }}' name="date_begin"
                                                    id='date_begin'>
                                             <input type='hidden' value='{{ timetable.date_end }}' name="date_begin"
