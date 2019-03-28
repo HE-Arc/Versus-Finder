@@ -24,6 +24,10 @@ import re
 
 def home(request):
     context = {}
+    try:
+        context['gameprofile'] = request.user.get_user_profile()
+    except:
+        pass
     return render(request, 'versusfinder_app/home.html', context)
 
 

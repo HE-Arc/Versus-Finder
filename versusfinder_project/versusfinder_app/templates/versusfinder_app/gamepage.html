@@ -5,7 +5,7 @@
 {% block content %}
     <h1 class="display-1">Super Smash Bros Ultimate</h1>
     <div>
-    {% if user.id is not None %}
+    {% if gameprofile is not None %}
         <a class="btn btn-primary btn-lg btn-block" href="{% url 'match.search' game_id=game.id %}">Search an opponent</a>
     {% endif %}
     </div>
