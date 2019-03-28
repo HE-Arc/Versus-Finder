@@ -460,12 +460,13 @@ def banlist_alter(request, user_id, gameprofile_id, char_id):
 
 
 def game_show(request, game_id):
+    context = {}
     if request.user.is_authenticated:
-        context = {}
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
-        context['game'] = Game.objects.get(id=game_id)
-        context['matchs'] = Match.objects.all()
+
+    context['game'] = Game.objects.get(id=game_id)
+    context['matchs'] = Match.objects.all()
     return render(request, 'versusfinder_app/gamepage.html', context)
 
 
