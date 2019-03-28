@@ -30,6 +30,14 @@ def home(request):
         pass
     return render(request, 'versusfinder_app/home.html', context)
 
+def about(request):
+    context = {}
+    try:
+        context['gameprofile'] = request.user.get_user_profile()
+    except:
+        pass
+    return render(request, 'versusfinder_app/about.html', context)
+
 
 def dashboard(request):
     if request.user.is_authenticated:
