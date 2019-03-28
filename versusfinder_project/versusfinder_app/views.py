@@ -122,7 +122,7 @@ def gameprofile_register(request, game_id):
             return redirect('gameprofile.register', game_id=game_id)
 
         # Validate skill
-        skill = int(request.POST.get('input_skill'))
+        skill = int(request.POST.get('input_skill_value'))
         if skill < 0 or skill > 10:
             messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
             return redirect('gameprofile.register', game_id=game_id)

@@ -138,7 +138,7 @@
                             Account
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% if gameprofile == None %}
+                            {% if gameprofile is None %}
                                 <a class="dropdown-item" href="{% url 'gameprofile.new' game_id=1 %}">New
                                     gameprofile</a>
                             {% else %}
