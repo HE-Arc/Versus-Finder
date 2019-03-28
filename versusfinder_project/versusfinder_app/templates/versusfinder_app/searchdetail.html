@@ -6,44 +6,39 @@
     <h1 class="display-1">Search Detail</h1>
     <hr>
     <div>
-        <form>
+        {% for opponent in opponents %}
+            <h2>
+                {{ opponent.gameprofile.username }}
+            </h2>
+            {{ opponent.gameprofile.mainchar }}
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Oppenent</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Opponent</th>
+                    <th scope="col">Mainchar</th>
+                    <th scope="col">Begin</th>
+                    <th scope="col">End</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {% for timetable in opponent.timetables %}
+                    <form>
+                        <tr>
+                            <td id="username"><h2>{{ opponent.gameprofile.username }}</h2></td>
+                            <td id="mainchar">{{ opponent.gameprofile.mainchar }}</td>
+                            <td id="date_begin">{{ timetable.date_begin }}</td>
+                            <td id="date_end">{{ timetable.date_end }}</td>
+                            <td><input class="btn btn-primary btn-lg" type="submit" value="Choose"></td>
+                        </tr>
+                    </form>
+
+                {% endfor %}
                 </tbody>
             </table>
-        </form>
+        {% endfor %}
 
     </div>
 
-    {% for opponent in opponents %}
-    <p>{{opponent}}</p>
-    {% endfor %}
 
 {% endblock %}

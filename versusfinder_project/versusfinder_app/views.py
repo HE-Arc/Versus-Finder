@@ -436,6 +436,7 @@ def timetable(request, user_id, gameprofile_id):
         return render(request, 'versusfinder_app/timetable.html', context)
 
 
+
 def timetable_new(request, user_id, gameprofile_id):
     if request.user.is_authenticated:
         if User.objects.get(id=user_id) == request.user:
