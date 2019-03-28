@@ -338,46 +338,32 @@ def match_search(request, game_id):
             return render(request, 'versusfinder_app/search.html', context)
 
 
-def match_validate(request, game_id, gameprofile_id):
+def match_validate(request, game_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
             gameprofile = user.get_user_profile()
-            opponent_gameprofile = UserGameProfile.objects.get(id=gameprofile_id)
+
+            opponent_id = request.POST.get('opponent')
+            opponent_gameprofile = UserGameProfile.objects.get(id=opponent_id)
+            game = Game.objects.get(id=int(game_id))
 
             # TO VALIDATE
-            time_begin = request.POST.get('input_hour_begin')
-            time_end = request.POST.get('input_hour_end')
-            date = request.POST.get('input_date')
-
-            begin_time = datetime.time(int(time_begin[:2]), int(time_begin[3:]))
-            end_time = datetime.time(int(time_end[:2]), int(time_end[3:]))
-
-            # Process date
-            begin_year = int(date[:4])
-            begin_month = int(date[5:7])
-            begin_day = int(date[8:])
-
-            end_year = int(date[:4])
-            end_month = int(date[5:7])
-            end_day = int(date[8:])
-
-            # Build datetime
-            date_begin = datetime.datetime(begin_year, begin_month, begin_day, begin_time.hour,
-                                           begin_time.minute)
-            date_end = datetime.datetime(end_year, end_month, end_day, end_time.hour,
-                                         end_time.minute)
+            date_begin = request.POST.get('date_begin')
+            date_end = request.POST.get('date_end')
+            opponent_timetable_id = request.POST.get('timetable')
+            opponent_timetable = Timetable.objects.get(id=opponent_timetable_id)
 
             # First way where we don't check if user already have match at this moment
             # Suppose to check if he already have a timetable at this moment and modify opponent timetables
             # First step without this and could maybe have 2 match at the same time.
             timetable = Timetable()
-            timetable.date_begin = date_begin
-            timetable.date_end = date_end
+            timetable.date_begin = opponent_timetable.date_begin
+            timetable.date_end = opponent_timetable.date_begin + datetime.timedelta(hours=1)
             timetable.save()
 
             match = Match()
-            match.game = game_id
+            match.game = game
             match.user_profile_one = gameprofile
             match.user_profile_two = opponent_gameprofile
             match.timetable = timetable
@@ -499,6 +485,12 @@ def timetable_new(request, user_id, gameprofile_id):
                 end = request.POST.get('date_end').replace('T', ' ')
                 start_obj = datetime.datetime.strptime(start, '%Y-%m-%d %H:%M')
                 end_obj = datetime.datetime.strptime(end, '%Y-%m-%d %H:%M')
+
+                # Validate time fields
+                if end_obj < start_obj:
+                    messages.error(request, "Error ! time fields are not coherent")
+                    return redirect("dashboard", user_id=user.id)
+
                 for timetable in gameprofile.timetables.all():
                     start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
                     start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
