@@ -162,6 +162,10 @@ def gameprofile_show(request, gameprofile_id):
 
         # Workaround (https://github.com/HE-Arc/Versus-Finder/wiki/Probl%C3%A8mes-non-r%C3%A9solus)
         context['content_gameprofile'] = gameprofile_from_uri
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass
 
         return render(request, 'versusfinder_app/gameprofile/show.html', context)
 
