@@ -329,12 +329,12 @@ def match_search(request, game_id):
 
         if gameprofile.id == -1:
             # User has no gameprofile, redirect '''
-            return redirect('gameprofile.new', game_id=game.id)
+            return redirect('gameprofile.new', game_id=game_id)
         else:
             context = {}
             context['user_id'] = user.id
             context['gameprofile'] = gameprofile
-            context['game'] = Game.objects.get(id=game_id)
+            context['game'] = game
             return render(request, 'versusfinder_app/search.html', context)
 
 
