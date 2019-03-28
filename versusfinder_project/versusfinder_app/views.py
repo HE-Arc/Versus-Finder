@@ -493,6 +493,12 @@ def timetable_new(request, user_id, gameprofile_id):
                 end = request.POST.get('date_end').replace('T', ' ')
                 start_obj = datetime.datetime.strptime(start, '%Y-%m-%d %H:%M')
                 end_obj = datetime.datetime.strptime(end, '%Y-%m-%d %H:%M')
+
+                # Validate time fields
+                if end_obj < start_obj:
+                    messages.error(request, "Error ! time fields are not coherent")
+                    return redirect("dashboard", user_id=user.id)
+
                 for timetable in gameprofile.timetables.all():
                     start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
                     start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
