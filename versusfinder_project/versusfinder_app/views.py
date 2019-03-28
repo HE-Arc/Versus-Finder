@@ -158,6 +158,10 @@ def gameprofile_show(request, gameprofile_id):
         context = {}
         context['user'] = request.user
         context['game'] = gameprofile_from_uri.game
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass #User might be just checking an other user's gameprofile
         context['characters'] = Character.objects.all().order_by('name')
 
         # Workaround (https://github.com/HE-Arc/Versus-Finder/wiki/Probl%C3%A8mes-non-r%C3%A9solus)
