@@ -103,7 +103,7 @@
                             {% endif %}
                         </li>
                         <li>
-                            <a href="{% url 'match.search' game_id=1 %}">Match</a>
+                            <a href="{% url 'match.search' game_id=1 %}">Search match</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -140,11 +140,11 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             {% if gameprofile == None %}
                                 <a class="dropdown-item" href="{% url 'gameprofile.new' user_id=user_id game_id=1 %}">New
-                                    profil</a>
+                                    gameprofile</a>
                             {% else %}
                                 <a class="dropdown-item"
                                    href="{% url 'gameprofile.edit' user_id=user_id gameprofile_id=gameprofile.id %}">Your
-                                    profil</a>
+                                    gameprofile</a>
                             {% endif %}
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
