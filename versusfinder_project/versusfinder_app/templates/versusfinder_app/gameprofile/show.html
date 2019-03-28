@@ -41,6 +41,18 @@
                 </div>
 
                 <p class="card-text h3">Banlist</p>
+
+                <!-- Banlist button -->
+                {% if gameprofile is not None %}
+                <div style="padding: 10px 10px 50px 10px;">
+                    <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
+                        {% csrf_token %}
+                    <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                    </form>
+                </div>
+                {% endif %}
+                <!-- END OF Banlist button -->
+
                 <div class="card-columns" style="column-count: 5;">
                     {% for character in gameprofile.banlist.all %}
                         <div class="card bg-dark text-white">

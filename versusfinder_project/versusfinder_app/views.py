@@ -332,7 +332,7 @@ def match_search(request, game_id):
             return render(request, 'versusfinder_app/search.html', context)
 
 
-def match_validate(request, game_id, gameprofile_id):
+def match_validate(request, game_id):
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
