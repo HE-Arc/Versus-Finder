@@ -37,55 +37,55 @@ def dashboard(request):
         context['user'] = request.user
         try:
             context['gameprofile'] = request.user.get_user_profile()
-            context['user_timetable'] = context['gameprofile'].timetables.all()
-            matchs = Match.objects.all()
-            user_matchs = []
-            for match in matchs:
-                if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
-                    user_matchs.append(match)
-
-            context['user_matchs'] = user_matchs
-            context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
-
-            ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
-            next_match = None
-            for match in matchs:
-                if match.timetable.date_begin > datetime.datetime.now(
-                        match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
-                    next_match = match
-                    ref_match = match.timetable.date_begin
-
-            if next_match is not None:
-                context['next_match'] = next_match
-
-            old_matchs = []
-            winlose = []
-            win = 0
-            lose = 0
-            for match in user_matchs:
-                if match.timetable.date_end < datetime.datetime.now(match.timetable.date_end.tzinfo):
-                    old_matchs.append(match)
-                    if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
-                        win += 1
-                    elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
-                        win += 1
-                    else:
-                        lose += 1
-
-            winlose.append(win)
-            winlose.append(lose)
-
-            context['user_stats'] = winlose
-            context['user_old_matchs'] = old_matchs
-
-            return render(request, 'versusfinder_app/dashboard.html', context)
         except:
             messages.warning(request, "Create a gameprofile first !")
             return redirect('/')
+
+        context['user_timetable'] = context['gameprofile'].timetables.all()
+        matchs = Match.objects.all()
+        user_matchs = []
+        for match in matchs:
+            if match.user_profile_one == context['gameprofile'] or match.user_profile_two == context['gameprofile']:
+                user_matchs.append(match)
+
+        context['user_matchs'] = user_matchs
+        context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
+
+        ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
+        next_match = None
+        for match in matchs:
+            if match.timetable.date_begin > datetime.datetime.now(
+                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                next_match = match
+                ref_match = match.timetable.date_begin
+
+        if next_match is not None:
+            context['next_match'] = next_match
+
+        old_matchs = []
+        winlose = []
+        win = 0
+        lose = 0
+        for match in user_matchs:
+            if match.timetable.date_end < datetime.datetime.now(match.timetable.date_end.tzinfo):
+                old_matchs.append(match)
+                if match.user_profile_one == context['gameprofile'] and match.user_one_score == 3:
+                    win += 1
+                elif match.user_profile_two == context['gameprofile'] and match.user_two_score == 3:
+                    win += 1
+                else:
+                    lose += 1
+
+        winlose.append(win)
+        winlose.append(lose)
+
+        context['user_stats'] = winlose
+        context['user_old_matchs'] = old_matchs
+
+        return render(request, 'versusfinder_app/dashboard.html', context)
     else:
         messages.warning(request, "Unallowed operation !")
         return redirect("dashboard")
-
 
 
 def gameprofile_create(request, game_id):
@@ -148,6 +148,7 @@ def gameprofile_register(request, game_id):
         messages.warning(request, "Unallowed operation !")
         return redirect("dashboard")
 
+
 def gameprofile_show(request, gameprofile_id):
     ''' Display the gameprofile according to given user and gameprofile ids'''
     gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
@@ -185,7 +186,6 @@ def gameprofile_edit(request, gameprofile_id):
     except:
         messages.warning(request, "Create a gameprofile first !")
         return redirect('dashboard')
-
 
 
 def gameprofile_update(request, gameprofile_id):
@@ -353,7 +353,6 @@ def match_search(request, game_id):
 
 
 def match_validate(request, game_id):
-
     # Check is user is allowed
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -404,7 +403,6 @@ def match_validate(request, game_id):
                             new_timetable.date_begin = match_timetable.date_end
                             new_timetable.date_end = tmp_timetable
                             new_timetable.save()
-
 
                         t.save()
 
@@ -519,13 +517,11 @@ def game_show(request, game_id):
 
 
 def timetable(request, gameprofile_id):
-
     if request.user.is_authenticated:
         context = {}
         context['user'] = request.user
         context['gameprofile'] = request.user.get_user_profile()
         return render(request, 'versusfinder_app/timetable.html', context)
-
 
 
 def timetable_new(request, gameprofile_id):

@@ -120,7 +120,7 @@
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated}}',
                         rendering: 'background',
-                        url: '{% url 'match.show' game_id=game.id match_id=match.id %}'
+                        url: '{% url 'match.show' game_id=match.game.id match_id=match.id %}'
                     },
                 {% endfor %}
             ]
