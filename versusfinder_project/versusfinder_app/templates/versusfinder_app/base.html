@@ -96,10 +96,10 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li>
-                            {% if user.get_user_profile == null %}
-                                <a href="{% url 'gameprofile.new' game_id=1 %}">Gameprofile</a>
+                            {% if gameprofile is None %}
+                                <a href="{% url 'gameprofile.new' game_id=1 %}">Newgameprofile</a>
                             {% else %}
-                                <a href="{% url 'gameprofile.show' gameprofile_id=1 %}">Gameprofile</a>
+                                <a href="{% url 'gameprofile.show' gameprofile_id=gameprofile.id %}">Your gameprofile</a>
                             {% endif %}
                         </li>
                         <li>
@@ -138,15 +138,6 @@
                             Account
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% if gameprofile is None %}
-                                <a class="dropdown-item" href="{% url 'gameprofile.new' game_id=1 %}">New
-                                    gameprofile</a>
-                            {% else %}
-                                <a class="dropdown-item"
-                                   href="{% url 'gameprofile.edit' gameprofile_id=gameprofile.id %}">Your
-                                    gameprofile</a>
-                            {% endif %}
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                         </div>
 
