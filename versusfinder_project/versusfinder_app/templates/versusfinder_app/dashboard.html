@@ -32,14 +32,17 @@
                                                  data-ride="carousel">
                                                 <div class="carousel-inner">
                                                     {% for match in user_old_matchs %}
-                                                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
-                                                       <div>
-                                                           <p>{{ match.user_profile_one.mainchar.name }} VS {{ match.user_profile_two.mainchar.name }}</p>
-                                                           <h4>Score</h4>
-                                                           <p>{{ match.user_profile_one.username }} : {{ match.user_one_score }}</p>
-                                                           <p>{{ match.user_profile_two.username }} : {{ match.user_two_score }}</p>
-                                                       </div>
-                                                    </div>
+                                                        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                                                            <div>
+                                                                <p>{{ match.user_profile_one.mainchar.name }}
+                                                                    VS {{ match.user_profile_two.mainchar.name }}</p>
+                                                                <h4>Score</h4>
+                                                                <p>{{ match.user_profile_one.username }}
+                                                                    : {{ match.user_one_score }}</p>
+                                                                <p>{{ match.user_profile_two.username }}
+                                                                    : {{ match.user_two_score }}</p>
+                                                            </div>
+                                                        </div>
                                                     {% endfor %}
                                                 </div>
                                                 <a class="carousel-control-prev" href="#carouselExampleControls"
@@ -72,7 +75,8 @@
     </div>
     <hr>
     <div>
-       <a class="btn btn-primary btn-lg btn-block" style="padding: 30px" href="{% url 'timetable' user_id=user_id gameprofile_id=gameprofile.id%}">New availability</a>
+        <a class="btn btn-primary btn-lg btn-block" style="padding: 30px"
+           href="{% url 'timetable' user_id=user_id gameprofile_id=gameprofile.id %}">New availability</a>
     </div>
     <hr>
 
@@ -99,7 +103,8 @@
         $('#calendar').fullCalendar({
             plugins: ['interaction', 'dayGrid', 'timeGrid'],
             navLinks: true,
-            defaultView: 'month',
+            eventLimit: true,
+            defaultView: 'agendaWeek',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -108,22 +113,70 @@
             events: [
                 {% for timetable in user_timetable %}
                     {
+                        id: '{{ timetable.id }}',
                         title: 'SmashBros',
                         start: '{{ timetable.getDateBeginFormated }}',
                         end: '{{ timetable.getDateEndFormated}}',
-                        rendering: 'background'
+                        rendering: 'background',
+                        url: ''
                     },
                 {% endfor %}
                 {% for match in user_matchs %}
                     {
                         title: '{{ match.user_profile_one.username }} VS {{ match.user_profile_two.username }}',
                         start: '{{ match.timetable.getDateBeginFormated }}',
-                        end: '{{ match.timetable.getDateEndFormated}}',
+                        end: '{{ match.timetable.getDateEndFormated }}',
                         rendering: 'background',
                         url: '{% url 'match.show' game_id=game.id match_id=match.id %}'
                     },
                 {% endfor %}
-            ]
+            ],
+            eventClick: function (calEvent, jsEvent, view, resourceObj) {
+                /*Open Sweet Alert
+                swal({
+            title: calEvent.id,//Event Title
+            text: "Start From : "+moment(calEvent.start).format("MMMM Do YYYY, h:mm a"),//Event Start Date
+            icon: "success",
+          });
+    */
+                /*
+                swal({
+                    title: "Are you sure you want to delete your timetable?",
+                    text: "You will not be able to recover your timetable!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, function () {
+                    swal({
+                            title: "Deleted!",
+                            text: "Your timetable has been deleted.",
+                            type: "success",
+                            //timer: 3000
+                        },
+                        function () {
+                            window.location.href = "/";
+                        })
+                });
+                */
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href = "{% url 'timetable.delete' user_id=user_id gameprofile_id=gameprofile.id timetable_id=calEvent.id %}"
+                        }
+                    });
+
+
+            }
+
+
         });
     </script>
 

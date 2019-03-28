@@ -38,5 +38,6 @@ urlpatterns = [
     # Timetables
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable', views.timetable, name='timetable'),
     path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable/new', views.timetable_new, name='timetable.new'),
+    path('dashboard/<user_id>/gameprofiles/<gameprofile_id>/timetable/<timetable_id>/delete', views.timetable_delete, name='timetable.delete'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

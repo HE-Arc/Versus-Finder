@@ -534,3 +534,11 @@ def timetable_new(request, user_id, gameprofile_id):
                 return redirect("dashboard", user_id=request.user.id)
 
         return redirect("dashboard", user_id=user.id)
+
+def timetable_delete(request, user_id, gameprofile_id, timetable_id):
+    if request.user.is_authenticated:
+        if User.objects.get(id=user_id) == request.user:
+            timetable = Timetable.objects.get(id=timetable_id)
+            timetable.delete()
+
+    return redirect("dashboard", user_id=request.user.id)
