@@ -12,6 +12,7 @@ from random import randint
 from django.db.models import Q
 import re
 
+
 # from django.contrib.auth.models import User
 # from .serializers import UserSerializer, SoldierSerializer
 # from rest_framework import viewsets
@@ -255,7 +256,8 @@ def search_process(request, game_id):
                 return redirect('match.search', user_id=user.id, gameprofile_id=game.id)
 
             # Exclude opponents that banned the user main character
-            opponents = list(UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
+            opponents = list(
+                UserGameProfile.objects.filter(game=gameprofile.game).exclude(banlist=gameprofile.mainchar))
 
             # Remove the current user from the list
             if gameprofile in opponents:
@@ -296,8 +298,8 @@ def search_process(request, game_id):
                     valid_opponent = {}
                     valid_opponent['gameprofile'] = opponent
                     valid_opponent['timetables'] = valid_opponent_timetables
-                    
-                   # Append new opponent to the context
+
+                    # Append new opponent to the context
                     context['opponents'].append(valid_opponent)
 
             # If no opponent found
@@ -351,16 +353,45 @@ def match_validate(request, game_id):
             # First way where we don't check if user already have match at this moment
             # Suppose to check if he already have a timetable at this moment and modify opponent timetables
             # First step without this and could maybe have 2 match at the same time.
-            timetable = Timetable()
-            timetable.date_begin = opponent_timetable.date_begin
-            timetable.date_end = opponent_timetable.date_begin + datetime.timedelta(hours=1)
-            timetable.save()
+            match_timetable = Timetable()
+            match_timetable.date_begin = opponent_timetable.date_begin
+            match_timetable.date_end = opponent_timetable.date_begin + datetime.timedelta(hours=1)
+            match_timetable.save()
+
+            # Update opponent timetable (replace timetable by a match)
+            if opponent_timetable.date_end > match_timetable.date_end:
+                opponent_timetable.date_begin += datetime.timedelta(hours=1)
+            else:
+                opponent_timetable.delete()
+
+            opponent_timetable.save()
+
+            for t in gameprofile.timetables.all():
+                # if the match is on one of my timetables
+                if match_timetable.date_begin >= t.date_begin and match_timetable.date_end <= t.date_end:
+
+                    if match_timetable.date_begin == t.date_begin:
+                        t.date_begin = match_timetable.date_end
+                    elif match_timetable.date_end == t.date_end:
+                        t.date_end = match_timetable.date_begin
+                    elif match_timetable.date_begin == t.date_begin and match_timetable.date_end == t.date_end:
+                        t.delete()
+                    else:
+                        tmp_timetable = t.date_end
+                        t.date_end = match_timetable.date_begin
+                        new_timetable = Timetable()
+                        new_timetable.date_begin = match_timetable.date_end
+                        new_timetable.date_end = tmp_timetable
+                        new_timetable.save()
+
+
+                    t.save()
 
             match = Match()
             match.game = game
             match.user_profile_one = gameprofile
             match.user_profile_two = opponent_gameprofile
-            match.timetable = timetable
+            match.timetable = match_timetable
             match.user_one_score = 0
             match.user_two_score = 0
             match.state = 0
@@ -449,7 +480,6 @@ def game_show(request, game_id):
     context = {}
     if request.user.is_authenticated:
         context['user_id'] = request.user.id
-        context['gameprofile'] = request.user.get_user_profile()
 
     context['game'] = Game.objects.get(id=game_id)
     context['matchs'] = Match.objects.all()
@@ -462,7 +492,6 @@ def timetable(request, user_id, gameprofile_id):
         context['user_id'] = request.user.id
         context['gameprofile'] = request.user.get_user_profile()
         return render(request, 'versusfinder_app/timetable.html', context)
-
 
 
 def timetable_new(request, user_id, gameprofile_id):
