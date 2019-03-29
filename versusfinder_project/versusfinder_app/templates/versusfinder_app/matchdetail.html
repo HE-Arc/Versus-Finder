@@ -34,8 +34,8 @@
                     <h3>Score</h3>
                     <!-- could be abuse by sore loser
                     protect it by send a request to the other player of the match to confirm the score -->
-                    {% if gameprofile.id == match.user_profile_one.id or gameprofile.id == match.user_profile_two %}
-                        {% if match.user_one_score != 3 and match.user_profile_two != 3 %}
+                    {% if gameprofile.id == match.user_profile_one.id or gameprofile.id == match.user_profile_two.id %}
+                        {% if match.user_one_score != 3 and match.user_two_score != 3 %}
                             <form action="{% url 'match.alterscore' game_id=game.id match_id=match.id %}" method="post">
                                 {% csrf_token %}
                                 <input id="score_player_1" name="score_player_1" type="number"

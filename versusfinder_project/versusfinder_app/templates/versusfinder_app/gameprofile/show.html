@@ -25,7 +25,7 @@
                         #{{ content_gameprofile.battletag }}
                     </em>
                     <div class="right">
-                        {% if content_gameprofile is not None and content_gameprofile.id == gameprofile.id %}
+                        {% if gameprofile is not None and content_gameprofile.id == gameprofile.id %}
                             <a class="btn btn-sm btn-outline-secondary"
                                 href="{% url 'gameprofile.edit' gameprofile_id=gameprofile.id %}">Edit gameprofile
                             </a>
@@ -44,12 +44,12 @@
 
                 <p class="card-text h3">Banlist</p>
 
-                {% if content_gameprofile is not None and content_gameprofile.id == gameprofile.id %}
+                {% if gameprofile is not None and content_gameprofile.id == gameprofile.id %}
                     <!-- Banlist button -->
                     <div style="padding: 10px 10px 50px 10px;">
                         <form action="{% url 'banlist.modify' gameprofile_id=gameprofile.id %}" method="POST">
                             {% csrf_token %}
-                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Edit banlist" name="Submit" id="redirect_submit" />
                         </form>
                     </div>
                     <!-- END OF Banlist button -->

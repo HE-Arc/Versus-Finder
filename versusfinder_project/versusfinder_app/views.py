@@ -24,23 +24,32 @@ import re
 
 def home(request):
     context = {}
-    if request.user.is_authenticated:
-        try:
-            context['gameprofile'] = request.user.get_user_profile()
-        except:
-            pass
+    try:
+        context['gameprofile'] = request.user.get_user_profile()
+    except:
+        pass
     return render(request, 'versusfinder_app/home.html', context)
+
+def about(request):
+    context = {}
+    try:
+        context['gameprofile'] = request.user.get_user_profile()
+    except:
+        pass
+    return render(request, 'versusfinder_app/about.html', context)
 
 
 def dashboard(request):
     if request.user.is_authenticated:
-
         context = {}
         context['user'] = request.user
-        context['gameprofile'] = request.user.get_user_profile()
-        context['game'] = context['gameprofile'].game
-        context['user_timetable'] = context['gameprofile'].timetables.all()
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            messages.warning(request, "Create a gameprofile first !")
+            return redirect('/')
 
+        context['user_timetable'] = context['gameprofile'].timetables.all()
         matchs = Match.objects.all()
         user_matchs = []
         for match in matchs:
@@ -50,15 +59,19 @@ def dashboard(request):
         context['user_matchs'] = user_matchs
         context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
+        # disgusting but didn't find another way
+        #for match in matchs:
+        ref_match = datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=730)
+        #    break
+
         next_match = None
         for match in matchs:
             if match.timetable.date_begin > datetime.datetime.now(
-                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                    match.timetable.date_begin.tzinfo) and match.timetable.date_begin < ref_match:
                 next_match = match
                 ref_match = match.timetable.date_begin
 
-        if next_match != None:
+        if next_match is not None:
             context['next_match'] = next_match
 
         old_matchs = []
@@ -119,13 +132,13 @@ def gameprofile_register(request, game_id):
         pseudo = request.POST.get('input_pseudo')
         if not re.match('^[a-zA-Z0-9_]+$', pseudo):
             messages.error(request, "Invalid pseudo ! Must be alphanumerical")
-            return redirect('gameprofile.register', game_id=game_id)
+            return redirect('gameprofile.new', game_id=game_id)
 
         # Validate skill
         skill = int(request.POST.get('input_skill_value'))
         if skill < 0 or skill > 10:
             messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-            return redirect('gameprofile.register', game_id=game_id)
+            return redirect('gameprofile.new', game_id=game_id)
 
         # Build new gameprofile
         gameprofile = UserGameProfile()
@@ -147,6 +160,7 @@ def gameprofile_register(request, game_id):
         messages.warning(request, "Unallowed operation !")
         return redirect("dashboard")
 
+
 def gameprofile_show(request, gameprofile_id):
     ''' Display the gameprofile according to given user and gameprofile ids'''
     gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
@@ -155,8 +169,11 @@ def gameprofile_show(request, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
         context['user'] = request.user
-        context['gameprofile'] = request.user.get_user_profile()
         context['game'] = gameprofile_from_uri.game
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass  # User might be just checking an other user's gameprofile
         context['characters'] = Character.objects.all().order_by('name')
 
         # Workaround (https://github.com/HE-Arc/Versus-Finder/wiki/Probl%C3%A8mes-non-r%C3%A9solus)
@@ -167,21 +184,24 @@ def gameprofile_show(request, gameprofile_id):
 
 def gameprofile_edit(request, gameprofile_id):
     ''' Open the page to edit the gameprofile '''
-    gameprofile = request.user.get_user_profile()
-    gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
+    try:
+        gameprofile = request.user.get_user_profile()
+        gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
 
-    # Check is user is allowed
-    if request.user.is_authenticated and gameprofile.id == gameprofile_from_uri.id:
-        context = {}
-        context['user'] = request.user
-        context['gameprofile'] = gameprofile_from_uri
-        context['game'] = gameprofile_from_uri.game
-        context['characters'] = Character.objects.all().order_by('name')
-        return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
-    else:
-        messages.warning(request, "Unallowed operation !")
-        return redirect("dashboard")
-
+        # Check is user is allowed
+        if request.user.is_authenticated and gameprofile.id == gameprofile_from_uri.id:
+            context = {}
+            context['user'] = request.user
+            context['gameprofile'] = gameprofile_from_uri
+            context['game'] = gameprofile_from_uri.game
+            context['characters'] = Character.objects.all().order_by('name')
+            return render(request, 'versusfinder_app/gameprofile/new_update.html', context)
+        else:
+            messages.warning(request, "Unallowed operation !")
+            return redirect("dashboard")
+    except:
+        messages.warning(request, "Create a gameprofile first !")
+        return redirect('dashboard')
 
 
 def gameprofile_update(request, gameprofile_id):
@@ -193,19 +213,19 @@ def gameprofile_update(request, gameprofile_id):
     if request.user.is_authenticated and gameprofile.id == gameprofile_from_uri.id:
         if request.method == 'POST':
 
-            #try:
+            try:
                 # Validate pseudo
                 pseudo = request.POST.get('input_pseudo')
                 if not re.match('^[a-zA-Z0-9_]+$', pseudo):
                     messages.error(request, "Invalid pseudo ! Must be alphanumerical")
-                    return redirect('gameprofile.register', game_id=gameprofile_from_uri.game.id)
+                    return redirect('gameprofile.new', game_id=gameprofile_from_uri.game.id)
 
                 # Validate skill
                 skill = int(request.POST.get('input_skill_value'))
                 print(skill)
                 if skill < 0 or skill > 10:
                     messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-                    return redirect('gameprofile.register', game_id=gameprofile_from_uri.game.id)
+                    return redirect('gameprofile.new', game_id=gameprofile_from_uri.game.id)
 
                 # Build new gameprofile
                 gameprofile_from_uri.mainchar = Character.objects.get(id=request.POST.get('input_character'))
@@ -215,7 +235,7 @@ def gameprofile_update(request, gameprofile_id):
 
                 messages.success(request, "Gameprofile successfully updated !")
                 return redirect('/')
-            #except:
+            except:
                 messages.error(request, "Error occured while updating !")
                 return redirect('gameprofile.edit', gameprofile_id=gameprofile_from_uri.id)
     else:
@@ -331,87 +351,92 @@ def match_search(request, game_id):
     if request.user.is_authenticated:
 
         user = request.user
-        gameprofile = user.get_user_profile()
-        game = Game.objects.get(id=game_id)
+        try:
+            gameprofile = user.get_user_profile()
+            game = Game.objects.get(id=game_id)
 
-        if gameprofile.id == -1:
-            # User has no gameprofile, redirect '''
+            if gameprofile.id == -1:
+                # User has no gameprofile, redirect '''
+                return redirect('gameprofile.new', game_id=game_id)
+            else:
+                context = {}
+                context['user'] = user
+                context['gameprofile'] = gameprofile
+                context['game'] = game
+                return render(request, 'versusfinder_app/search.html', context)
+        except:
             return redirect('gameprofile.new', game_id=game_id)
-        else:
-            context = {}
-            context['user'] = user
-            context['gameprofile'] = gameprofile
-            context['game'] = game
-            return render(request, 'versusfinder_app/search.html', context)
 
 
 def match_validate(request, game_id):
-
     # Check is user is allowed
     if request.user.is_authenticated:
         if request.method == 'POST':
             user = request.user
-            gameprofile = user.get_user_profile()
+            try:
+                gameprofile = user.get_user_profile()
 
-            opponent_id = request.POST.get('opponent')
-            opponent_gameprofile = UserGameProfile.objects.get(id=opponent_id)
-            game = Game.objects.get(id=int(game_id))
+                opponent_id = request.POST.get('opponent')
+                opponent_gameprofile = UserGameProfile.objects.get(id=opponent_id)
+                game = Game.objects.get(id=int(game_id))
 
-            # TO VALIDATE
-            date_begin = request.POST.get('date_begin')
-            date_end = request.POST.get('date_end')
-            opponent_timetable_id = request.POST.get('timetable')
-            opponent_timetable = Timetable.objects.get(id=opponent_timetable_id)
+                # TO VALIDATE
+                date_begin = request.POST.get('date_begin')
+                date_end = request.POST.get('date_end')
+                opponent_timetable_id = request.POST.get('timetable')
+                opponent_timetable = Timetable.objects.get(id=opponent_timetable_id)
 
-            # First way where we don't check if user already have match at this moment
-            # Suppose to check if he already have a timetable at this moment and modify opponent timetables
-            # First step without this and could maybe have 2 match at the same time.
-            match_timetable = Timetable()
-            match_timetable.date_begin = opponent_timetable.date_begin
-            match_timetable.date_end = opponent_timetable.date_begin + datetime.timedelta(hours=1)
-            match_timetable.save()
+                # First way where we don't check if user already have match at this moment
+                # Suppose to check if he already have a timetable at this moment and modify opponent timetables
+                # First step without this and could maybe have 2 match at the same time.
+                match_timetable = Timetable()
+                match_timetable.date_begin = opponent_timetable.date_begin
+                match_timetable.date_end = opponent_timetable.date_begin + datetime.timedelta(hours=1)
+                match_timetable.save()
 
-            # Update opponent timetable (replace timetable by a match)
-            if opponent_timetable.date_end > match_timetable.date_end:
-                opponent_timetable.date_begin += datetime.timedelta(hours=1)
-            else:
-                opponent_timetable.delete()
+                # Update opponent timetable (replace timetable by a match)
+                if opponent_timetable.date_end > match_timetable.date_end:
+                    opponent_timetable.date_begin += datetime.timedelta(hours=1)
+                else:
+                    opponent_timetable.delete()
 
-            opponent_timetable.save()
+                opponent_timetable.save()
 
-            for t in gameprofile.timetables.all():
-                # if the match is on one of my timetables
-                if match_timetable.date_begin >= t.date_begin and match_timetable.date_end <= t.date_end:
+                for t in gameprofile.timetables.all():
+                    # if the match is on one of my timetables
+                    if match_timetable.date_begin >= t.date_begin and match_timetable.date_end <= t.date_end:
 
-                    if match_timetable.date_begin == t.date_begin:
-                        t.date_begin = match_timetable.date_end
-                    elif match_timetable.date_end == t.date_end:
-                        t.date_end = match_timetable.date_begin
-                    elif match_timetable.date_begin == t.date_begin and match_timetable.date_end == t.date_end:
-                        t.delete()
-                    else:
-                        tmp_timetable = t.date_end
-                        t.date_end = match_timetable.date_begin
-                        new_timetable = Timetable()
-                        new_timetable.date_begin = match_timetable.date_end
-                        new_timetable.date_end = tmp_timetable
-                        new_timetable.save()
+                        if match_timetable.date_begin == t.date_begin:
+                            t.date_begin = match_timetable.date_end
+                        elif match_timetable.date_end == t.date_end:
+                            t.date_end = match_timetable.date_begin
+                        elif match_timetable.date_begin == t.date_begin and match_timetable.date_end == t.date_end:
+                            t.delete()
+                        else:
+                            tmp_timetable = t.date_end
+                            t.date_end = match_timetable.date_begin
+                            new_timetable = Timetable()
+                            new_timetable.date_begin = match_timetable.date_end
+                            new_timetable.date_end = tmp_timetable
+                            new_timetable.save()
+                            gameprofile.timetables.add(new_timetable)
 
+                        t.save()
 
-                    t.save()
+                match = Match()
+                match.game = game
+                match.user_profile_one = gameprofile
+                match.user_profile_two = opponent_gameprofile
+                match.timetable = match_timetable
+                match.user_one_score = 0
+                match.user_two_score = 0
+                match.state = 0
+                match.save()
 
-            match = Match()
-            match.game = game
-            match.user_profile_one = gameprofile
-            match.user_profile_two = opponent_gameprofile
-            match.timetable = match_timetable
-            match.user_one_score = 0
-            match.user_two_score = 0
-            match.state = 0
-            match.save()
-
-            messages.success(request, "Match successfully accepted !")
-            return redirect('match.search', game_id=game_id)
+                messages.success(request, "Match successfully accepted !")
+                return redirect('match.search', game_id=game_id)
+            except:
+                return redirect('gameprofile.new', game_id=game_id)
 
     return HttpResponse("Error occured !")
 
@@ -420,11 +445,14 @@ def match_show(request, game_id, match_id):
     if request.user.is_authenticated:
         context = {}
         context['user'] = request.user
-        context['gameprofile'] = request.user.get_user_profile()
         context['game'] = Game.objects.get(id=game_id)
         context['match'] = Match.objects.get(id=match_id)
         context['date_begin'] = (context['match'].timetable.date_begin).strftime("%Y-%m-%d %H:%M:%S")
         context['date_end'] = (context['match'].timetable.date_end).strftime("%Y-%m-%d %H:%M:%S")
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass
     return render(request, 'versusfinder_app/matchdetail.html', context)
 
 
@@ -499,7 +527,10 @@ def game_show(request, game_id):
     context = {}
     if request.user.is_authenticated:
         context['user'] = request.user
-        context['gameprofile'] = request.user.get_user_profile()
+        try:
+            context['gameprofile'] = request.user.get_user_profile()
+        except:
+            pass
 
     context['game'] = Game.objects.get(id=game_id)
     context['matchs'] = Match.objects.all()
@@ -507,13 +538,11 @@ def game_show(request, game_id):
 
 
 def timetable(request, gameprofile_id):
-
     if request.user.is_authenticated:
         context = {}
         context['user'] = request.user
         context['gameprofile'] = request.user.get_user_profile()
         return render(request, 'versusfinder_app/timetable.html', context)
-
 
 
 def timetable_new(request, gameprofile_id):

@@ -100,17 +100,19 @@
                     {% if user.is_authenticated %}
                         <li>
                             {% if gameprofile is None %}
-                                <a href="{% url 'gameprofile.new' game_id=1 %}">Newgameprofile</a>
+                                <a href="{% url 'gameprofile.new' game_id=1 %}">New gameprofile</a>
                             {% else %}
                                 <a href="{% url 'gameprofile.show' gameprofile_id=gameprofile.id %}">Your gameprofile</a>
                             {% endif %}
                         </li>
+                        {% if gameprofile is not None %}
                         <li>
                             <a href="{% url 'match.search' game_id=1 %}">Search match</a>
                         </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
-                <a href="#">
+                <a href="{% url 'about' %}">
                     <i class="fas fa-briefcase"></i>
                     About
                 </a>

@@ -1,19 +1,17 @@
 <!-- templates/home.html -->
 {% extends 'versusfinder_app/base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}About{% endblock %}
 
-
+{% load static %}
 
 {% block content %}
-
-
 
     {% if user.is_authenticated %}
         <div class="jumbotron">
             <div class="container">
                 <h1 class="display-3">
-                    Hi <strong>{{ user.username }}</strong>, have a good play!
+                    About <strong>us</strong> !
                 </h1>
             </div>
         </div>
@@ -22,26 +20,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-6 shadow-sm">
-                        <img class="card-img-top"
-                             src="https://d2m5zqqcosbe2i.cloudfront.net/uploads/media/1/5711-super-smash-bros-article.jpeg?date=20170628-2"
-                             alt="Card image cap">
+                        <img class="card-img-top" src="{% static '' %}img/he-arc.jpg" alt="Card image cap" style="padding: 30px;">
                         <div class="card-body">
-                            <h2>Super Smash Bros Ultimate</h2>
+                            <h2>HE-Arc</h2>
                             <p class="card-text">
-                                Join us and organize matches against other penguin opponents on Super Smash Bros
-                                Ultimate!</p>
+                                Have a look at HE-Arc website
+                            </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    {% if gameprofile == None %}
-                                        <a class="btn btn-sm btn-outline-secondary"
-                                           href="{% url 'gameprofile.new' game_id=1 %}">New
-                                            game profil</a>
-                                    {% else %}
-
-                                        <a class="btn btn-sm btn-outline-secondary"
-                                           href="{% url 'gameprofile.edit' gameprofile_id=gameprofile.id %}">Edit
-                                            game profil</a>
-                                    {% endif %}
+                                    <a class="btn btn-sm btn-outline-secondary" href="https://www.he-arc.ch/">Go !</a>
                                 </div>
                             </div>
                         </div>
@@ -49,18 +36,16 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card mb-6 shadow-sm">
-                        <img class="card-img-top"
-                             src="https://www.jvfrance.com/wp-content/uploads/2016/02/Street-Fighter-V-3-890x501.jpg"
-                             alt="Card image cap">
                         <div class="card-body">
-                            <h2>Other game</h2>
+                            <h2>The devs</h2>
                             <p class="card-text">
-                                Will be developed one day (maybe)</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-
-                                </div>
-                            </div>
+                                Developped by
+                                <ul>
+                                    <li><a href="https://github.com/Miaouw17">Quentin Michel</a></li>
+                                    <li><a href="https://github.com/Maering">Segan Salomon</a></li>
+                                    <li><a href="https://github.com/Skogarmadr">Lucas Srdjenovic</a></li>
+                                </ul>
+                            </p>
                         </div>
                     </div>
                 </div>
