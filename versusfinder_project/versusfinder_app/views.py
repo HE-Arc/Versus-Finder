@@ -419,6 +419,7 @@ def match_validate(request, game_id):
                             new_timetable.date_begin = match_timetable.date_end
                             new_timetable.date_end = tmp_timetable
                             new_timetable.save()
+                            gameprofile.timetables.add(new_timetable)
 
                         t.save()
 
