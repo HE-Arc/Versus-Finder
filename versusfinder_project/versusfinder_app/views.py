@@ -140,11 +140,16 @@ def gameprofile_register(request, game_id):
             messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
             return redirect('gameprofile.new', game_id=game_id)
 
+        character_id = request.POST.get('input_character')
+        if not character_id.isdigit() or character_id < 0:
+            messages.error(request, "Invalid character !")
+            return redirect('gameprofile.new', game_id=game_id)
+
         # Build new gameprofile
         gameprofile = UserGameProfile()
         gameprofile.user = user
         gameprofile.game = Game.objects.get(id=game_id)
-        gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+        gameprofile.mainchar = Character.objects.get(id=character_id)
         gameprofile.username = pseudo
         gameprofile.battletag = randint(1000, 9999)
         gameprofile.skill_level = skill
