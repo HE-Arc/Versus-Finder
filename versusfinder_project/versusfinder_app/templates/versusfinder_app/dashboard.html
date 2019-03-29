@@ -75,8 +75,7 @@
     </div>
     <hr>
     <div>
-        <a class="btn btn-primary btn-lg btn-block" style="padding: 30px"
-           href="{% url 'timetable' user_id=user_id gameprofile_id=gameprofile.id %}">New availability</a>
+       <a class="btn btn-primary btn-lg btn-block" style="padding: 30px" href="{% url 'timetable' gameprofile_id=gameprofile.id%}">New availability</a>
     </div>
     <hr>
 
@@ -118,7 +117,6 @@
                         start: '{{ timetable.getDateBeginFormated }}',
                         end: '{{ timetable.getDateEndFormated}}',
                         rendering: 'background',
-                        url: ''
                     },
                 {% endfor %}
                 {% for match in user_matchs %}
@@ -132,44 +130,19 @@
                 {% endfor %}
             ],
             eventClick: function (calEvent, jsEvent, view, resourceObj) {
-                /*Open Sweet Alert
+                /*Open Sweet Alert*/
                 swal({
-            title: calEvent.id,//Event Title
-            text: "Start From : "+moment(calEvent.start).format("MMMM Do YYYY, h:mm a"),//Event Start Date
-            icon: "success",
-          });
-    */
-                /*
-                swal({
-                    title: "Are you sure you want to delete your timetable?",
-                    text: "You will not be able to recover your timetable!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes, delete it!",
-                    closeOnConfirm: false
-                }, function () {
-                    swal({
-                            title: "Deleted!",
-                            text: "Your timetable has been deleted.",
-                            type: "success",
-                            //timer: 3000
-                        },
-                        function () {
-                            window.location.href = "/";
-                        })
-                });
-                */
-                swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    title: "Are you sure you want delete?",
+                    text: "Once deleted, you will not be able to recover this timetable.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
                 })
                     .then((willDelete) => {
                         if (willDelete) {
-                            window.location.href = "{% url 'timetable.delete' user_id=user_id gameprofile_id=gameprofile.id timetable_id=calEvent.id %}"
+                            var url = "{% url 'timetable.delete' gameprofile.id 9999 %}";
+                            var timetableid =calEvent.id;
+                            document.location.href  = url.replace('9999', timetableid );
                         }
                     });
 

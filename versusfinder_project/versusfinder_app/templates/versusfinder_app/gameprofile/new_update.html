@@ -25,7 +25,7 @@
       <!-- Banlist button -->
       {% if gameprofile is not None %}
       <div style="padding: 10px 10px 50px 10px;">
-        <form action="{% url 'banlist.modify' user_id=user_id gameprofile_id=gameprofile.id %}" method="POST">
+        <form action="{% url 'banlist.modify' gameprofile_id=gameprofile.id %}" method="POST">
             {% csrf_token %}
           <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
         </form>
@@ -34,7 +34,7 @@
       <!-- END OF Banlist button -->
 
       <div class="card-text">
-        <form method="POST" {% if gameprofile is None %}action="{% url 'gameprofile.register' user_id=user_id game_id=game.id %}"{% else %}action="{% url 'gameprofile.update' user_id=user_id gameprofile_id=gameprofile.id %}"{% endif %}>
+        <form method="POST" action="{% if gameprofile is None %}{% url 'gameprofile.register' game_id=game.id %}{% else %}{% url 'gameprofile.update' gameprofile_id=gameprofile.id %}{% endif %}">
           {% csrf_token %}
 
           <div class="form-group row">
@@ -58,13 +58,14 @@
           </div>
 
           <div class="form-group row">
-              <label for="input_skill" class="col-sm-2 col-form-label col-form-label-lg">Skill</label>
-              <div class="col-sm-1"><p>Noob</p></div>
-              <div class="col-sm-8">
-                <input type="range" min="1" max="10" class="form-control form-control-lg slider" name="input_skill" id="input_skill" {% if gameprofile is not None %} value="{{ gameprofile.skill_level }}" {% else %} value="5" {% endif %} >
-              </div>
-              <div class="col-sm-1"><p>Pro</p></div>
+            <label for="input_skill" class="col-sm-2 col-form-label col-form-label-lg">Skill</label>
+            <div class="col-sm-1"><p>Noob</p></div>
+            <div class="col-sm-8">
+              <div id="input_skill" name="input_skill"></div>
+              <input type="hidden" id="input_skill_value" name="input_skill_value" value="{% if gameprofile is not None %}{{ gameprofile.skill_level }}{% else %}5{% endif %}"/>
             </div>
+            <div class="col-sm-1"><p>Pro</p></div>
+          </div>
 
           <blockquote class="blockquote mb-0">
             <button class="btn btn-primary btn-lg" type="submit"> {% if gameprofile is None %}New profil{% else %}Update{% endif %}</button>
@@ -74,4 +75,27 @@
     </div>
   </div>
 </div>
+
+<script>
+
+  var skill_input = document.getElementById('input_skill');
+  var skill_value = document.getElementById('input_skill_value');
+
+  var slider = noUiSlider.create(skill_input, {
+      step: 1,
+      start: skill_value.value,
+      connect: [true, false],
+      range: {
+          'min': 0,
+          'max': 10
+      }
+  });
+
+  slider.on('update', function (values, handle) {
+    skill_value.value = Math.round(values[handle]);
+    console.log(skill_value.value);
+  });
+
+</script>
+
 {% endblock %}

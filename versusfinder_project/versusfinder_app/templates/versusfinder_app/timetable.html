@@ -8,7 +8,7 @@
             <h2>Create a new timetable</h2>
         </div>
         <div class="card-body">
-            <form action="{% url 'timetable.new' user_id=user_id gameprofile_id=gameprofile.id %}" method="post"
+            <form action="{% url 'timetable.new' gameprofile_id=gameprofile.id %}" method="post"
                   class="form-example">
                 {% csrf_token %}
                 <div class="form-group row">
