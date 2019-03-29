@@ -59,11 +59,15 @@ def dashboard(request):
         context['user_matchs'] = user_matchs
         context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
-        ref_match = datetime.datetime.now() + datetime.timedelta(days=730)
+        # disgusting but didn't find another way
+        #for match in matchs:
+        ref_match = datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=730)
+        #    break
+
         next_match = None
         for match in matchs:
             if match.timetable.date_begin > datetime.datetime.now(
-                    match.timetable.date_begin.tzinfo) and match.timetable.begin < ref_match:
+                    match.timetable.date_begin.tzinfo) and match.timetable.date_begin < ref_match:
                 next_match = match
                 ref_match = match.timetable.date_begin
 
@@ -169,7 +173,7 @@ def gameprofile_show(request, gameprofile_id):
         try:
             context['gameprofile'] = request.user.get_user_profile()
         except:
-            pass #User might be just checking an other user's gameprofile
+            pass  # User might be just checking an other user's gameprofile
         context['characters'] = Character.objects.all().order_by('name')
 
         # Workaround (https://github.com/HE-Arc/Versus-Finder/wiki/Probl%C3%A8mes-non-r%C3%A9solus)

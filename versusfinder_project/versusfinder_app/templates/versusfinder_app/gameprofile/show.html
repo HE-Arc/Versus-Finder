@@ -49,7 +49,7 @@
                     <div style="padding: 10px 10px 50px 10px;">
                         <form action="{% url 'banlist.modify' gameprofile_id=gameprofile.id %}" method="POST">
                             {% csrf_token %}
-                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                        <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Edit banlist" name="Submit" id="redirect_submit" />
                         </form>
                     </div>
                     <!-- END OF Banlist button -->
