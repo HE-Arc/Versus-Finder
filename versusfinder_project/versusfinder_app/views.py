@@ -148,9 +148,9 @@ def gameprofile_register(request, game_id):
 
         # Battletag
         battletag = request.POST.get('input_battletag')
-        # TODO:Verifiy battletag with regex
-        #    messages.error(request, "Invalid battletag !")
-        #    return redirect('gameprofile.new', game_id=game_id)
+        if not re.match('([A-Z0-9]{2}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})', battletag):
+            messages.error(request, "Invalid battletag !")
+            return redirect('gameprofile.new', game_id=game_id)
 
         # Build new gameprofile
         gameprofile = UserGameProfile()
@@ -245,10 +245,11 @@ def gameprofile_update(request, gameprofile_id):
                     return redirect('gameprofile.new', game_id=game_id)
 
                 # Battletag
+                # Battletag
                 battletag = request.POST.get('input_battletag')
-                # TODO:Verifiy battletag with regex
-                #    messages.error(request, "Invalid battletag !")
-                #    return redirect('gameprofile.new', game_id=game_id)
+                if not re.match('([A-Z0-9]{2}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})', battletag):
+                    messages.error(request, "Invalid battletag !")
+                    return redirect('gameprofile.new', game_id=game_id)
 
                 # Build new gameprofile
                 gameprofile_from_uri.mainchar = Character.objects.get(id=character_id)
