@@ -176,22 +176,21 @@ def gameprofile_register(request, game_id):
 def gameprofile_show(request, gameprofile_id):
     ''' Display the gameprofile according to given user and gameprofile ids'''
     gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
+    context = {}
+    context['game'] = gameprofile_from_uri.game
+    context['characters'] = Character.objects.all().order_by('name')
+    context['content_gameprofile'] = gameprofile_from_uri
 
     # Check is user is authenticate
     if request.user.is_authenticated:
-        context = {}
         context['user'] = request.user
-        context['game'] = gameprofile_from_uri.game
+
         try:
             context['gameprofile'] = request.user.get_user_profile()
         except:
             pass  # User might be just checking an other user's gameprofile
-        context['characters'] = Character.objects.all().order_by('name')
 
-        # Workaround (https://github.com/HE-Arc/Versus-Finder/wiki/Probl%C3%A8mes-non-r%C3%A9solus)
-        context['content_gameprofile'] = gameprofile_from_uri
-
-        return render(request, 'versusfinder_app/gameprofile/show.html', context)
+    return render(request, 'versusfinder_app/gameprofile/show.html', context)
 
 
 def gameprofile_edit(request, gameprofile_id):
