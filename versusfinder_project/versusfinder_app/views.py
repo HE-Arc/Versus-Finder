@@ -540,7 +540,6 @@ def game_show(request, game_id):
 def timetable(request, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
-        context['user'] = request.user
         context['gameprofile'] = request.user.get_user_profile()
         return render(request, 'versusfinder_app/timetable.html', context)
 
@@ -554,7 +553,7 @@ def timetable_new(request, gameprofile_id):
         user = request.user
         gameprofile = user.get_user_profile()
 
-        # Check if the new timetable already exist
+
 
         isOk = True
         start = request.POST.get('date_begin').replace('T', ' ')
@@ -567,6 +566,7 @@ def timetable_new(request, gameprofile_id):
             messages.error(request, "Error ! time fields are not coherent")
             return redirect("dashboard")
 
+        # Check if the new timetable already exist
         for timetable in gameprofile.timetables.all():
             start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
             start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
