@@ -140,13 +140,25 @@ def gameprofile_register(request, game_id):
             messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
             return redirect('gameprofile.new', game_id=game_id)
 
+        # Character
+        character_id = int(request.POST.get('input_character'))
+        if character_id < 0:
+            messages.error(request, "Invalid character !")
+            return redirect('gameprofile.new', game_id=game_id)
+
+        # Battletag
+        battletag = request.POST.get('input_battletag')
+        # TODO:Verifiy battletag with regex
+        #    messages.error(request, "Invalid battletag !")
+        #    return redirect('gameprofile.new', game_id=game_id)
+
         # Build new gameprofile
         gameprofile = UserGameProfile()
         gameprofile.user = user
         gameprofile.game = Game.objects.get(id=game_id)
-        gameprofile.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+        gameprofile.mainchar = Character.objects.get(id=character_id)
         gameprofile.username = pseudo
-        gameprofile.battletag = randint(1000, 9999)
+        gameprofile.battletag = battletag
         gameprofile.skill_level = skill
         gameprofile.save()
 
@@ -222,14 +234,26 @@ def gameprofile_update(request, gameprofile_id):
 
                 # Validate skill
                 skill = int(request.POST.get('input_skill_value'))
-                print(skill)
                 if skill < 0 or skill > 10:
                     messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-                    return redirect('gameprofile.new', game_id=gameprofile_from_uri.game.id)
+                    return redirect('gameprofile.new', game_id=game_id)
+
+                # Character
+                character_id = int(request.POST.get('input_character'))
+                if character_id < 0:
+                    messages.error(request, "Invalid character !")
+                    return redirect('gameprofile.new', game_id=game_id)
+
+                # Battletag
+                battletag = request.POST.get('input_battletag')
+                # TODO:Verifiy battletag with regex
+                #    messages.error(request, "Invalid battletag !")
+                #    return redirect('gameprofile.new', game_id=game_id)
 
                 # Build new gameprofile
-                gameprofile_from_uri.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                gameprofile_from_uri.mainchar = Character.objects.get(id=character_id)
                 gameprofile_from_uri.username = pseudo
+                gameprofile_from_uri.battletag = battletag
                 gameprofile_from_uri.skill_level = skill
                 gameprofile_from_uri.save()
 
