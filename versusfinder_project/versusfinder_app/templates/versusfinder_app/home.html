@@ -73,15 +73,37 @@
                     Welcome to Versus Finder
                 </h1>
                 <p class="lead">
-                    Find an opponent of your choice !
+                <h2>Find an opponent of your choice !</h2>
                 </p>
-                <hr>
-                <p><strong>Do you already have an account ?</strong>
-                    <a class="btn btn-lg btn-success" href="{% url 'login' %}">Login</a>
-                </p>
-                <p> New on the website ?
-                    <a class="btn btn-lg btn-success" href="{% url 'signup' %}">Sign up</a>
-                </p>
+                <table class="table">
+                    <tr>
+                        <td>
+                            <p><strong>Do you already have an account ?</strong>
+                                <a class="btn btn-lg btn-success" href="{% url 'login' %}">Login</a>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p> New on the website ?
+                                <a class="btn btn-lg btn-success" href="{% url 'signup' %}">Sign up</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <hr>
+            <h3>This is the games you'll be able to find opponent on !</h3>
+            <div class="card mb-6 shadow-sm">
+                <img class="card-img-top"
+                     src="https://d2m5zqqcosbe2i.cloudfront.net/uploads/media/1/5711-super-smash-bros-article.jpeg?date=20170628-2"
+                     alt="Card image cap">
+                <div class="card-body">
+                    <h2>Super Smash Bros Ultimate</h2>
+                    <p class="card-text">
+                        Join us and organize matches against other penguin opponents on Super Smash Bros
+                        Ultimate!</p>
+                </div>
             </div>
         </div>
     {% endif %}

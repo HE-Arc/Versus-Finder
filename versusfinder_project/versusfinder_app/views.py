@@ -30,6 +30,7 @@ def home(request):
         pass
     return render(request, 'versusfinder_app/home.html', context)
 
+
 def about(request):
     context = {}
     try:
@@ -60,7 +61,7 @@ def dashboard(request):
         context['today'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
         # disgusting but didn't find another way
-        #for match in matchs:
+        # for match in matchs:
         ref_match = datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=730)
         #    break
 
@@ -490,6 +491,8 @@ def match_alterscore(request, game_id, match_id):
                     data = request.POST.copy()
                     score_player_1 = data.get('score_player_1')
                     score_player_2 = data.get('score_player_2')
+                    if score_player_1 < 0 or score_player_1 > 3 or score_player_2 < 0 or score_player_2 > 3:
+                        messages.error(request, "Score invalid !")
                     match.user_one_score = score_player_1
                     match.user_two_score = score_player_2
                     match.save()
@@ -577,8 +580,6 @@ def timetable_new(request, gameprofile_id):
         user = request.user
         gameprofile = user.get_user_profile()
 
-
-
         isOk = True
         start = request.POST.get('date_begin').replace('T', ' ')
         end = request.POST.get('date_end').replace('T', ' ')
@@ -626,6 +627,7 @@ def timetable_new(request, gameprofile_id):
 
     return redirect("dashboard")
 
+
 def timetable_delete(request, gameprofile_id, timetable_id):
     if request.user.is_authenticated:
         if User.objects.get(id=request.user.id) == request.user:
@@ -633,4 +635,3 @@ def timetable_delete(request, gameprofile_id, timetable_id):
             timetable.delete()
             messages.success(request, "Timetable successfully deleted !")
     return redirect("dashboard")
-
