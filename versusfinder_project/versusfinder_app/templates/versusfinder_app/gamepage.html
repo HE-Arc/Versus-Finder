@@ -4,14 +4,18 @@
 
 {% block content %}
     <h1 class="display-1">Super Smash Bros Ultimate</h1>
+    <hr>
     <div>
     {% if gameprofile is not None %}
         <a class="btn btn-primary btn-lg btn-block" href="{% url 'match.search' game_id=game.id %}">Search an opponent</a>
     {% endif %}
     </div>
+    <br />
     <div>
-        <p>The matchs to come</p>
+        <h2 class="display-4">The matchs to come</h2>
     </div>
+
+    <br>
 
     <div id="calendar">
 
