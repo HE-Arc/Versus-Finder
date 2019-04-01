@@ -75,7 +75,8 @@
     </div>
     <hr>
     <div>
-       <a class="btn btn-primary btn-lg btn-block" style="padding: 30px" href="{% url 'timetable' gameprofile_id=gameprofile.id%}">New availability</a>
+        <a class="btn btn-primary btn-lg btn-block" style="padding: 30px"
+           href="{% url 'timetable' gameprofile_id=gameprofile.id %}">New availability</a>
     </div>
     <hr>
 
@@ -103,7 +104,7 @@
             plugins: ['interaction', 'dayGrid', 'timeGrid'],
             navLinks: true,
             eventLimit: true,
-            defaultView: 'agendaWeek',
+            defaultView: 'month',
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -121,32 +122,35 @@
                 {% endfor %}
                 {% for match in user_matchs %}
                     {
+                        id: 'match',
                         title: '{{ match.user_profile_one.username }} VS {{ match.user_profile_two.username }}',
                         start: '{{ match.timetable.getDateBeginFormated }}',
                         end: '{{ match.timetable.getDateEndFormated }}',
                         rendering: 'background',
+                        color: '#FF0000',
                         url: '{% url 'match.show' game_id=match.game.id match_id=match.id %}'
                     },
                 {% endfor %}
             ],
             eventClick: function (calEvent, jsEvent, view, resourceObj) {
-                /*Open Sweet Alert*/
-                swal({
-                    title: "Are you sure you want delete?",
-                    text: "Once deleted, you will not be able to recover this timetable.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            var url = "{% url 'timetable.delete' gameprofile.id 9999 %}";
-                            var timetableid =calEvent.id;
-                            document.location.href  = url.replace('9999', timetableid );
-                        }
-                    });
-
-
+                // check if it's a timetable or a match
+                if (calEvent.color != '#FF0000') {
+                    /*Open Sweet Alert*/
+                    swal({
+                        title: "Are you sure you want delete?",
+                        text: "Once deleted, you will not be able to recover this timetable.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                var url = "{% url 'timetable.delete' gameprofile.id 9999 %}";
+                                var timetableid = calEvent.id;
+                                document.location.href = url.replace('9999', timetableid);
+                            }
+                        });
+                }
             }
 
 
