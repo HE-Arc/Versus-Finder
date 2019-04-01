@@ -6,21 +6,20 @@
 {% load static %}
 
 {% block content %}
-
-    {% if user.is_authenticated %}
-        <div class="jumbotron">
-            <div class="container">
-                <h1 class="display-3">
-                    About <strong>us</strong> !
-                </h1>
-            </div>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3">
+                About <strong>us</strong> !
+            </h1>
         </div>
-        <div class="album py-5 bg-light">
+    </div>
+    <div class="album py-5 bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-6 shadow-sm">
-                        <img class="card-img-top" src="{% static '' %}img/he-arc.jpg" alt="Card image cap" style="padding: 30px;">
+                        <img class="card-img-top" src="{% static '' %}img/he-arc.jpg" alt="Card image cap"
+                             style="padding: 30px;">
                         <div class="card-body">
                             <h2>HE-Arc</h2>
                             <p class="card-text">
@@ -40,34 +39,16 @@
                             <h2>The devs</h2>
                             <p class="card-text">
                                 Developped by
-                                <ul>
-                                    <li><a href="https://github.com/Miaouw17">Quentin Michel</a></li>
-                                    <li><a href="https://github.com/Maering">Segan Salomon</a></li>
-                                    <li><a href="https://github.com/Skogarmadr">Luca Srdjenovic</a></li>
-                                </ul>
+                            <ul>
+                                <li><a href="https://github.com/Miaouw17">Quentin Michel</a></li>
+                                <li><a href="https://github.com/Maering">Segan Salomon</a></li>
+                                <li><a href="https://github.com/Skogarmadr">Luca Srdjenovic</a></li>
+                            </ul>
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    {% else %}
-        <div class="jumbotron">
-            <div class="container">
-                <h1 class="display-3">
-                    Welcome to Versus Finder
-                </h1>
-                <p class="lead">
-                    Find an opponent of your choice !
-                </p>
-                <hr>
-                <p><strong>Do you already have an account ?</strong>
-                    <a class="btn btn-lg btn-success" href="{% url 'login' %}">Log in</a>
-                </p>
-                <p> New on the website ?
-                    <a class="btn btn-lg btn-success" href="{% url 'signup' %}">Sign up</a>
-                </p>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 {% endblock %}
