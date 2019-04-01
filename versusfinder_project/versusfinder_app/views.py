@@ -140,9 +140,16 @@ def gameprofile_register(request, game_id):
             messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
             return redirect('gameprofile.new', game_id=game_id)
 
+        # Character
         character_id = int(request.POST.get('input_character'))
         if character_id < 0:
             messages.error(request, "Invalid character !")
+            return redirect('gameprofile.new', game_id=game_id)
+
+        # Battletag
+        battletag = request.POST.get('input_battletag')
+        if not re.match('([A-Z0-9]{2}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})', battletag):
+            messages.error(request, "Invalid battletag !")
             return redirect('gameprofile.new', game_id=game_id)
 
         # Build new gameprofile
@@ -151,7 +158,7 @@ def gameprofile_register(request, game_id):
         gameprofile.game = Game.objects.get(id=game_id)
         gameprofile.mainchar = Character.objects.get(id=character_id)
         gameprofile.username = pseudo
-        gameprofile.battletag = randint(1000, 9999)
+        gameprofile.battletag = battletag
         gameprofile.skill_level = skill
         gameprofile.save()
 
@@ -227,14 +234,27 @@ def gameprofile_update(request, gameprofile_id):
 
                 # Validate skill
                 skill = int(request.POST.get('input_skill_value'))
-                print(skill)
                 if skill < 0 or skill > 10:
                     messages.error(request, "Invalid skill ! Must be between 0 and 10 (inclusive)")
-                    return redirect('gameprofile.new', game_id=gameprofile_from_uri.game.id)
+                    return redirect('gameprofile.new', game_id=game_id)
+
+                # Character
+                character_id = int(request.POST.get('input_character'))
+                if character_id < 0:
+                    messages.error(request, "Invalid character !")
+                    return redirect('gameprofile.new', game_id=game_id)
+
+                # Battletag
+                # Battletag
+                battletag = request.POST.get('input_battletag')
+                if not re.match('([A-Z0-9]{2}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4})', battletag):
+                    messages.error(request, "Invalid battletag !")
+                    return redirect('gameprofile.new', game_id=game_id)
 
                 # Build new gameprofile
-                gameprofile_from_uri.mainchar = Character.objects.get(id=request.POST.get('input_character'))
+                gameprofile_from_uri.mainchar = Character.objects.get(id=character_id)
                 gameprofile_from_uri.username = pseudo
+                gameprofile_from_uri.battletag = battletag
                 gameprofile_from_uri.skill_level = skill
                 gameprofile_from_uri.save()
 
@@ -545,7 +565,6 @@ def game_show(request, game_id):
 def timetable(request, gameprofile_id):
     if request.user.is_authenticated:
         context = {}
-        context['user'] = request.user
         context['gameprofile'] = request.user.get_user_profile()
         return render(request, 'versusfinder_app/timetable.html', context)
 
@@ -559,7 +578,7 @@ def timetable_new(request, gameprofile_id):
         user = request.user
         gameprofile = user.get_user_profile()
 
-        # Check if the new timetable already exist
+
 
         isOk = True
         start = request.POST.get('date_begin').replace('T', ' ')
@@ -572,6 +591,7 @@ def timetable_new(request, gameprofile_id):
             messages.error(request, "Error ! time fields are not coherent")
             return redirect("dashboard")
 
+        # Check if the new timetable already exist
         for timetable in gameprofile.timetables.all():
             start_timetable = timetable.date_begin.strftime('%Y-%m-%d %H:%M:%S')
             start_timetable_obj = datetime.datetime.strptime(start_timetable, '%Y-%m-%d %H:%M:%S')
