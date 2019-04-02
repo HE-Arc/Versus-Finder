@@ -565,6 +565,9 @@ def game_show(request, game_id):
 
 
 def timetable(request, gameprofile_id):
+    """
+    Redirect in the timetable page.
+    """
     if request.user.is_authenticated:
         context = {}
         context['gameprofile'] = request.user.get_user_profile()
@@ -572,6 +575,10 @@ def timetable(request, gameprofile_id):
 
 
 def timetable_new(request, gameprofile_id):
+    """
+    Create a new timetable with the input of the form. We must check first if the timetable
+    already exist in table for not allowing the superposition of them. We need 4 conditions.
+    """
     gameprofile = request.user.get_user_profile()
     gameprofile_from_uri = UserGameProfile.objects.get(id=gameprofile_id)
 
@@ -580,6 +587,7 @@ def timetable_new(request, gameprofile_id):
         user = request.user
         gameprofile = user.get_user_profile()
 
+        # Get the parameters
         isOk = True
         start = request.POST.get('date_begin').replace('T', ' ')
         end = request.POST.get('date_end').replace('T', ' ')
@@ -629,6 +637,9 @@ def timetable_new(request, gameprofile_id):
 
 
 def timetable_delete(request, gameprofile_id, timetable_id):
+    """
+    Function to delete a timetable using the id of the timetable.
+    """
     if request.user.is_authenticated:
         if User.objects.get(id=request.user.id) == request.user:
             timetable = Timetable.objects.get(id=timetable_id)
