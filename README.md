@@ -1,7 +1,7 @@
 # Versus-Finder
 Project to help Smash Bros (or other games maybe) players to find some opponents according to their game schedules
 
-# User guide to install the project
+#  User guide to install the project
 
 
 ## Requirements
@@ -9,7 +9,7 @@ Project to help Smash Bros (or other games maybe) players to find some opponents
 * Pip 19.0.3
 
 
-## First clone the project
+## 1. Clone the project
 
 
 ```bash
@@ -17,7 +17,7 @@ git clone https://github.com/HE-Arc/Versus-Finder.git
 ```
 Go into the folder project.
 
-## Installation of dependencies
+## 2. Installation of dependencies
 
 Create and activate a python virtual environement. 
 ```bash
@@ -30,7 +30,7 @@ Now we can install the dependencies.
 ```bash
 pip install -r requirements.txt
 ```
-## Launch the project
+## 3. Launch the project
 
 First, we must initiate the project.
 
@@ -45,4 +45,4 @@ Then you can launch the project with the following command.
 python manage.py runserver
 ```
 
-Open a browser and go to **localhost:8000**.
+Open a browser and go to [localhost:8000]().
