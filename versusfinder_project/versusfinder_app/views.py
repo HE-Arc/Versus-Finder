@@ -629,7 +629,7 @@ def timetable_new(request, gameprofile_id):
 
             messages.success(request, "Timetable successfully created !")
         else:
-            messages.error(request, "Timetable already exist")
+            messages.warning(request, "Timetable already exist")
     else:
         messages.error(request, "Unallowed operation !")
 
