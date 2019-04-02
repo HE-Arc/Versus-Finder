@@ -3,6 +3,12 @@ Project to help Smash Bros (or other games maybe) players to find some opponents
 
 # User guide to install the project
 
+
+## Requirements
+* Python 3.7.3
+* Pip 19.0.3
+
+
 ## First clone the project
 
 
@@ -19,7 +25,7 @@ python -m virtualenv venv
 
 source venv/bin/activate
 ```
-Now we can install the dependencies 
+Now we can install the dependencies.
 
 ```bash
 pip install -r requirements.txt
@@ -39,4 +45,4 @@ Then you can launch the project with the following command.
 python manage.py runserver
 ```
 
-Open a brower and go to localhost:8000
+Open a browser and go to **localhost:8000**.
