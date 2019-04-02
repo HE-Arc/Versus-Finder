@@ -45,4 +45,4 @@ Then you can launch the project with the following command.
 python manage.py runserver
 ```
 
-Open a browser and go to [localhost:8000]().
+Open a browser and go to [http://localhost:8000](http://localhost:8000).
