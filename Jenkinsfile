@@ -10,14 +10,13 @@
     }
     stage('Test') {
       steps {
-        sh 'flake8 src/ --exit-zero --output-file flake8-output.txt'
-        sh 'flake8_junit flake8-output.txt flake8-output.xml'
+        sh 'pytz src/ --exit-zero --output-file pytz-output.txt'
       }
     }
   }
   post {
     always {
-      junit 'flake8-output.xml'
+      junit 'pytz-output.xml'
     }
     failure {
       echo 'Failed!'
