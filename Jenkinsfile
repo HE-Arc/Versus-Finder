@@ -16,7 +16,7 @@ pipeline {
   }
   post {
     always {
-      junit ''
+      echo 'Test'
     }
     failure {
       echo 'Failed!'
