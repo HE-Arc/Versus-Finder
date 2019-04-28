@@ -1,28 +1,11 @@
- pipeline {
-  agent {
-    docker 'python:3.6.1'
-  }
-  stages {
-    stage('Install dependencies') {
-      steps {
-        sh 'pip install -r requirements.txt'
-      }
+pipeline {
+    agent { docker { image 'python:3.7.3' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'python --version'
+            }
+        }
     }
-    stage('Test') {
-      steps {
-        sh 'pytz src/ --exit-zero --output-file pytz-output.txt'
-      }
-    }
-  }
-  post {
-    always {
-      junit 'pytz-output.xml'
-    }
-    failure {
-      echo 'Failed!'
-    }
-    success {
-      echo 'Done!'
-    }
-  }
+}
 }
