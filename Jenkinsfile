@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    docker 'python:3.7.3'
+    docker { image 'python:3.7.1' }
   }
   stages {
     stage('Install dependencies') {
