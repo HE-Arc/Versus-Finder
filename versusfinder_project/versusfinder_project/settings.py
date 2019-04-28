@@ -41,7 +41,14 @@ INSTALLED_APPS = [
     'versusfinder_app',
     'accounts.apps.AccountsConfig',
     'bootstrap4',
+    'django_jenkins',
 ]
+
+JENKINS_TASKS = (
+ 'django_jenkins.tasks.run_pep8',
+ 'django_jenkins.tasks.run_pyflakes'
+)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
