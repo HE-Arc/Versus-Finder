@@ -20,7 +20,8 @@ pipeline {
               }
             }
             steps {
-			sh 'mvn clean test'
+                unstash "app"
+			sh '(mvn clean test)'
 		    sh '(mvn sonar:sonar -Dsonar.projectKey=Versusfinder -Dsonar.organization=skogarmadr-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3d0cf503c64084102358a4c51068f89e69107699)'
 	    }
     }
