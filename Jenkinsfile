@@ -16,7 +16,7 @@ pipeline {
     stage('QualityTest') { 
             steps {
         sh 'ls -a'
-        sh 'cd /sonar-scanner-3.3.0.1492-linux/ '
+        sh 'cd ./sonar-scanner-3.3.0.1492-linux/ '
 		    sh '(./bin/sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
 	    }
     }
