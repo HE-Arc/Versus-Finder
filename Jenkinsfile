@@ -5,13 +5,12 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        sh 'export PATH=./sonar-scanner-3.3.0.1492-linux/bin:$PATH'
+        sh 'echo test'
       }
     }
     stage('Test') {
       steps {
         sh 'python --version'
-        sh './sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -h'
       }
     }
     stage('QualityTest') { 
