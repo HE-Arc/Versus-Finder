@@ -15,8 +15,8 @@ pipeline {
     }
     stage('QualityTest') { 
             steps {
-        sh './jenkins.sh'
-        
+        sh 'echo "PATH is: $PATH"'
+		    sh '(./sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
 	    }
     }
   }
