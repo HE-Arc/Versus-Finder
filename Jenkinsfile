@@ -15,7 +15,7 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'echo test'
+        sh 'sonar-scanner -h'
       }
     }
     stage('Test') {
@@ -27,7 +27,7 @@ pipeline {
     stage('QualityTest') { 
             steps {
         sh 'echo "PATH is: $PATH"'
-		    sh '(./sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
+		    sh '(sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
 	    }
     }
   }
