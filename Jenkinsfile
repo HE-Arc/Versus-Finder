@@ -3,7 +3,7 @@ pipeline {
     docker { image 'python:3.7.1' }
   }
   environment {
-    PATH = "sonar-scanner-3.3.0.1492-linux/bin:$PATH"
+    PATH = "/var/jenkins_home/workspace/LSR_Project_qdl/sonar-scanner-3.3.0.1492-linux/bin:$PATH"
   }
 
   stages {
