@@ -15,7 +15,7 @@ pipeline {
     }
     stage('QualityTest') { 
             steps {
-		    
+              sh 'echo test'
 	    }
     }
   }
