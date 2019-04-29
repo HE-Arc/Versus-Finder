@@ -2,7 +2,17 @@ pipeline {
   agent {
     docker { image 'python:3.7.1' }
   }
+  environment {
+    PATH = "/hot/new/bin:$PATH"
+  }
+
   stages {
+        stage ('build') {
+      steps {
+        echo "PATH is: $PATH"
+      }
+    }
+
     stage('Install dependencies') {
       steps {
         sh 'echo test'
