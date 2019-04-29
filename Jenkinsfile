@@ -6,6 +6,7 @@ pipeline {
     stage('Install dependencies') {
       steps {
         sh 'export PATH=./sonar-scanner-3.3.0.1492-linux/bin:$PATH'
+        sh 'cd $HOME; source .bashrc'
       }
     }
     stage('Test') {
