@@ -18,7 +18,7 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'sonar-scanner -h'
+        sh '/var/jenkins_home/workspace/LSR_Project_qdl/sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -h'
       }
     }
     stage('Test') {
