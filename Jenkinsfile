@@ -4,23 +4,15 @@ pipeline {
   }
 
   stages {
-        stage ('build') {
+    stage ('build') {
       steps {
-        sh 'pwd'
-        sh 'ls -a'
-        sh 'ls /var/jenkins_home/workspace/LSR_Project_qdl'
-        echo "PATH is: $PATH"
+        sh 'python --version'
       }
     }
 
     stage('Install dependencies') {
       steps {
-        sh '/var/jenkins_home/workspace/LSR_Project_qdl/sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner -h'
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'python --version'
+        sh 'pip install -p requirements.txt'
       }
     }
   
