@@ -15,10 +15,8 @@ pipeline {
     }
     stage('QualityTest') { 
             steps {
-			sh '(mvn clean test)'
-		    sh '(mvn sonar:sonar -Dsonar.projectKey=Versusfinder -Dsonar.organization=skogarmadr-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=3d0cf503c64084102358a4c51068f89e69107699)'
+		    sh '(sonar-scanner -Dsonar.projectKey=Versusfinder -Dsonar.organization=skogarmadr-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=c21936d712b162805304fa999c443ef933b4b246
+)'
 	    }
     }
   }
-
-}
