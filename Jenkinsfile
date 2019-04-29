@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-
+        sh 'echo test'
       }
     }
     stage('Test') {
@@ -15,8 +15,8 @@ pipeline {
     }
     stage('QualityTest') { 
             steps {
-        sh 'export PATH=./sonar-scanner-3.3.0.1492-linux/bin:$PATH'
-		    sh '(./sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
+        sh 'cd /sonar-scanner-3.3.0.1492-linux/ '
+		    sh '(./bin/sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io )'
 	    }
     }
   }
