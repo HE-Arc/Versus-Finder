@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    docker { image 'python:3.7.1' }
+    docker { image 'maven:3-alpine' }
   }
   stages {
     stage('Install dependencies') {
@@ -16,7 +16,7 @@ pipeline {
     stage('QualityTest') { 
             agent {
               docker {
-               image 'python:3.7.1'
+               image 'maven:3-alpine'
               }
             }
             steps {
