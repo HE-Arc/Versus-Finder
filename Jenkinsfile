@@ -5,7 +5,7 @@ pipeline {
   stages {
     stage('Install dependencies') {
       steps {
-        sh 'ls -a'
+        sh 'ls -a sonar-scanner-3.3.0.1492-linux/bin/'
       }
     }
     stage('Test') {
