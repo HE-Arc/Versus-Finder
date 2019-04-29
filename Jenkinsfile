@@ -10,6 +10,8 @@ pipeline {
         stage ('build') {
       steps {
         sh 'pwd'
+        sh 'ls -a'
+        sh 'ls /var/jenkins_home/workspace/LSR_Project_qdl'
         echo "PATH is: $PATH"
       }
     }
