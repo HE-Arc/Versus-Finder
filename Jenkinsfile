@@ -3,7 +3,7 @@ pipeline {
     docker { image 'python:3.7.1' }
   }
   environment {
-    PATH = "/hot/new/bin:$PATH"
+    PATH = "./sonar-scanner-3.3.0.1492-linux/bin:$PATH"
   }
 
   stages {
@@ -23,17 +23,7 @@ pipeline {
         sh 'python --version'
       }
     }
-    stage('Sonarqube analysis') {
-        steps {
-        script {
-                scannerHome = tool 'SonarScanner';
-            }
-        withSonarQubeEnv('SonarQube') {
-            sh "${scannerHome}/bin/sonar-scanner -h" 
-        }
-
-        }
-        }
+  
     stage('QualityTest') { 
             steps {
         sh 'echo "PATH is: $PATH"'
