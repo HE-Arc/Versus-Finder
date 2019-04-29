@@ -9,6 +9,7 @@ pipeline {
   stages {
         stage ('build') {
       steps {
+        pwd
         echo "PATH is: $PATH"
       }
     }
