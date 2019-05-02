@@ -15,13 +15,14 @@ pipeline {
         sh 'pip install -r requirements.txt'
       }
     }
-  
+
+    
     
     stage('IntegrationTest') {
              agent {
               docker {
                image 'lucienmoor/katalon-for-jenkins:latest'
-               args '-p 9999:9090'
+               args '-p 8888:8080'
               }
             }
             steps {
