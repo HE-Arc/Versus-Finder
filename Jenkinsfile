@@ -23,9 +23,16 @@ pipeline {
     } 
     
     stage('IntegrationTest') {
-
+             agent {
+              docker {
+               image 'lucienmoor/katalon-for-jenkins:latest'
+               args '-p 8888:8080'
+              }
+            }
             steps {
-  
+                unstash "app"
+                sh 'java -jar target/SMF-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &'
+                sh 'sleep 30'
 			    sh 'chmod +x ./source/runTest.sh'
 			    sh './source/runTest.sh'
 			    cleanWs()
