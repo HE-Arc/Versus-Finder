@@ -12,13 +12,13 @@ pipeline {
 
     stage('Install dependencies') {
       steps {
-        sh 'pip install -r requirements.txt'
+        sh 'pip install -r source/requirements.txt'
       }
     }
 
     stage('QualityTest') { 
             steps {
-		    sh '($(pwd)/source/sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=. -Dsonar.exclusions=./versusfindertest/**  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=c21936d712b162805304fa999c443ef933b4b246)'
+		    sh '($(pwd)/source/sonar-scanner-3.3.0.1492-linux/bin/sonar-scanner  -Dsonar.projectKey=Versusfinder   -Dsonar.organization=skogarmadr-github   -Dsonar.sources=. -Dsonar.exclusions=./versusfindertest  -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=c21936d712b162805304fa999c443ef933b4b246)'
 	    }
     } 
     
