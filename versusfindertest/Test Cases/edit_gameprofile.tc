@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>create_timetable</name>
+   <name>edit_gameprofile</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>7d4ed775-66ef-4111-b3c7-ffacad9e1739</testCaseGuid>
+   <testCaseGuid>05f6aba5-b7f1-415b-bbb8-d36a4834352b</testCaseGuid>
 </TestCaseEntity>

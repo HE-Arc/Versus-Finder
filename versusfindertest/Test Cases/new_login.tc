@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>create_timetable</name>
+   <name>new_login</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>7d4ed775-66ef-4111-b3c7-ffacad9e1739</testCaseGuid>
+   <testCaseGuid>d618c5bd-d8b2-4c4a-ab7d-279b3ea3376c</testCaseGuid>
 </TestCaseEntity>

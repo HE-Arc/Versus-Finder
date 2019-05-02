@@ -1,0 +1,11 @@
+Suite/Test/Step Name,Browser,Description,Tag,Start time,End time,Duration,Status
+Halt_test,,,,2019-05-02 21:38:20,2019-05-02 21:38:21,1.095s,FAILED
+,,,,,,,
+Test Cases/create_account,,,,2019-05-02 21:38:20,2019-05-02 21:38:20,0.534s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:20,2019-05-02 21:38:20,0.242s,FAILED
+,,,,,,,
+Test Cases/Login,,,,2019-05-02 21:38:20,2019-05-02 21:38:21,0.167s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:21,2019-05-02 21:38:21,0.012s,FAILED
+,,,,,,,
+Test Cases/new_profile,,,,2019-05-02 21:38:21,2019-05-02 21:38:21,0.185s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:21,2019-05-02 21:38:21,0.006s,FAILED

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Halt_test" time="8" tests="2" failures="0" errors="0">
+   <testsuite name="Halt_test" tests="2" failures="0" errors="0" time="8" timestamp="2019-05-02 22:18:43" hostname="Lukka - 157.26.66.73" id="Test Suites/Halt_test">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="C:\\Users\\Lukka\\Katalon Studio\\versusfinderKatalon\\Reports\\Halt_test\\20190502_221841"/>
+         <property name="logFiles" value="C:\\Users\\Lukka\\Katalon Studio\\versusfinderKatalon\\Reports\\Halt_test\\20190502_221841\\execution0.log"/>
+         <property name="attachments" value=""/>
+         <property name="hostName" value="Lukka - 157.26.66.73"/>
+         <property name="os" value="Windows 10 64bit"/>
+         <property name="katalonVersion" value="6.1.2.2"/>
+         <property name="browser" value="Chrome 73.0.3683.103"/>
+         <property name="hostAddress" value="157.26.66.73"/>
+         <property name="sessionId" value="29c31173a185d1df59b58c88221fc784"/>
+         <property name="seleniumVersion" value="3.7.1"/>
+         <property name="proxyInformation" value="ProxyInformation{proxyOption=NO_PROXY, proxyServerType=HTTP, password=, proxyServerAddress=, proxyServerPort=0}"/>
+         <property name="platform" value="Windows 10"/>
+      </properties>
+      <testcase name="Test Cases/new_login" classname="Test Cases/new_login" status="PASSED">
+         <system-out><![CDATA[2019-05-02 22:18:43 - [TEST_CASE][PASSED] - Test Cases/new_login: Test Cases/new_login
+
+2019-05-02 22:18:43 - [TEST_STEP][PASSED] - return null: null]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/edit_gameprofile" classname="Test Cases/edit_gameprofile" status="PASSED">
+         <system-out><![CDATA[2019-05-02 22:18:43 - [TEST_CASE][PASSED] - Test Cases/edit_gameprofile: Test Cases/edit_gameprofile
+
+2019-05-02 22:18:43 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2019-05-02 22:18:43 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2019-05-02 22:18:43 - [MESSAGE][INFO] - Action delay is set to 0 seconds
+
+2019-05-02 22:18:47 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2019-05-02 22:18:47 - [TEST_STEP][PASSED] - navigateToUrl("https://vsfinder.srvz-webapp.he-arc.ch/home"): Navigate to 'https://vsfinder.srvz-webapp.he-arc.ch/home' successfully
+
+2019-05-02 22:18:48 - [MESSAGE][PASSED] - Navigate to 'https://vsfinder.srvz-webapp.he-arc.ch/home' successfully
+
+2019-05-02 22:18:48 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/profile/a_Login")): Object: 'Object Repository/profile/a_Login' is clicked on
+
+2019-05-02 22:18:48 - [MESSAGE][PASSED] - Object: 'Object Repository/profile/a_Login' is clicked on
+
+2019-05-02 22:18:48 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/profile/username"), "lulu"): Text 'lulu' is set on object 'Object Repository/profile/username'
+
+2019-05-02 22:18:48 - [MESSAGE][PASSED] - Text 'lulu' is set on object 'Object Repository/profile/username'
+
+2019-05-02 22:18:48 - [TEST_STEP][PASSED] - setEncryptedText(findTestObject("Object Repository/profile/inputpwd"), "d/JjU8WmERS2ng5gWy3qxQ=="): Text ****** has been set on object 'Object Repository/profile/inputpwd'
+
+2019-05-02 22:18:48 - [MESSAGE][PASSED] - Text ****** has been set on object 'Object Repository/profile/inputpwd'
+
+2019-05-02 22:18:48 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/profile/login")): Object: 'Object Repository/profile/login' is clicked on
+
+2019-05-02 22:18:49 - [MESSAGE][PASSED] - Object: 'Object Repository/profile/login' is clicked on
+
+2019-05-02 22:18:49 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/profile/edit                              game profil")): Object: 'Object Repository/profile/edit                              game profil' is clicked on
+
+2019-05-02 22:18:49 - [MESSAGE][PASSED] - Object: 'Object Repository/profile/edit                              game profil' is clicked on
+
+2019-05-02 22:18:49 - [TEST_STEP][PASSED] - selectOptionByValue(findTestObject("Object Repository/profile/select                                                                        BOWSER                                                                                BOWSER JR"), "15", true): All options with value '15' are selected in object 'Object Repository/profile/select                                                                        BOWSER                                                                                BOWSER JR'  using regular expression
+
+2019-05-02 22:18:50 - [MESSAGE][PASSED] - All options with value '15' are selected in object 'Object Repository/profile/select                                                                        BOWSER                                                                                BOWSER JR'  using regular expression
+
+2019-05-02 22:18:50 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/profile/skill")): Object: 'Object Repository/profile/skill' is clicked on
+
+2019-05-02 22:18:50 - [MESSAGE][PASSED] - Object: 'Object Repository/profile/skill' is clicked on
+
+2019-05-02 22:18:50 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/profile/update")): Object: 'Object Repository/profile/update' is clicked on
+
+2019-05-02 22:18:51 - [MESSAGE][PASSED] - Object: 'Object Repository/profile/update' is clicked on]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2019-05-02 22:18:43 - [TEST_SUITE][PASSED] - Halt_test: Test Cases/edit_gameprofile]]></system-out>
+      <system-err><![CDATA[]]></system-err>
+   </testsuite>
+</testsuites>
