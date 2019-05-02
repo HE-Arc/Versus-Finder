@@ -1,7 +1,7 @@
 organization=skogarmadr-github
 projectKey=Versusfinder
 serverUrl=https://sonarcloud.io
-serverVersion=7.8.0.23906
+serverVersion=7.8.0.24313
 dashboardUrl=https://sonarcloud.io/dashboard?id=Versusfinder
-ceTaskId=AWpqis19UanQDuOXx981
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWpqis19UanQDuOXx981
+ceTaskId=AWp497NhHLVbYrRfFznq
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWp497NhHLVbYrRfFznq

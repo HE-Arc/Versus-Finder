@@ -1,0 +1,18 @@
+[
+  {
+    "model": "versusfinder_app.timetable",
+    "pk": 1,
+    "fields": {
+      "date_begin" : "2019-02-28T17:00:00+00:00",
+      "date_end" : "2019-02-28T18:00:00+00:00"
+    }
+  },
+  {
+    "model": "versusfinder_app.timetable",
+    "pk": 2,
+    "fields": {
+      "date_begin" : "2019-03-14T16:00:00+00:00",
+      "date_end" : "2019-03-14T19:00:00+00:00"
+    }
+  }
+]

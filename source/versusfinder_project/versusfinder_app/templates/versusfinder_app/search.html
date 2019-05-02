@@ -1,0 +1,112 @@
+<!-- templates/home.html -->
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+    <div style="padding:30px">
+        <div class="card">
+            <div  class="card-header">
+                <h2>Opponents lookup</h2>
+            </div>
+            <div class="card-body">
+
+                <!-- Banlist button -->
+                {% if gameprofile is not None %}
+                <div style="padding: 10px 10px 50px 10px;">
+                    <form action="{% url 'banlist.modify' gameprofile_id=gameprofile.id %}" method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-primary btn-lg btn-block" type="submit" value="Modifiy banlist" name="Submit" id="redirect_submit" />
+                    </form>
+                </div>
+                {% endif %}
+                <!-- END OF Banlist button -->
+
+                <div class="card-text">
+                    <form method="POST" action="{% url 'search.process' game_id=game.id %}">
+                    {% csrf_token %}
+
+                    <div class="form-group row">
+                        <label for="skill_input" class="col-sm-2 col-form-label col-form-label-lg">Skill range</label>
+                        <div class="col-sm-1"><p>Noob</p></div>
+                        <div class="col-sm-8">
+                            <!-- SLider from : https://refreshless.com/nouislider/examples/ -->
+                            <div id="skill_input" name="skill_input"></div>
+                        </div>
+                        <div class="col-sm-1"><p>Pro</p></div>
+                    </div>
+                    <input type="hidden" id="skill_min" name="skill_min"/>
+                    <input type="hidden" id="skill_max" name="skill_max"/>
+
+                    <div class="form-group row">
+                        <label for="input_hour_begin" class="col-sm-2 col-form-label col-form-label-lg">Hour (begin)</label>
+                        <div class="col-sm-10">
+                            <input type="time" class="form-control form-control-lg" id="input_hour_begin" name="input_hour_begin" min="0:00" max="24:00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="input_hour_end" class="col-sm-2 col-form-label col-form-label-lg">Hour (end)</label>
+                        <div class="col-sm-10">
+                            <input type="time" class="form-control form-control-lg" id="input_hour_end" name="input_hour_end" min="0:00" max="24:00" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="input_date" class="col-sm-2 col-form-label col-form-label-lg">Date</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control form-control-lg" id="input_date" name="input_date" min="2019-01-01" required>
+                        </div>
+                    </div>
+
+                    <blockquote class="blockquote mb-0">
+                        <button class="btn btn-primary btn-lg" type="submit">Search !</button>
+                    </blockquote>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    
+        var skill_input = document.getElementById('skill_input');
+
+        var slider = noUiSlider.create(skill_input, {
+            start: [3, 7],
+            connect: true,
+            step: 1,
+            range: {
+                'min': 0,
+                'max': 10
+            }
+        });
+
+        var skill_min = document.getElementById('skill_min');
+        var skill_max = document.getElementById('skill_max');
+        
+        slider.on('update', function (values, handle) {
+            var value = values[handle];
+            if (handle) {
+                skill_min.value = Math.round(value);
+            } else {
+                skill_max.value = Math.round(value);
+            }
+        });
+
+
+        // FROM : https://stackoverflow.com/a/13052187
+        Date.prototype.toDateInputValue = (function() {
+            var local = new Date(this);
+            local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+            return local.toJSON().slice(0,10);
+        });
+        $('#input_date').val(new Date().toDateInputValue());
+    </script>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+{% endblock %}

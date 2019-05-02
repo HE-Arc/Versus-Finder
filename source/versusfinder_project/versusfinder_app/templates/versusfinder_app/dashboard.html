@@ -1,0 +1,161 @@
+{% extends 'versusfinder_app/base.html' %}
+
+{% block title %}DashBoard{% endblock %}
+
+{% block content %}
+    <h1 class="display-1">Dashboard</h1>
+    <hr>
+    <div style="width:100%;">
+        <table>
+            <tr>
+                <td id="match_incoming" style="width:80%;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 mt-3">
+                                <div class="card">
+                                    <div class="card-horizontal" style="display: flex; flex: 1 1 auto;">
+                                        <div class="card-body">
+                                            {% if next_match != Null %}
+                                                <h4 class="card-title">Next Match</h4>
+                                                <p class="card-text">{{ next_match.user_profile_one.username }}
+                                                    as {{ next_match.user_profile_one.mainchar.name }}
+                                                    VS {{ next_match.user_profile_two.username }}
+                                                    as {{ next_match.user_profile_two.mainchar.name }}</p>
+                                                <p class="card-text">BEGIN
+                                                    : {{ next_match.timetable.getDateBeginFormated }}</p>
+                                            {% else %}
+                                                <h4 class="card-title">No Match in coming :(</h4>
+                                            {% endif %}
+                                        </div>
+                                        <div style="background-color: gainsboro">
+                                            <div id="carouselExampleControls" class="carousel slide"
+                                                 data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    {% for match in user_old_matchs %}
+                                                        <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                                                            <div>
+                                                                <p>{{ match.user_profile_one.mainchar.name }}
+                                                                    VS {{ match.user_profile_two.mainchar.name }}</p>
+                                                                <h4>Score</h4>
+                                                                <p>{{ match.user_profile_one.username }}
+                                                                    : {{ match.user_one_score }}</p>
+                                                                <p>{{ match.user_profile_two.username }}
+                                                                    : {{ match.user_two_score }}</p>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <a class="carousel-control-prev" href="#carouselExampleControls"
+                                                   role="button"
+                                                   data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleControls"
+                                                   role="button"
+                                                   data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td id="piechart" style="width:20%;">
+                    <div>
+                        <canvas id="stats_charts"></canvas>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div>
+        <a class="btn btn-primary btn-lg btn-block" style="padding: 30px"
+           href="{% url 'timetable' gameprofile_id=gameprofile.id %}">New availability</a>
+    </div>
+    <hr>
+
+    <p>Click on a <font color="blue">timetable</font> to delete it or click on a <font color="red">match</font> to show it in the calendar.</p>
+    <div id="calendar" style="padding: 30px;">
+
+    </div>
+
+    <script>
+        var ctx = document.getElementById("stats_charts").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ["Win", "Lose"],
+                datasets: [{
+                    backgroundColor: [
+                        "#00FF00",
+                        "#FF0000"
+                    ],
+                    data: [{% for stat in user_stats %}{{ stat }}, {% endfor %}]
+                }]
+            }
+        });
+
+        $('#calendar').fullCalendar({
+            plugins: ['interaction', 'dayGrid', 'timeGrid'],
+            navLinks: true,
+            eventLimit: true,
+            defaultView: 'month',
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'agendaDay,agendaWeek,month'
+            },
+            events: [
+                {% for timetable in user_timetable %}
+                    {
+                        id: '{{ timetable.id }}',
+                        title: 'SmashBros',
+                        start: '{{ timetable.getDateBeginFormated }}',
+                        end: '{{ timetable.getDateEndFormated}}',
+                        rendering: 'background',
+                    },
+                {% endfor %}
+                {% for match in user_matchs %}
+                    {
+                        id: 'match',
+                        title: '{{ match.user_profile_one.username }} VS {{ match.user_profile_two.username }}',
+                        start: '{{ match.timetable.getDateBeginFormated }}',
+                        end: '{{ match.timetable.getDateEndFormated }}',
+                        rendering: 'background',
+                        color: '#FF0000',
+                        url: '{% url 'match.show' game_id=match.game.id match_id=match.id %}'
+                    },
+                {% endfor %}
+            ],
+            eventClick: function (calEvent, jsEvent, view, resourceObj) {
+                // check if it's a timetable or a match
+                if (calEvent.color != '#FF0000') {
+                    /*Open Sweet Alert*/
+                    swal({
+                        title: "Do you want to delete this timetable ?",
+                        text: "Once deleted, you will not be able to recover this timetable.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                var url = "{% url 'timetable.delete' gameprofile.id 9999 %}";
+                                var timetableid = calEvent.id;
+                                document.location.href = url.replace('9999', timetableid);
+                            }
+                        });
+                }
+            }
+
+
+        });
+    </script>
+
+{% endblock %}
