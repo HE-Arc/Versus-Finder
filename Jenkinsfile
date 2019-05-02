@@ -15,6 +15,11 @@ pipeline {
 
 
     stage('Install dependencies') {
+      agent {
+              docker {
+               image 'python:3.7.1'
+              }
+      }
       steps {
         sh 'pip install -r source/requirements.txt'
       }
