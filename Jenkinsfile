@@ -44,8 +44,8 @@ pipeline {
               }
             }
             steps {
-			    sh 'chmod +x ./source/runTest.sh'
-			    sh './source/runTest.sh'
+			    sh 'chmod +x ./runTest.sh'
+			    sh './runTest.sh'
 			    cleanWs()
             }
             post {
