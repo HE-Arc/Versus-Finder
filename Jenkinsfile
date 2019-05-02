@@ -5,11 +5,11 @@ pipeline {
     stage('Build') {
              agent {
               docker {
-               image 'maven:3-alpine'
+               image 'python:3.7.1'
               }
             }
             steps {
-			    sh '(mvn clean package)'
+              sh 'python --version'
             }
     }
 
