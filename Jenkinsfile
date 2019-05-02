@@ -23,12 +23,7 @@ pipeline {
     } 
     
     stage('IntegrationTest') {
-             agent {
-              docker {
-               image 'lucienmoor/katalon-for-jenkins:latest'
-               args '-p 8888:8080'
-              }
-            }
+
             steps {
                 unstash "app"
                 sh 'java -jar target/SMF-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &'
