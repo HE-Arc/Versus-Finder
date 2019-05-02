@@ -10,7 +10,6 @@ pipeline {
             }
             steps {
 			    sh '(mvn clean package)'
-			    stash name: "app", includes: "**"
             }
     }
 
