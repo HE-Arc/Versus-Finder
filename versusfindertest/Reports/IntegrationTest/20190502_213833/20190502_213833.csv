@@ -1,0 +1,17 @@
+Suite/Test/Step Name,Browser,Description,Tag,Start time,End time,Duration,Status
+IntegrationTest,,,,2019-05-02 21:38:35,2019-05-02 21:38:36,1.398s,FAILED
+,,,,,,,
+Test Cases/create_timetable,,,,2019-05-02 21:38:35,2019-05-02 21:38:36,0.478s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:35,2019-05-02 21:38:36,0.223s,FAILED
+,,,,,,,
+Test Cases/Delete_Timetable,,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.218s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.010s,FAILED
+,,,,,,,
+Test Cases/search_match,,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.193s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.007s,FAILED
+,,,,,,,
+Test Cases/update_gameprofile,,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.146s,PASSED
+return null,,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.001s,PASSED
+,,,,,,,
+Test Cases/Login,,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.141s,FAILED
+"openBrowser("""")",,,,2019-05-02 21:38:36,2019-05-02 21:38:36,0.007s,FAILED
