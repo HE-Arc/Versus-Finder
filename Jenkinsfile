@@ -26,7 +26,7 @@ pipeline {
              agent {
               docker {
                image 'lucienmoor/katalon-for-jenkins:latest'
-               args '-p 1349:8080'
+               args '-p 8888:8080'
               }
             }
             steps {
