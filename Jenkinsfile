@@ -1,7 +1,5 @@
 pipeline {
-  agent {
-    docker { image 'python:3.7.1' }
-  }
+  agent any
 
   stages {
     stage ('build') {
@@ -26,13 +24,10 @@ pipeline {
              agent {
               docker {
                image 'lucienmoor/katalon-for-jenkins:latest'
-               args '-p 8888:8080'
+               args '-p 9999:9090'  
               }
             }
             steps {
-                unstash "app"
-                sh 'java -jar target/SMF-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &'
-                sh 'sleep 30'
 			    sh 'chmod +x ./source/runTest.sh'
 			    sh './source/runTest.sh'
 			    cleanWs()
