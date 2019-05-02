@@ -1,0 +1,17 @@
+Suite/Test/Step Name,Browser,Description,Tag,Start time,End time,Duration,Status
+Halt_test,Chrome 73.0.3683.103,,,2019-05-02 22:18:43,2019-05-02 22:18:51,8.564s,PASSED
+,,,,,,,
+Test Cases/new_login,Chrome 73.0.3683.103,,,2019-05-02 22:18:43,2019-05-02 22:18:43,0.249s,PASSED
+return null,Chrome 73.0.3683.103,,,2019-05-02 22:18:43,2019-05-02 22:18:43,0.001s,PASSED
+,,,,,,,
+Test Cases/edit_gameprofile,Chrome 73.0.3683.103,,,2019-05-02 22:18:43,2019-05-02 22:18:51,7.499s,PASSED
+"openBrowser("""")",Chrome 73.0.3683.103,,,2019-05-02 22:18:43,2019-05-02 22:18:47,3.368s,PASSED
+"navigateToUrl(""https://vsfinder.srvz-webapp.he-arc.ch/home"")",Chrome 73.0.3683.103,,,2019-05-02 22:18:47,2019-05-02 22:18:48,1.399s,PASSED
+"click(findTestObject(""Object Repository/profile/a_Login""))",Chrome 73.0.3683.103,,,2019-05-02 22:18:48,2019-05-02 22:18:48,0.286s,PASSED
+"setText(findTestObject(""Object Repository/profile/username""), ""lulu"")",Chrome 73.0.3683.103,,,2019-05-02 22:18:48,2019-05-02 22:18:48,0.099s,PASSED
+"setEncryptedText(findTestObject(""Object Repository/profile/inputpwd""), ""d/JjU8WmERS2ng5gWy3qxQ=="")",Chrome 73.0.3683.103,,,2019-05-02 22:18:48,2019-05-02 22:18:48,0.150s,PASSED
+"click(findTestObject(""Object Repository/profile/login""))",Chrome 73.0.3683.103,,,2019-05-02 22:18:48,2019-05-02 22:18:49,0.743s,PASSED
+"click(findTestObject(""Object Repository/profile/edit                              game profil""))",Chrome 73.0.3683.103,,,2019-05-02 22:18:49,2019-05-02 22:18:49,0.237s,PASSED
+"selectOptionByValue(findTestObject(""Object Repository/profile/select                                                                        BOWSER                                                                                BOWSER JR""), ""15"", true)",Chrome 73.0.3683.103,,,2019-05-02 22:18:49,2019-05-02 22:18:50,0.633s,PASSED
+"click(findTestObject(""Object Repository/profile/skill""))",Chrome 73.0.3683.103,,,2019-05-02 22:18:50,2019-05-02 22:18:50,0.077s,PASSED
+"click(findTestObject(""Object Repository/profile/update""))",Chrome 73.0.3683.103,,,2019-05-02 22:18:50,2019-05-02 22:18:51,0.363s,PASSED

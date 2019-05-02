@@ -13,15 +13,3 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-WebUI.openBrowser('')
-
-WebUI.navigateToUrl('https://vsfinder.srvz-webapp.he-arc.ch/home')
-
-WebUI.click(findTestObject('Page_Home/a_Login (5)'))
-
-WebUI.setText(findTestObject('Page_Login/input_Username_username (6)'), 'lulu')
-
-WebUI.setEncryptedText(findTestObject('Page_Login/input_Password_password (6)'), 'd/JjU8WmERS2ng5gWy3qxQ==')
-
-WebUI.click(findTestObject('Page_Login/button_Login (1)'))
-

@@ -13,3 +13,24 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
+WebUI.openBrowser('')
+
+WebUI.navigateToUrl('https://vsfinder.srvz-webapp.he-arc.ch/home')
+
+WebUI.click(findTestObject('Object Repository/profile/a_Login'))
+
+WebUI.setText(findTestObject('Object Repository/profile/username'), 'lulu')
+
+WebUI.setEncryptedText(findTestObject('Object Repository/profile/inputpwd'), 'd/JjU8WmERS2ng5gWy3qxQ==')
+
+WebUI.click(findTestObject('Object Repository/profile/login'))
+
+WebUI.click(findTestObject('Object Repository/profile/edit                              game profil'))
+
+WebUI.selectOptionByValue(findTestObject('Object Repository/profile/select                                                                        BOWSER                                                                                BOWSER JR'), 
+    '15', true)
+
+WebUI.click(findTestObject('Object Repository/profile/skill'))
+
+WebUI.click(findTestObject('Object Repository/profile/update'))
+
